@@ -28,7 +28,7 @@ The following data sources have been selected for the project:
 | Deutsche Nationalbibliothek     | https://www.dnb.de/                          | Relational, RDF | 145,112 persons between 1200 and 1600; the dataset can be narrowed further because only ecclesiastical representatives are considered relevant | >6           | Person, alternative names, time, country, geographic reference, profession(s), additional information, type, etc.                                       |
 | Repertorium Germanicum Online   | https://rg-online.dhi-roma.it/               | XML             | Approx. 400,000 persons in the full RG; only Volume 8 is intended to be used                                                                   | 3            | The source is principally provided as running text, but first name, surname, and mentioned place are to be extracted                                    |
 
-## Scope and Assumptions
+## Scope
 
 At this stage, the project scope has been defined through the selection of three candidate datasets that appear suitable for 
 methodological comparison. A shared thematic focus on historical persons, especially in ecclesiastical contexts, has been identified 
@@ -49,3 +49,36 @@ This repository is intended to be used for:
 - storing scripts and transformation workflows,
 - tracking extraction and matching experiments, and
 - presenting project results in a transparent and reproducible way.
+
+## Planned Pipeline Steps
+
+1. **Acquisition**  
+   Source datasets are collected and prepared for processing.
+
+2. **Materialization to RDF Graphs**  
+   Source data is transformed into RDF using [**Morph-KGC**](https://morph-kgc.readthedocs.io/en/stable/).
+
+3. **Mapping to a Unified Schema**  
+   The generated RDF is aligned to a shared ontology and integrated into a common graph model.
+
+4. **Entity Resolution**  
+   [**LIMES**](https://aksw.org/Projects/LIMES.html) is used to detect and link equivalent entities across datasets.
+
+5. **Storage and Querying**  
+   The resulting RDF graphs are loaded into [**QLever**](https://github.com/ad-freiburg/qlever?tab=readme-ov-file) for querying and analysis.
+
+## Tech Stack Specification
+
+The pipeline will be implemented with the following core technologies:
+
+- **Morph-KGC**  
+  Used for RDF materialization from heterogeneous source data into knowledge graphs.  
+  It will serve as the mapping engine for transforming source data into RDF according to the chosen ontology and mapping definitions.
+
+- **QLever**  
+  Used as the RDF triplestore and SPARQL query engine.  
+  It will store the materialized graphs, support querying across the integrated data, and provide the main environment for accessing the unified knowledge graph.
+
+- **LIMES**  
+  Used for entity resolution and record linkage.  
+  It will identify likely matches across records from different source datasets and support the creation of canonical entities or alignment links.
