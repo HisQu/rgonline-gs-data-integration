@@ -23,7 +23,7 @@ from rdflib import Graph, URIRef
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-QUERIES_DIR = PROJECT_ROOT / "queries" / "acquisition"
+QUERIES_DIR = PROJECT_ROOT / "queries" / "acquisition" / "dnb"
 RAW_DIR = PROJECT_ROOT / "data" / "raw" / "source-dnb"
 INTERIM_DIR = PROJECT_ROOT / "data" / "interim" / "rdf"
 
@@ -44,7 +44,7 @@ def load_query(name: str) -> str:
 
 
 def run_count_query(client: httpx.Client) -> int:
-    query = load_query("source-dnb-count.rq")
+    query = load_query("count.rq")
     resp = client.get(
         ENDPOINT,
         params={"query": query},
@@ -276,7 +276,7 @@ def main(argv: list[str] | None = None) -> None:
         started_at = datetime.now(timezone.utc).isoformat()
 
         # --- Fetch pages ---
-        query_file = "source-dnb-construct.rq"
+        query_file = "construct.rq"
         query_text = load_query(query_file)
         query_hash = hashlib.sha256(query_text.encode()).hexdigest()
 
@@ -287,7 +287,7 @@ def main(argv: list[str] | None = None) -> None:
         )
 
         if args.include_literal_occ:
-            lit_query_file = "source-dnb-construct-literal-occ.rq"
+            lit_query_file = "construct-literal-occ.rq"
             logger.info("Fetching literal-occupation persons...")
             lit_pages = fetch_all_pages(
                 client, lit_query_file, total, args.page_size, args.raw_dir
