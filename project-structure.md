@@ -4,8 +4,8 @@
 ├── LICENSE
 ├── .gitignore
 ├── .env.example
-├── Makefile
-├── docker-compose.yml
+├── .envrc
+├── justfile
 ├── pyproject.toml
 ├── uv.lock
 │
@@ -15,28 +15,26 @@
 │   └── decisions/
 │       ├── 0001-data-sources.md
 │       ├── 0002-uri-policy.md
-│       └── 0003-er-thresholds.md
+│       ├── 0003-er-thresholds.md
+│       └── 0004-dnb-skip-materialization.md
 │
 ├── configs/
 │   ├── morph-kgc/
-│   │   ├── source-a.ini
-│   │   ├── source-b.ini
-│   │   ├── source-c.ini
+│   │   ├── source-gs.ini
+│   │   ├── source-rgo.ini
 │   │   └── shared-prefixes.ttl
 │   ├── qlever/
 │   │   ├── dataset.settings.json
 │   │   └── qleverfile.example
-│   └── splink/
+│   └── limes/
 │       ├── blocking_rules.py
 │       ├── comparisons.py
 │       └── thresholds.yaml
 │
 ├── mappings/
-│   ├── source-a/
+│   ├── source-gs/
 │   │   └── mapping.rml.ttl
-│   ├── source-b/
-│   │   └── mapping.rml.ttl
-│   ├── source-c/
+│   ├── source-rgo/
 │   │   └── mapping.rml.ttl
 │   └── unified/
 │       ├── ontology.ttl
@@ -45,14 +43,14 @@
 │
 ├── data/
 │   ├── raw/
-│   │   ├── source-a/
-│   │   ├── source-b/
-│   │   └── source-c/
+│   │   ├── source-gs/
+│   │   ├── source-dnb/
+│   │   └── source-rgo/
 │   ├── interim/
 │   │   ├── rdf/
-│   │   │   ├── source-a.ttl
-│   │   │   ├── source-b.ttl
-│   │   │   ├── source-c.ttl
+│   │   │   ├── source-gs.ttl
+│   │   │   ├── source-dnb.ttl
+│   │   │   ├── source-rgo.ttl
 │   │   │   └── unified.ttl
 │   │   └── er/
 │   │       ├── candidate-records.parquet
@@ -68,37 +66,32 @@
 │       └── logs/
 │
 ├── src/
-│   └── project_name/
-│       ├── __init__.py
-│       ├── acquisition/
-│       │   ├── fetch_source_a.py
-│       │   ├── fetch_source_b.py
-│       │   └── fetch_source_c.py
-│       ├── materialize/
-│       │   ├── run_morph_kgc.py
-│       │   └── validate_rdf.py
-│       ├── transform/
-│       │   ├── export_er_table.py
-│       │   ├── run_harmonization.py
-│       │   └── write_links_back.py
-│       ├── er/
-│       │   ├── train_splink.py
-│       │   ├── predict_matches.py
-│       │   └── cluster_entities.py
-│       └── qlever/
-│           ├── build_index.py
-│           └── load_queries.py
+│   ├── dnb/                    # Deutsche Nationalbibliothek — SPARQL endpoint (QLever/GND)
+│   │   ├── __init__.py
+│   │   └── fetch.py            # Paginated CONSTRUCT queries → cache → dedup → Turtle
+│   ├── gs/                     # Germania Sacra — TTL file download
+│   │   ├── __init__.py
+│   │   └── fetch.py
+│   ├── rgo/                    # Repertorium Germanicum Online — XML parsing + RDF conversion
+│   │   ├── __init__.py
+│   │   └── fetch.py
+│   └── er/                     # Entity resolution — record linkage across all three sources
+│       └── __init__.py
 │
 ├── queries/
+│   ├── acquisition/
+│   │   ├── source-dnb-count.rq
+│   │   ├── source-dnb-construct.rq
+│   │   └── source-dnb-construct-literal-occ.rq
 │   ├── validation/
 │   ├── analysis/
 │   └── reports/
 │
 ├── tests/
-│   ├── test_mappings.py
-│   ├── test_harmonization.py
-│   ├── test_er_pipeline.py
+│   ├── test_acquisition_source_dnb.py
+│   ├── test_harmonization_source_dnb.py
 │   └── fixtures/
+│       └── source-dnb-sample.nt
 │
 ├── notebooks/
 │   ├── 01-exploration.ipynb

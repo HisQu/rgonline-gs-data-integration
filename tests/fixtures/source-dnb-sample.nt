@@ -1,0 +1,25 @@
+<https://d-nb.info/gnd/118514768> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://d-nb.info/standards/elementset/gnd#Person> .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#preferredNameForThePerson> "Bonifatius, Mainz, Erzbischof, Heiliger" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#variantNameForThePerson> "Bonifacius" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#variantNameForThePerson> "Wynfreth" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#dateOfBirth> "0672" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#dateOfDeath> "0754" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#professionOrOccupation> <https://d-nb.info/gnd/4015833-0> .
+<https://d-nb.info/gnd/4015833-0> <https://d-nb.info/standards/elementset/gnd#preferredNameForTheSubjectHeading> "Erzbischof" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#gender> <https://d-nb.info/standards/vocab/gnd/gender#male> .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#placeOfDeath> <https://d-nb.info/gnd/4012685-8> .
+<https://d-nb.info/gnd/4012685-8> <https://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName> "Dokkum" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#biographicalOrHistoricalInformation> "Missionar, Erzbischof von Mainz" .
+<https://d-nb.info/gnd/118514768> <https://d-nb.info/standards/elementset/gnd#preferredNameEntityForThePerson> _:namenode1 .
+_:namenode1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://d-nb.info/standards/elementset/gnd#NameOfThePerson> .
+_:namenode1 <https://d-nb.info/standards/elementset/gnd#personalName> "Bonifatius" .
+_:namenode1 <https://d-nb.info/standards/elementset/gnd#nameAddition> "Mainz, Erzbischof, Heiliger" .
+<https://d-nb.info/gnd/100086721> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://d-nb.info/standards/elementset/gnd#Person> .
+<https://d-nb.info/gnd/100086721> <https://d-nb.info/standards/elementset/gnd#preferredNameForThePerson> "Albertus Magnus" .
+<https://d-nb.info/gnd/100086721> <https://d-nb.info/standards/elementset/gnd#dateOfBirth> "1193" .
+<https://d-nb.info/gnd/100086721> <https://d-nb.info/standards/elementset/gnd#dateOfDeath> "1280" .
+<https://d-nb.info/gnd/100086721> <https://d-nb.info/standards/elementset/gnd#professionOrOccupation> <https://d-nb.info/gnd/4015833-0> .
+<https://d-nb.info/gnd/100086721> <https://d-nb.info/standards/elementset/gnd#placeOfDeath> <https://d-nb.info/gnd/4031483-2> .
+<https://d-nb.info/gnd/4031483-2> <https://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName> "Koeln" .
+<https://d-nb.info/gnd/100086721> <https://d-nb.info/standards/elementset/gnd#gender> <https://d-nb.info/standards/vocab/gnd/gender#male> .
+<https://d-nb.info/gnd/100086721> <https://d-nb.info/standards/elementset/gnd#biographicalOrHistoricalInformation> "Dominikaner, Bischof von Regensburg, Kirchenlehrer" .

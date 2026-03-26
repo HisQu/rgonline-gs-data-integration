@@ -1,0 +1,79 @@
+PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+# Secondary query: persons with professionOrOccupationAsLiteral but no linked
+# occupation URI matching the ecclesiastical filter. Catches edge cases where
+# the occupation is only recorded as a literal string.
+
+CONSTRUCT {
+  ?person a gndo:Person ;
+    gndo:preferredNameForThePerson ?prefName ;
+    gndo:variantNameForThePerson ?varName ;
+    gndo:dateOfBirth ?birth ;
+    gndo:dateOfDeath ?death ;
+    gndo:periodOfActivity ?activity ;
+    gndo:professionOrOccupationAsLiteral ?occLit ;
+    gndo:placeOfBirthAsLiteral ?birthPlaceLit ;
+    gndo:placeOfDeathAsLiteral ?deathPlaceLit ;
+    gndo:geographicAreaCode ?geoCode ;
+    gndo:gender ?gender ;
+    gndo:biographicalOrHistoricalInformation ?bio ;
+    gndo:oldAuthorityNumber ?oldNum ;
+    gndo:preferredNameEntityForThePerson ?nameNode .
+
+  ?nameNode a gndo:NameOfThePerson ;
+    gndo:forename ?forename ;
+    gndo:surname ?surname ;
+    gndo:prefix ?namePrefix ;
+    gndo:personalName ?personalName ;
+    gndo:nameAddition ?nameAddition .
+}
+WHERE {
+  {
+    SELECT DISTINCT ?person WHERE {
+      ?type rdfs:subClassOf* gndo:Person .
+      ?person a ?type .
+
+      ?person gndo:professionOrOccupationAsLiteral ?occLit .
+      FILTER(REGEX(LCASE(STR(?occLit)),
+        "bischof|abt|kanoniker|domherr|geistlich|propst|diakon|erzbischof|prior|pfarrer|kleriker|dekan|kustos|scholast|kantor"
+      ))
+
+      # Exclude persons already captured by the primary construct query
+      FILTER NOT EXISTS {
+        ?person gndo:professionOrOccupation ?linkedOcc .
+        ?linkedOcc gndo:preferredNameForTheSubjectHeading ?linkedOccLabel .
+        FILTER(REGEX(LCASE(STR(?linkedOccLabel)),
+          "bischof|abt|kanoniker|domherr|geistlich|propst|diakon|erzbischof|prior|pfarrer|kleriker|dekan|kustos|scholast|kantor"
+        ))
+      }
+    }
+    ORDER BY ?person
+    LIMIT {limit}
+    OFFSET {offset}
+  }
+
+  ?person gndo:preferredNameForThePerson ?prefName .
+
+  OPTIONAL { ?person gndo:variantNameForThePerson ?varName }
+  OPTIONAL { ?person gndo:dateOfBirth ?birth }
+  OPTIONAL { ?person gndo:dateOfDeath ?death }
+  OPTIONAL { ?person gndo:periodOfActivity ?activity }
+  OPTIONAL { ?person gndo:professionOrOccupationAsLiteral ?occLit }
+  OPTIONAL { ?person gndo:placeOfBirthAsLiteral ?birthPlaceLit }
+  OPTIONAL { ?person gndo:placeOfDeathAsLiteral ?deathPlaceLit }
+  OPTIONAL { ?person gndo:geographicAreaCode ?geoCode }
+  OPTIONAL { ?person gndo:gender ?gender }
+  OPTIONAL { ?person gndo:biographicalOrHistoricalInformation ?bio }
+  OPTIONAL { ?person gndo:oldAuthorityNumber ?oldNum }
+
+  OPTIONAL {
+    ?person gndo:preferredNameEntityForThePerson ?nameNode .
+    OPTIONAL { ?nameNode gndo:forename ?forename }
+    OPTIONAL { ?nameNode gndo:surname ?surname }
+    OPTIONAL { ?nameNode gndo:prefix ?namePrefix }
+    OPTIONAL { ?nameNode gndo:personalName ?personalName }
+    OPTIONAL { ?nameNode gndo:nameAddition ?nameAddition }
+  }
+}
