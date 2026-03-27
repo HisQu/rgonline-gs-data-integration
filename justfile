@@ -26,9 +26,11 @@ dnb-fetch *args:
 dnb-fetch-verbose:
     uv run python src/dnb/acquisition/fetch_source_dnb.py -v
 
+backend: qlever-up
+
 # Build the QLever index from all available source files
 qlever-index:
-    qlever index
+    qlever index --overwrite-existing
 
 # Start the QLever SPARQL endpoint (port 7001)
 qlever-start:
@@ -41,13 +43,17 @@ qlever-stop:
 # Build index and start server in one step
 qlever-up: qlever-index qlever-start
 
+ui: ui-stop ui-build ui-setup ui-start
+
 # Build the QLever UI Docker image
 ui-build:
-    docker build -t qleverui qlever-ui/
+    docker build -t qleverui -f Dockerfile.qleverui qlever-ui/
 
 # Configure the database and backend (run once after ui-build; safe to re-run)
 ui-setup:
+    chmod 777 qlever-ui/db && touch qlever-ui/db/qleverui.sqlite3 && chmod 666 qlever-ui/db/qleverui.sqlite3
     docker run --rm \
+        -e PYTHONPATH=/app \
         -v "$(pwd)/qlever-ui/db:/app/db" \
         -v "$(pwd)/scripts/setup_qlever_ui.py:/setup.py:ro" \
         qleverui python /setup.py
@@ -55,7 +61,8 @@ ui-setup:
 # Start the QLever UI container on port 7000
 ui-start:
     docker run -d \
-        --network host \
+        -p 7000:7000 \
+        --add-host=host.docker.internal:host-gateway \
         -v "$(pwd)/qlever-ui/db:/app/db" \
         --name qleverui \
         qleverui
