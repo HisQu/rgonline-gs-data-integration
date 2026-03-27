@@ -9,7 +9,7 @@ URL = (
     "&query[3][field]=fundstelle.bandtitel&query[3][operator]=contains&query[3][value]=&format=turtle&limit=1000000"
 )
 
-OUTPUT = Path("data/raw/gs/data.ttl")
+OUTPUT = Path("data/raw/gs/statements.ttl")
 
 def fetch():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)

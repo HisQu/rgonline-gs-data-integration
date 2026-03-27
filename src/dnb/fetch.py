@@ -23,7 +23,7 @@ from rdflib import Graph, URIRef
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-QUERIES_DIR = PROJECT_ROOT / "queries" / "acquisition" / "dnb"
+QUERIES_DIR = PROJECT_ROOT / "mappings" / "dnb"
 RAW_DIR = PROJECT_ROOT / "data" / "raw" / "dnb"
 
 ENDPOINT = "https://sparql.dnb.de/api/gnd"
@@ -299,7 +299,7 @@ def main(argv: list[str] | None = None) -> None:
     num_triples = concatenate_and_dedup(pages, deduped_path)
     logger.info("Deduplicated to %d unique triples", num_triples)
 
-    ttl_path = args.output_dir / "data.ttl"
+    ttl_path = args.output_dir / "statements.ttl"
     validate_and_convert(deduped_path, ttl_path)
 
     finished_at = datetime.now(timezone.utc).isoformat()

@@ -1,0 +1,177 @@
+# GS Cleaning Pass
+#
+# Reads raw GS triples from the source graph and writes cleaned triples into
+# the target graph.  The raw data has several structural flaws (see
+# src/gs/technical-specs.md) that are corrected here:
+#
+#   - RDF type assertions encoded as typed string literals
+#     ("foaf:Person"^^xsd:string) are replaced by proper IRI references.
+#   - Blank-node persons are re-anchored to their canonical GS URI
+#     (recovered from owl:sameAs).
+#   - Plain-literal names stored as xsd:string are converted to simple strings.
+#   - Date literals that are clean four-digit years are promoted to xsd:gYear;
+#     all other date strings (e.g. "um 1172", "vor 938", "13. Jh.") are kept as
+#     language-tagged German strings.
+#   - The broken string references for participation:role_at and
+#     participation:role (e.g. "person:GSN-ID#organisation-NNN"^^xsd:string)
+#     are reconstructed as proper IRIs.
+#   - The rdfs:Container artefact (a class used as a predicate) is silently
+#     dropped.
+
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX prov:   <http://www.w3.org/ns/prov#>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+# ── 1. Persons ────────────────────────────────────────────────────────────────
+# Raw persons are blank nodes.  The canonical GS URI is recovered from the
+# owl:sameAs link that points into personendatenbank.germania-sacra.de.
+# GND cross-references (http://d-nb.info/gnd/…) are forwarded as owl:sameAs.
+
+INSERT {
+  GRAPH <https://data.rgonline-integration.de/graph/gs/clean> {
+    ?person a foaf:Person ;
+      schema:givenName  ?givenName ;
+      schema:familyName ?familyName ;
+      schema:birthDate  ?birthDate ;
+      schema:deathDate  ?deathDate ;
+      part:holder_of    ?amtURI ;
+      org:memberOf      ?orgURI ;
+      owl:sameAs        ?gndURI .
+  }
+}
+WHERE {
+  GRAPH <https://data.rgonline-integration.de/graph/gs> {
+    ?bn a "foaf:Person"^^xsd:string ;
+        owl:sameAs ?person .
+
+    # Keep only the canonical GS person URI (no fragment) as subject.
+    FILTER(STRSTARTS(STR(?person), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    FILTER(!CONTAINS(STR(?person), "#"))
+
+    OPTIONAL {
+      ?bn schema:givenName ?givenNameRaw .
+      BIND(STR(?givenNameRaw) AS ?givenName)
+    }
+    OPTIONAL {
+      ?bn schema:familyName ?familyNameRaw .
+      BIND(STR(?familyNameRaw) AS ?familyName)
+    }
+    OPTIONAL {
+      ?bn schema:birthDate ?birthDateRaw .
+      BIND(
+        IF(REGEX(STR(?birthDateRaw), "^[0-9]{4}$"),
+           STRDT(STR(?birthDateRaw), xsd:gYear),
+           STRLANG(STR(?birthDateRaw), "de"))
+        AS ?birthDate)
+    }
+    OPTIONAL {
+      ?bn schema:deathDate ?deathDateRaw .
+      BIND(
+        IF(REGEX(STR(?deathDateRaw), "^[0-9]{4}$"),
+           STRDT(STR(?deathDateRaw), xsd:gYear),
+           STRLANG(STR(?deathDateRaw), "de"))
+        AS ?deathDate)
+    }
+    OPTIONAL { ?bn part:holder_of ?amtURI }
+    OPTIONAL { ?bn org:memberOf   ?orgURI }
+    OPTIONAL {
+      ?bn owl:sameAs ?gndURI .
+      FILTER(
+        STRSTARTS(STR(?gndURI), "http://d-nb.info/gnd/") ||
+        STRSTARTS(STR(?gndURI), "https://d-nb.info/gnd/"))
+    }
+  }
+} ;
+
+# ── 2. Organisations ──────────────────────────────────────────────────────────
+# Each organisation carries two string type assertions
+# ("foaf:Organization"^^xsd:string and "prov:Agent"^^xsd:string).
+# Both are mapped to proper class IRIs via a VALUES table.
+# foaf:name literals are given a German language tag.
+
+INSERT {
+  GRAPH <https://data.rgonline-integration.de/graph/gs/clean> {
+    ?org a ?orgClass ;
+      foaf:name  ?orgName ;
+      owl:sameAs ?klosterURI .
+  }
+}
+WHERE {
+  GRAPH <https://data.rgonline-integration.de/graph/gs> {
+    ?org a ?orgTypeStr .
+
+    FILTER(STRSTARTS(STR(?org), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    FILTER(CONTAINS(STR(?org), "#organisation-"))
+
+    OPTIONAL {
+      ?org foaf:name ?orgNameRaw .
+      BIND(STRLANG(STR(?orgNameRaw), "de") AS ?orgName)
+    }
+    OPTIONAL {
+      ?org owl:sameAs ?klosterURI .
+      FILTER(STRSTARTS(STR(?klosterURI), "https://klosterdatenbank.germania-sacra.de/"))
+    }
+  }
+
+  VALUES (?orgTypeStr ?orgClass) {
+    ("foaf:Organization"^^xsd:string foaf:Organization)
+    ("prov:Agent"^^xsd:string        prov:Agent)
+  }
+} ;
+
+# ── 3. Offices / Ämter ───────────────────────────────────────────────────────
+# foaf:name on Amt nodes is already a language-tagged literal ("Bischof"@de)
+# and is passed through unchanged.
+# Date strings are promoted to xsd:gYear when they are clean four-digit years;
+# otherwise kept as German-tagged strings.
+# The role_at string "person:GSN-ID#organisation-NNN"^^xsd:string is
+# reconstructed as a proper IRI by replacing the "person:" prefix with the
+# full GS base URI.
+
+INSERT {
+  GRAPH <https://data.rgonline-integration.de/graph/gs/clean> {
+    ?amt foaf:name      ?officeName ;
+         part:startDate ?startDate ;
+         part:endDate   ?endDate ;
+         part:role_at   ?orgURI .
+  }
+}
+WHERE {
+  GRAPH <https://data.rgonline-integration.de/graph/gs> {
+    ?amt foaf:name ?officeName .
+
+    FILTER(STRSTARTS(STR(?amt), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    FILTER(CONTAINS(STR(?amt), "#amt-"))
+
+    OPTIONAL {
+      ?amt part:startDate ?startDateRaw .
+      BIND(
+        IF(REGEX(STR(?startDateRaw), "^[0-9]{4}$"),
+           STRDT(STR(?startDateRaw), xsd:gYear),
+           STRLANG(STR(?startDateRaw), "de"))
+        AS ?startDate)
+    }
+    OPTIONAL {
+      ?amt part:endDate ?endDateRaw .
+      BIND(
+        IF(REGEX(STR(?endDateRaw), "^[0-9]{4}$"),
+           STRDT(STR(?endDateRaw), xsd:gYear),
+           STRLANG(STR(?endDateRaw), "de"))
+        AS ?endDate)
+    }
+    OPTIONAL {
+      ?amt part:role_at ?roleAtRaw .
+      # "person:GSN-ID#organisation-NNN" → <https://…/gsn/GSN-ID#organisation-NNN>
+      # SUBSTR(..., 8) skips the leading "person:" (7 characters).
+      BIND(
+        IRI(CONCAT(
+          "https://personendatenbank.germania-sacra.de/index/gsn/",
+          SUBSTR(STR(?roleAtRaw), 8)))
+        AS ?orgURI)
+    }
+  }
+}
