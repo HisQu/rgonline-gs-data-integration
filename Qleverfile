@@ -32,4 +32,4 @@ INDEX_BINARY   = qlever-index
 SERVER_BINARY  = qlever-server
 
 [ui]
-UI_PORT        = 7002
+UI_PORT        = 7000

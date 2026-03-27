@@ -1,7 +1,12 @@
-.idea
+.idea/*
+!.idea/rgonline-gs-data-integration.iml
+!.idea/vcs.xml
 data/raw/*/*
 !data/raw/**/.gitkeep
 *.pyc
+__pycache__/
+.venv/
+.pytest_cache/
 
 # QLever index files (built locally from Qleverfile)
 ecclesiastical-persons.*
