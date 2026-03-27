@@ -2,6 +2,9 @@
 default:
     @just --list
 
+# Set up the entire project environment and starts all services
+go: sync test dnb-fetch qlever-up ui
+
 # Install project and dev dependencies
 sync:
     uv sync --dev
