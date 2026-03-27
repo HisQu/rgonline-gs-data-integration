@@ -1,0 +1,14 @@
+{
+  "files.exclude": {
+    "qlever/ecclesiastical-persons.index.*": true,
+    "qlever/ecclesiastical-persons.internal.index.*": true,
+    "qlever/ecclesiastical-persons.vocabulary.*": true,
+    "qlever/ecclesiastical-persons.server-log.txt": true
+  },
+  "search.exclude": {
+    "qlever/ecclesiastical-persons.index.*": true,
+    "qlever/ecclesiastical-persons.internal.index.*": true,
+    "qlever/ecclesiastical-persons.vocabulary.*": true,
+    "qlever/ecclesiastical-persons.server-log.txt": true
+  }
+}
