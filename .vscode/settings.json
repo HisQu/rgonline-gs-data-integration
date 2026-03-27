@@ -10,5 +10,7 @@
     "qlever/ecclesiastical-persons.internal.index.*": true,
     "qlever/ecclesiastical-persons.vocabulary.*": true,
     "qlever/ecclesiastical-persons.server-log.txt": true
-  }
+  },
+  "git.repositoryScanIgnoredFolders": ["qlever-ui"],
+  "git.detectSubmodules": false
 }
