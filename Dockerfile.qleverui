@@ -1,0 +1,30 @@
+FROM index.docker.io/library/python:3.12.4-alpine3.20
+
+COPY . /app
+WORKDIR /app
+
+RUN set -ex \
+    && python -m venv /env \
+    && /env/bin/pip install --upgrade pip \
+    && /env/bin/pip install --no-cache-dir /app
+
+RUN set -ex \
+    && runDeps="$(scanelf --needed --nobanner --recursive /env \
+    | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+    | sort -u \
+    | xargs -r apk info --installed \
+    | sort -u)" \
+    && apk add --virtual rundeps $runDeps \
+    && apk add bash bash-completion make sqlite nodejs npm
+
+RUN npm ci
+RUN npm run build
+
+ENV VIRTUAL_ENV="/env"
+ENV PATH="/env/bin:${PATH}"
+ENV PYTHONUNBUFFERED="1"
+
+# Use /env/bin/python explicitly — Alpine has no `python` symlink in PATH
+RUN /env/bin/python manage.py collectstatic --noinput
+
+CMD [ "gunicorn", "--bind", ":7000", "--workers", "3", "--limit-request-line", "10000", "qlever.wsgi:application" ]
