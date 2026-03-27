@@ -59,6 +59,7 @@ ui-setup:
         -e PYTHONPATH=/app \
         -v "$(pwd)/qlever-ui/db:/app/db" \
         -v "$(pwd)/scripts/setup_qlever_ui.py:/setup.py:ro" \
+        -v "$(pwd)/queries/examples:/queries/examples:ro" \
         qleverui python /setup.py
 
 # Start the QLever UI container on port 7000
@@ -74,6 +75,13 @@ ui-start:
 ui-stop:
     -docker stop qleverui
     -docker rm qleverui
+
+# ── ROBOT ──────────────────────────────────────────────────────────────────
+
+# Run ROBOT via Docker; pass any ROBOT command and flags as arguments
+# Example: just robot convert --input mappings/gs/ontology.owl --output out.ttl
+robot *args:
+    docker compose run --rm robot robot {{ args }}
 
 # ── RDF4J ──────────────────────────────────────────────────────────────────
 

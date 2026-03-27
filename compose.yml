@@ -1,0 +1,17 @@
+services:
+
+  # ── ROBOT ─────────────────────────────────────────────────────────────────
+  # OWL ontology toolchain.  Run one-off commands via:
+  #   just robot <command> [flags]          (wraps docker compose run)
+  #   docker compose run --rm robot robot convert --input ...
+  robot:
+    image: obolibrary/robot
+    volumes:
+      - .:/work
+    working_dir: /work
+
+  # ── QLever UI ─────────────────────────────────────────────────────────────
+  # (planned)
+
+  # ── QLever backend ────────────────────────────────────────────────────────
+  # (planned)
