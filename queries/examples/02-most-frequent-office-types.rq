@@ -1,0 +1,12 @@
+# Name: Most frequent office types
+# SortKey: 2
+PREFIX ns0: <http://purl.org/vocab/participation/schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+SELECT ?officeName (COUNT(?office) AS ?count) WHERE {
+  ?office foaf:name ?officeName ;
+          ns0:role_at ?orgRef .
+}
+GROUP BY ?officeName
+ORDER BY DESC(?count)
+LIMIT 20

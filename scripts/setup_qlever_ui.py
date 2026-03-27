@@ -4,7 +4,7 @@ Runs inside the qlever-ui Docker container — Django is already on the path.
 
 Creates the backend if missing, makes it the default, deletes all
 pre-installed demo backends, configures prefix auto-completion,
-and loads two example queries.
+and loads example queries from /queries/examples/*.rq.
 Idempotent: safe to re-run.
 """
 import os
@@ -13,6 +13,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qlever.settings")
 import django
 django.setup()
 
+from pathlib import Path
 from django.core.management import call_command
 from backend.models import Backend, Example
 
@@ -35,42 +36,35 @@ PREFIXES = """\
 @prefix gs: <https://personendatenbank.germania-sacra.de/index/gsn/> .
 """
 
-EXAMPLES = [
-    {
-        "name": "Offices at institutions with dates",
-        "sortKey": 1,
-        "query": """\
-PREFIX ns0: <http://purl.org/vocab/participation/schema#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+def _load_examples(examples_dir: Path) -> list[dict]:
+    """Load example queries from *.rq files.
 
-SELECT ?officeName ?institutionName ?start ?end WHERE {
-  ?office foaf:name ?officeName ;
-          ns0:role_at ?orgRef .
-  BIND(IRI(CONCAT("https://personendatenbank.germania-sacra.de/index/gsn/",
-    REPLACE(STR(?orgRef), "^person:", ""))) AS ?institution)
-  ?institution foaf:name ?institutionName .
-  OPTIONAL { ?office ns0:startDate ?start }
-  OPTIONAL { ?office ns0:endDate ?end }
-}
-ORDER BY ?institutionName ?start
-LIMIT 20""",
-    },
-    {
-        "name": "Most frequent office types",
-        "sortKey": 2,
-        "query": """\
-PREFIX ns0: <http://purl.org/vocab/participation/schema#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    Each file may begin with header comment lines of the form:
+        # Name: <display name>
+        # SortKey: <integer>
+    The remainder (or full file if no headers) is used as the query body.
+    """
+    examples = []
+    for path in sorted(examples_dir.glob("*.rq")):
+        lines = path.read_text().splitlines()
+        meta: dict = {}
+        query_start = 0
+        for i, line in enumerate(lines):
+            if line.startswith("# ") and ":" in line:
+                key, _, val = line[2:].partition(":")
+                meta[key.strip().lower()] = val.strip()
+            else:
+                query_start = i
+                break
+        query = "\n".join(lines[query_start:]).strip()
+        examples.append({
+            "name": meta.get("name", path.stem),
+            "sortKey": int(meta.get("sortkey", 99)),
+            "query": query,
+        })
+    return examples
 
-SELECT ?officeName (COUNT(?office) AS ?count) WHERE {
-  ?office foaf:name ?officeName ;
-          ns0:role_at ?orgRef .
-}
-GROUP BY ?officeName
-ORDER BY DESC(?count)
-LIMIT 20""",
-    },
-]
+EXAMPLES = _load_examples(Path("/queries/examples"))
 
 # ── migrate ────────────────────────────────────────────────────────────────
 call_command("migrate", verbosity=1)

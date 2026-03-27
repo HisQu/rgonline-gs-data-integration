@@ -1,0 +1,16 @@
+# Name: Offices at institutions with dates
+# SortKey: 1
+PREFIX ns0: <http://purl.org/vocab/participation/schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+SELECT ?officeName ?institutionName ?start ?end WHERE {
+  ?office foaf:name ?officeName ;
+          ns0:role_at ?orgRef .
+  BIND(IRI(CONCAT("https://personendatenbank.germania-sacra.de/index/gsn/",
+    REPLACE(STR(?orgRef), "^person:", ""))) AS ?institution)
+  ?institution foaf:name ?institutionName .
+  OPTIONAL { ?office ns0:startDate ?start }
+  OPTIONAL { ?office ns0:endDate ?end }
+}
+ORDER BY ?institutionName ?start
+LIMIT 20
