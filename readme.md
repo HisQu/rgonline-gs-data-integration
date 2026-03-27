@@ -83,6 +83,12 @@ The pipeline will be implemented with the following core technologies:
   Used for entity resolution and record linkage.  
   It will identify likely matches across records from different source datasets and support the creation of canonical entities or alignment links.
 
+## Set up for production use
+
+### Software Requirements
+- Docker
+- Python3 + uv
+
 
 ## Maybe?
 

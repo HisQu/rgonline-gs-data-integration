@@ -3,6 +3,7 @@
 !.idea/vcs.xml
 data/raw/*/*
 !data/raw/**/.gitkeep
+!data/raw/**/example*
 *.pyc
 __pycache__/
 .venv/
@@ -14,3 +15,9 @@ ecclesiastical-persons-log.txt
 
 # QLever UI (cloned separately, not part of this repo)
 qlever-ui/
+
+# RDF4J server data and logs (generated at runtime)
+rdf4j/data/*
+!rdf4j/data/.gitkeep
+rdf4j/logs/*
+!rdf4j/logs/.gitkeep

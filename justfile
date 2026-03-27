@@ -3,7 +3,7 @@ default:
     @just --list
 
 # Set up the entire project environment and starts all services
-go: sync test dnb-fetch qlever-up ui
+go: sync test dnb-fetch qlever ui
 
 # Install project and dev dependencies
 sync:
@@ -29,7 +29,7 @@ dnb-fetch *args:
 dnb-fetch-verbose:
     uv run python src/dnb/acquisition/fetch_source_dnb.py -v
 
-backend: qlever-up
+qlever: qlever-index qlever-up
 
 # Build the QLever index from all available source files
 qlever-index:
@@ -72,5 +72,30 @@ ui-start:
 
 # Stop and remove the QLever UI container
 ui-stop:
-    docker stop qleverui
-    docker rm qleverui
+    -docker stop qleverui
+    -docker rm qleverui
+
+# ── RDF4J ──────────────────────────────────────────────────────────────────
+
+# Start RDF4J, then configure repositories and load source data
+rdf4j: rdf4j-stop rdf4j-start rdf4j-setup
+
+# Start the RDF4J server + Workbench container (port 8080)
+rdf4j-start:
+    docker run -d \
+        --name rdf4j \
+        -p 8080:8080 \
+        --user "$(id -u):$(id -g)" \
+        -e JAVA_OPTS="-Xms1g -Xmx4g" \
+        -v "$(pwd)/rdf4j/data:/var/rdf4j" \
+        -v "$(pwd)/rdf4j/logs:/usr/local/tomcat/logs" \
+        eclipse/rdf4j-workbench:latest
+
+# Stop and remove the RDF4J container (data persists in rdf4j/data/)
+rdf4j-stop:
+    -docker stop rdf4j
+    -docker rm rdf4j
+
+# Create repositories (gs, rgo, integration/FedX) and load available source data
+rdf4j-setup:
+    uv run python scripts/setup_rdf4j.py
