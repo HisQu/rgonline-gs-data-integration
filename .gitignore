@@ -2,3 +2,10 @@
 data/raw/*/*
 !data/raw/**/.gitkeep
 *.pyc
+
+# QLever index files (built locally from Qleverfile)
+ecclesiastical-persons.*
+ecclesiastical-persons-log.txt
+
+# QLever UI (cloned separately, not part of this repo)
+qlever-ui/

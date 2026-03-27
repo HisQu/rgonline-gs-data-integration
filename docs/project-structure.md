@@ -24,8 +24,7 @@
 │   │   ├── source-rgo.ini
 │   │   └── shared-prefixes.ttl
 │   ├── qlever/
-│   │   ├── dataset.settings.json
-│   │   └── qleverfile.example
+│   │   └── dataset.settings.json
 │   └── limes/
 │       ├── blocking_rules.py
 │       ├── comparisons.py
@@ -43,27 +42,26 @@
 │
 ├── data/
 │   ├── raw/
-│   │   ├── source-gs/
-│   │   ├── source-dnb/
-│   │   └── source-rgo/
+│   │   ├── gs/
+│   │   │   └── data.ttl          # Germania Sacra TTL export
+│   │   ├── dnb/
+│   │   │   ├── persons-page-*.nt # Paginated CONSTRUCT cache
+│   │   │   ├── data.nt           # Deduplicated N-Triples (intermediate)
+│   │   │   ├── data.ttl          # Final materialized Turtle
+│   │   │   └── fetch-metadata.json
+│   │   └── rgo/
+│   │       └── data.ttl          # RDF output from Morph-KGC
 │   ├── interim/
 │   │   ├── rdf/
-│   │   │   ├── source-gs.ttl
-│   │   │   ├── source-dnb.ttl
-│   │   │   ├── source-rgo.ttl
-│   │   │   └── unified.ttl
+│   │   │   └── unified.ttl       # Post-harmonization unified graph
 │   │   └── er/
 │   │       ├── candidate-records.parquet
 │   │       ├── pairwise-scores.parquet
 │   │       └── clusters.parquet
-│   ├── processed/
-│   │   ├── canonical-graph.ttl
-│   │   ├── links.ttl
-│   │   └── exports/
-│   └── qlever/
-│       ├── input/
-│       ├── index/
-│       └── logs/
+│   └── processed/
+│       ├── canonical-graph.ttl
+│       ├── links.ttl
+│       └── exports/
 │
 ├── src/
 │   ├── dnb/                    # Deutsche Nationalbibliothek — SPARQL endpoint (QLever/GND)

@@ -1,0 +1,35 @@
+[data]
+NAME             = ecclesiastical-persons
+DESCRIPTION      = Historical ecclesiastical persons: Germania Sacra, DNB/GND, Repertorium Germanicum Online (Vol. 8)
+
+[index]
+# INPUT_FILES is required by the CLI; the glob matches only files that exist.
+# Actual ingestion is controlled by MULTI_INPUT_JSON — missing sources are skipped.
+INPUT_FILES      = data/raw/*/data.ttl
+
+# Each source is loaded into its own named graph.
+# for-each skips a pattern that matches no files, so missing sources produce no input.
+MULTI_INPUT_JSON = [
+    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/gs",  "for-each": "data/raw/gs/data.ttl"},
+    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/dnb", "for-each": "data/raw/dnb/data.ttl"},
+    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/rgo", "for-each": "data/raw/rgo/data.ttl"}
+  ]
+
+STXXL_MEMORY     = 4G
+ULIMIT           = 1048576
+
+[server]
+PORT                        = 7001
+ACCESS_TOKEN                = ecclesiastical-persons-token
+MEMORY_FOR_QUERIES          = 4G
+TIMEOUT                     = 300s
+CACHE_MAX_SIZE              = 2G
+CACHE_MAX_SIZE_SINGLE_ENTRY = 1G
+
+[runtime]
+SYSTEM         = native
+INDEX_BINARY   = qlever-index
+SERVER_BINARY  = qlever-server
+
+[ui]
+UI_PORT        = 7002

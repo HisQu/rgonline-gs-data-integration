@@ -24,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 QUERIES_DIR = PROJECT_ROOT / "queries" / "acquisition" / "dnb"
-RAW_DIR = PROJECT_ROOT / "data" / "raw" / "source-dnb"
-INTERIM_DIR = PROJECT_ROOT / "data" / "interim" / "rdf"
+RAW_DIR = PROJECT_ROOT / "data" / "raw" / "dnb"
 
 ENDPOINT = "https://sparql.dnb.de/api/gnd"
 DEFAULT_PAGE_SIZE = 10_000
@@ -245,8 +244,8 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=INTERIM_DIR,
-        help=f"Directory for materialized Turtle output (default: {INTERIM_DIR})",
+        default=RAW_DIR,
+        help=f"Directory for materialized Turtle output (default: {RAW_DIR})",
     )
     parser.add_argument(
         "-v", "--verbose",
@@ -296,11 +295,11 @@ def main(argv: list[str] | None = None) -> None:
 
     # --- Materialize: dedup + validate + convert ---
     logger.info("Deduplicating %d page files...", len(pages))
-    deduped_path = args.output_dir / "source-dnb.nt"
+    deduped_path = args.output_dir / "data.nt"
     num_triples = concatenate_and_dedup(pages, deduped_path)
     logger.info("Deduplicated to %d unique triples", num_triples)
 
-    ttl_path = args.output_dir / "source-dnb.ttl"
+    ttl_path = args.output_dir / "data.ttl"
     validate_and_convert(deduped_path, ttl_path)
 
     finished_at = datetime.now(timezone.utc).isoformat()
