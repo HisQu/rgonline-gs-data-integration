@@ -48,7 +48,7 @@ def _load_examples(examples_dir: Path) -> list[dict]:
     for path in sorted(examples_dir.glob("*.rq")):
         lines = path.read_text().splitlines()
         meta: dict = {}
-        query_start = 0
+        query_start = len(lines)
         for i, line in enumerate(lines):
             if line.startswith("# ") and ":" in line:
                 key, _, val = line[2:].partition(":")
