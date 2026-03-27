@@ -3,7 +3,7 @@ default:
     @just --list
 
 # Set up the entire project environment and starts all services
-go: sync test dnb-fetch qlever ui
+go: sync test gs-fetch gs-clean dnb-fetch qlever ui
 
 # Install project and dev dependencies
 sync:
@@ -17,17 +17,34 @@ test *args:
 test-file file *args:
     uv run pytest {{ file }} {{ args }}
 
+fetch: gs-fetch dnb-fetch
+
+clean: gs-clean
+
+# Fetch Germania Sacra source data
+gs-fetch:
+    uv run python src/gs/fetch.py
+
+# Run the GS cleaning SPARQL UPDATE against the QLever endpoint
+gs-clean:
+    curl -s -X POST "http://localhost:7001" \
+        --data-urlencode "update@mappings/gs/clean.rq" \
+        --data-urlencode "access-token=ecclesiastical-persons-token" \
+    | uv run python scripts/report_update.py Persons Organisations Offices
+
 # Count ecclesiastical persons on the DNB endpoint (no data fetched)
 dnb-count:
-    uv run python src/dnb/acquisition/fetch_source_dnb.py --dry-run
+    uv run python src/dnb/fetch.py --dry-run
 
 # Fetch and materialize DNB source data
 dnb-fetch *args:
-    uv run python src/dnb/acquisition/fetch_source_dnb.py {{ args }}
+    uv run python src/dnb/fetch.py {{ args }}
 
 # Fetch DNB data with verbose logging
 dnb-fetch-verbose:
-    uv run python src/dnb/acquisition/fetch_source_dnb.py -v
+    uv run python src/dnb/fetch.py -v
+
+qlever-restart: qlever-stop qlever-start
 
 qlever: qlever-index qlever-up
 
