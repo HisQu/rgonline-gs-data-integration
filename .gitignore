@@ -10,8 +10,8 @@ __pycache__/
 .pytest_cache/
 
 # QLever index files (built locally from Qleverfile)
-ecclesiastical-persons.*
-ecclesiastical-persons-log.txt
+qlever/*
+!qlever/.gitkeep
 
 # QLever UI (cloned separately, not part of this repo)
 qlever-ui/
