@@ -21,3 +21,6 @@ rdf4j/data/*
 !rdf4j/data/.gitkeep
 rdf4j/logs/*
 !rdf4j/logs/.gitkeep
+
+# Environment variables
+.env
