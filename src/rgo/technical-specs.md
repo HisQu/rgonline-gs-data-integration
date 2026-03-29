@@ -180,3 +180,16 @@ rg:place/10519882 a ex:PlaceOrInstitution ;
     ex:preferredName "Traiect. Leod. dioc: s. Servatii colleg. eccl." ;
     ex:appearsInLemma rg:lemma/10500001 .
 ```
+## Licensing
+
+No explicit licensing information is currently available to us from the source
+repository metadata. The upstream repository is private and access-restricted.
+Reuse, redistribution, and publication rights must therefore be clarified with
+the repository owner / data provider (HisQu) before further distribution of the
+raw data or derived data products.
+
+## Update Frequency
+
+There is no automatic update schedule. The dataset is ingested manually from a
+fixed repository snapshot (commit-pinned fetch). Updates only occur when a new
+snapshot is deliberately fetched and stored.
