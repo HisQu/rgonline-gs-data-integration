@@ -60,7 +60,7 @@ def person_uri(person_id: str) -> URIRef:
 
 
 def place_uri(place_id: str) -> URIRef:
-    return RG[f"place/{place_id}"]
+    return RG[f"ort/{place_id}"]
 
 
 def head_date_uri(lemma_id: str, idx: int) -> URIRef:
@@ -258,7 +258,7 @@ def build_graph() -> Graph:
                     continue
 
                 place_node = place_uri(oid)
-                g.add((place_node, RDF.type, EX.PlaceOrInstitution))
+                g.add((place_node, RDF.type, EX.Ort))
                 g.add((place_node, EX.sourceId, Literal(oid)))
 
                 name_el = place.find("name")

@@ -85,9 +85,9 @@ def main() -> None:
             ref_code = first_literal(g_in, fund_node, EX.referenceCode)
 
             if ref_text is not None:
-                g_out.add((sub, EX.sourceReferenceText, ref_text))
+                g_out.add((sub, EX.fundReferenceText, ref_text))
             if ref_code is not None:
-                g_out.add((sub, EX.sourceReferenceCode, ref_code))
+                g_out.add((sub, EX.fundReferenceCode, ref_code))
 
     # --- Persons ---
     for person in g_in.subjects(RDF.type, EX.Person):
@@ -107,8 +107,8 @@ def main() -> None:
                 g_out.add((person, EX.beiname, Literal(part)))
 
     # --- Places ---
-    for place in g_in.subjects(RDF.type, EX.PlaceOrInstitution):
-        g_out.add((place, RDF.type, EX.PlaceOrInstitution))
+    for place in g_in.subjects(RDF.type, EX.Ort):
+        g_out.add((place, RDF.type, EX.Ort))
 
         for pred in [EX.sourceId, EX.preferredName]:
             for obj in g_in.objects(place, pred):

@@ -146,11 +146,13 @@ The XML may contain uncertainty markers or reconstructed text, for example via
 bracketing, inline markers, or punctuation such as ?. This information is part
 of the source semantics and should not be discarded in early-stage conversion.
 
-## Consequences for the RDF Conversion Step
 
-The RG Online XML should first be transformed into a source-faithful RDF graph
+
+# Conversion to RDF and alignment with the DNB source 
+
+The RG Online XML was first be transformed into a source-faithful RDF graph
 with minimal information loss.
-The initial RDF conversion should therefore model at least:
+The initial RDF conversion models:
 
 * each <lemma> as a regest entry resource
 * each <sublemma> as a subentry resource linked to its parent lemma
@@ -180,6 +182,73 @@ rg:place/10519882 a ex:PlaceOrInstitution ;
     ex:preferredName "Traiect. Leod. dioc: s. Servatii colleg. eccl." ;
     ex:appearsInLemma rg:lemma/10500001 .
 ```
+
+and can be created with the [materialize-script](./materialize.py).
+
+
+## Simplification of the initial RG Online RDF representation
+After generating an initial source-faithful RDF graph from the XML files, a second
+transformation step was introduced to make the data easier to work with in later
+matching and integration steps.
+
+This simplification deliberately reduces technical and redundant structure from
+the first RDF version while preserving the information currently needed for the
+project.
+
+### 1. Assumption for splitting `beiname`
+
+In the initial RDF conversion, the XML element `beiname` was preserved as a
+single literal in order to avoid premature semantic interpretation.
+
+In the simplified representation, `beiname` values are split into multiple
+literals based on comma separation. This is a pragmatic assumption derived from
+the observed structure of the source data, where alternative forms often appear
+as comma-separated strings.
+
+### 2. Redundancy in date and fund nodes
+
+In the initial RDF model, dates and source references (`fund`) were represented
+as separate nodes because they carry multiple properties, e.g.:
+
+- for dates: textual form, ISO-like value, year, typed RDF value
+- for fund references: text form, code, and structured parts (`l1`, `l2`, `l3`)
+
+For the current project phase, this level of structure was considered more
+detailed than necessary. In practice, much of this information is redundant for
+downstream handling, especially where only the normalized date value or a compact
+source reference is required.
+
+### 3. Simplification of dates and source references
+
+To reduce graph complexity, separate `DateInfo` and `SourceReference` nodes are
+removed in the simplified RDF representation and instead attached directly to the respective lemma or sublemma
+
+This simplification process can be reproduced with the [simplification-script](./simplify.py)
+
+
+## Alignment of the RGO ontology with the GND/DNB ontology
+
+To support later cross-source querying and entity comparison, the reduced RGO RDF
+representation is aligned with the GND ontology used by the Deutsche
+Nationalbibliothek. The GND element set provides suitable classes and properties
+for persons, places, and preferred/variant naming, which makes it a useful
+semantic anchor for later integration steps. Therefore the following alignments to the GND Ontology were performed:
+
+| RGO term | Alignment decision |
+|---|---|
+| `ex:Person` | [`gnd:DifferentiatedPerson`](https://d-nb.info/standards/elementset/gnd#DifferentiatedPerson) |
+| `ex:PlaceOrInstitution` / `ort` | [`gnd:PlaceOrGeographicName`](https://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName) |
+| `ex:name` (person) | [`gnd:preferredNameForThePerson`](https://d-nb.info/standards/elementset/gnd#preferredNameForThePerson) |
+| `ex:beiname` | [`gnd:variantNameForThePerson`](https://d-nb.info/standards/elementset/gnd#variantNameForThePerson) |
+| `ex:preferredName` (place) | [`gnd:preferredNameForThePlaceOrGeographicName`](https://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName) |
+| `ex:dateValue` | kept as typed XML Schema literal such as `xsd:date`, `xsd:gYearMonth`, or `xsd:gYear` rather than mapped to a GND property |
+
+The remaining terms `ex:RegestEntry`, `ex:SubEntry`, `ex:hasSubEntry`, `ex:partOfLemma`, `ex:headText`, `ex:sourceId`, `ex:volume`, `ex:sourceReferenceText` and `ex:sourceReferenceCode` were kept in the project namespace
+
+The resulting aligned graph therefore combines GND-aligned concepts for persons, places, and naming, and project-specific concepts for regest and
+source structure and can be recreated using the [alligning-script](./allign.py). 
+
+
 ## Licensing
 
 No explicit licensing information is currently available to us from the source
