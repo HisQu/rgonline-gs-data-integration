@@ -59,13 +59,16 @@ def main() -> None:
 
         # source refs from head directly attached to lemma
         for fund_node in g_in.objects(lemma, EX.hasSourceReference):
-            ref_text = first_literal(g_in, fund_node, EX.referenceText)
-            ref_code = first_literal(g_in, fund_node, EX.referenceCode)
+            part1 = first_literal(g_in, fund_node, EX.referencePart1)
+            part2 = first_literal(g_in, fund_node, EX.referencePart2)
+            part3 = first_literal(g_in, fund_node, EX.referencePart3)
 
-            if ref_text is not None:
-                g_out.add((lemma, EX.sourceReferenceText, ref_text))
-            if ref_code is not None:
-                g_out.add((lemma, EX.sourceReferenceCode, ref_code))
+            if part1 is not None:
+                g_out.add((lemma, EX.fundReferencePart1, part1))
+            if part2 is not None:
+                g_out.add((lemma, EX.fundReferencePart2, part2))
+            if part3 is not None:
+                g_out.add((lemma, EX.fundReferencePart3, part3))
 
     # --- Subentries ---
     for sub in g_in.subjects(RDF.type, EX.SubEntry):
@@ -81,13 +84,16 @@ def main() -> None:
                 g_out.add((sub, EX.dateValue, date_value))
 
         for fund_node in g_in.objects(sub, EX.hasSourceReference):
-            ref_text = first_literal(g_in, fund_node, EX.referenceText)
-            ref_code = first_literal(g_in, fund_node, EX.referenceCode)
+            part1 = first_literal(g_in, fund_node, EX.referencePart1)
+            part2 = first_literal(g_in, fund_node, EX.referencePart2)
+            part3 = first_literal(g_in, fund_node, EX.referencePart3)
 
-            if ref_text is not None:
-                g_out.add((sub, EX.fundReferenceText, ref_text))
-            if ref_code is not None:
-                g_out.add((sub, EX.fundReferenceCode, ref_code))
+            if part1 is not None:
+                g_out.add((sub, EX.fundReferencePart1, part1))
+            if part2 is not None:
+                g_out.add((sub, EX.fundReferencePart2, part2))
+            if part3 is not None:
+                g_out.add((sub, EX.fundReferencePart3, part3))
 
     # --- Persons ---
     for person in g_in.subjects(RDF.type, EX.Person):

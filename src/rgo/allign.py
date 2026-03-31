@@ -38,8 +38,9 @@ def main() -> None:
             EX.spEnd,
             EX.hasSubEntry,
             EX.dateValue,
-            EX.fundReferenceText,
-            EX.fundReferenceCode,
+            EX.fundReferencePart1,
+            EX.fundReferencePart2,
+            EX.fundReferencePart3,
         ]:
             copy_all(g_in, g_out, lemma, pred)
 
@@ -53,8 +54,9 @@ def main() -> None:
             EX.volume,
             EX.text,
             EX.dateValue,
-            EX.fundReferenceText,
-            EX.fundReferenceCode,
+            EX.fundReferencePart1,
+            EX.fundReferencePart2,
+            EX.fundReferencePart3,
         ]:
             copy_all(g_in, g_out, sub, pred)
 
