@@ -249,6 +249,32 @@ The resulting aligned graph therefore combines GND-aligned concepts for persons,
 source structure and can be recreated using the [alligning-script](./allign.py). 
 
 
+## Matching Step
+
+The ontology-based transformation of the three source datasets serves as a source-faithful integration layer. Its purpose is to preserve the structure and meaning of the original data as far as possible while making the sources comparable at the semantic level.
+
+For entity matching, the aligned ontology is not used directly as the primary working format. Instead, the ontology serves as the basis for deriving a set of comparable person-level features. These features are then compiled into a tabular representation in which each row corresponds to one source entity and each column captures one attribute relevant for comparison. Typical columns include identifiers such as `id` and `source`, core naming fields such as `preferred_name`, further name variants, temporal features such as birth, death,or active years, place-related features, role or office labels, and external authority identifiers such as GND or Wikidata where available.
+
+For DNB and Germania Sacra, many of these features can be extracted directly from their structured records. For RG Online, person-level features are derived from the ontology by aggregating information connected to a person through regest entries and their
+subentries, which results in features for dates, preferred names, and mentioned places. The ontology therefore acts as an intermediate representation that makes it possible to recover structured matching features from source material that is originally more text- and context-based.
+
+The resulting feature tables provide the basis for probabilistic entity resolution with Splink. Matching is then performed on selected comparison features that are informative for
+person identity, like:
+
+- **Identifiers** such as GND, Wikidata, WIAG, or other strong authority links,
+  which provide the strongest evidence when they coincide.
+- **Preferred names and variant names**, compared using lexical similarity
+  measures and normalized forms.
+- **Temporal information**, such as birth and death years, active periods, or
+  years inferred from regest contexts, used to test chronological plausibility.
+- **Places and geographic references**, compared to determine whether different
+  records are associated with the same or similar locations.
+- **Roles, titles, or offices**, such as bishop, antipope, cardinal, or related
+  ecclesiastical functions, which provide important contextual evidence.
+
+The matching procedure therefore combines several types of evidence rather than relying on a single string comparison. Exact or highly reliable identifier matches can serve as very strong signals, while lexical similarity of names, overlap or compatibility of dates, shared places, and overlapping role labels provide further evidence. 
+
+
 ## Licensing
 
 No explicit licensing information is currently available to us from the source
@@ -262,3 +288,5 @@ raw data or derived data products.
 There is no automatic update schedule. The dataset is ingested manually from a
 fixed repository snapshot (commit-pinned fetch). Updates only occur when a new
 snapshot is deliberately fetched and stored.
+
+
