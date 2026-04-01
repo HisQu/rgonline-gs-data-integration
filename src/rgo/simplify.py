@@ -44,7 +44,10 @@ def main() -> None:
     for lemma in g_in.subjects(RDF.type, EX.RegestEntry):
         g_out.add((lemma, RDF.type, EX.RegestEntry))
 
-        for pred in [EX.sourceId, EX.volume, EX.headText, EX.spStart, EX.spEnd]:
+        for pred in [
+            EX.sourceId, EX.volume, EX.headText, EX.spStart, EX.spEnd,
+            EX.mentionsPerson, EX.mentionsPlace
+        ]:
             for obj in g_in.objects(lemma, pred):
                 g_out.add((lemma, pred, obj))
 
@@ -99,7 +102,7 @@ def main() -> None:
     for person in g_in.subjects(RDF.type, EX.Person):
         g_out.add((person, RDF.type, EX.Person))
 
-        for pred in [EX.sourceId, EX.name]:
+        for pred in [EX.sourceId, EX.name, EX.appearsInLemma]:
             for obj in g_in.objects(person, pred):
                 g_out.add((person, pred, obj))
 
@@ -116,7 +119,7 @@ def main() -> None:
     for place in g_in.subjects(RDF.type, EX.Ort):
         g_out.add((place, RDF.type, EX.Ort))
 
-        for pred in [EX.sourceId, EX.preferredName]:
+        for pred in [EX.sourceId, EX.preferredName, EX.appearsInLemma]:
             for obj in g_in.objects(place, pred):
                 g_out.add((place, pred, obj))
 

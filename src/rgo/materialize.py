@@ -241,14 +241,9 @@ def build_graph() -> Graph:
                 if beiname_el is not None:
                     add_literal_if_present(g, person_node, EX.byName, inner_text(beiname_el))
 
-                # create bidirectional links between person and lemma based on personenindex
-                # lemma_id_el = person.find("lemmaID")
-                # if lemma_id_el is not None:
-                #     lemma_ids = split_lemma_ids(inner_text(lemma_id_el))
-                #     for ref_lid in lemma_ids:
-                #         ref_lemma = lemma_uri(ref_lid)
-                #         g.add((person_node, EX.appearsInLemma, ref_lemma))
-                #         g.add((ref_lemma, EX.mentionsPerson, person_node))
+                # create bidirectional links between current lemma and person
+                g.add((person_node, EX.appearsInLemma, lemma_node))
+                g.add((lemma_node, EX.mentionsPerson, person_node))
 
         ortsindex = lemma.find("ortsindex")
         if ortsindex is not None:
@@ -265,14 +260,9 @@ def build_graph() -> Graph:
                 if name_el is not None:
                     add_literal_if_present(g, place_node, EX.preferredName, inner_text(name_el))
 
-                # same as for person <-> lemma links
-                # lemma_id_el = place.find("lemmaID")
-                # if lemma_id_el is not None:
-                #     lemma_ids = split_lemma_ids(inner_text(lemma_id_el))
-                #     for ref_lid in lemma_ids:
-                #         ref_lemma = lemma_uri(ref_lid)
-                #         g.add((place_node, EX.appearsInLemma, ref_lemma))
-                #         g.add((ref_lemma, EX.mentionsPlace, place_node))
+                # create bidirectional links between current lemma and place
+                g.add((place_node, EX.appearsInLemma, lemma_node))
+                g.add((lemma_node, EX.mentionsPlace, place_node))
 
     return g
 

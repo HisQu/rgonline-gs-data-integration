@@ -41,6 +41,8 @@ def main() -> None:
             EX.fundReferencePart1,
             EX.fundReferencePart2,
             EX.fundReferencePart3,
+            EX.mentionsPerson,
+            EX.mentionsPlace,
         ]:
             copy_all(g_in, g_out, lemma, pred)
 
@@ -57,6 +59,8 @@ def main() -> None:
             EX.fundReferencePart1,
             EX.fundReferencePart2,
             EX.fundReferencePart3,
+            EX.mentionsPerson,
+            EX.mentionsPlace,
         ]:
             copy_all(g_in, g_out, sub, pred)
 
@@ -65,6 +69,7 @@ def main() -> None:
         g_out.add((person, RDF.type, GND.DifferentiatedPerson))
 
         copy_all(g_in, g_out, person, EX.sourceId)
+        copy_all(g_in, g_out, person, EX.appearsInLemma)
 
         # ex:name -> gnd:preferredNameForThePerson
         for obj in g_in.objects(person, EX.name):
@@ -80,6 +85,7 @@ def main() -> None:
         g_out.add((place, RDF.type, GND.PlaceOrGeographicName))
 
         copy_all(g_in, g_out, place, EX.sourceId)
+        copy_all(g_in, g_out, place, EX.appearsInLemma)
 
         # ex:preferredName -> gnd:preferredNameForThePlaceOrGeographicName
         for obj in g_in.objects(place, EX.preferredName):
