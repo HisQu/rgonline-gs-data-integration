@@ -1,0 +1,324 @@
+@prefix schema: <http://schema.org/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix lib: <http://purl.org/library/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix editeur: <https://ns.editeur.org/thema/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix umbel: <http://umbel.org/umbel#> .
+@prefix naf: <https://id.loc.gov/authorities/names/> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix rdau: <http://rdaregistry.info/Elements/u/> .
+@prefix bflc: <http://id.loc.gov/ontologies/bflc/> .
+@prefix thesoz: <http://lod.gesis.org/thesoz/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix isbd: <http://iflastandards.info/ns/isbd/elements/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mesh: <http://id.nlm.nih.gov/mesh/vocab#> .
+@prefix ram: <https://data.bnf.fr/ark:/12148/> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix marcRole: <http://id.loc.gov/vocabulary/relators/> .
+@prefix agrelon: <https://d-nb.info/standards/elementset/agrelon#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix nsogg: <https://purl.org/bncf/tid/> .
+@prefix dnbt: <https://d-nb.info/standards/elementset/dnb#> .
+@prefix dbp: <http://dbpedia.org/property/> .
+@prefix embne: <https://datos.bne.es/resource/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dnb_intern: <http://dnb.de/> .
+@prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix v: <http://www.w3.org/2006/vcard/ns#> .
+@prefix cidoc: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix dcatde: <http://dcat-ap.de/def/dcatde/> .
+@prefix ebu: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .
+@prefix wdrs: <http://www.w3.org/2007/05/powder-s#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix gbv: <http://purl.org/ontology/gbv/> .
+@prefix agrovoc: <https://aims.fao.org/aos/agrovoc/> .
+@prefix lcsh: <https://id.loc.gov/authorities/subjects/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://d-nb.info/gnd/10427526X> a gndo:DifferentiatedPerson;
+  wdrs:describedby <https://d-nb.info/gnd/10427526X/about> .
+
+<https://d-nb.info/gnd/10427526X/about> dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
+  dcterms:modified "2013-06-24T12:07:38.000"^^xsd:dateTime;
+  gndo:descriptionLevel <https://d-nb.info/standards/vocab/gnd/description-level#1> .
+
+<https://d-nb.info/gnd/10427526X> gndo:gndIdentifier "10427526X";
+  foaf:page <https://de.wikipedia.org/wiki/Henricus_Bodo>;
+  owl:sameAs <http://viaf.org/viaf/34887579>, <https://isni.org/isni/0000000078553490>,
+    <http://www.wikidata.org/entity/Q48405285>;
+  gndo:oldAuthorityNumber "(DE-588a)10427526X";
+  gndo:variantNameForThePerson "Bodo, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600832 .
+
+_:node1ji78aarmx2600832 gndo:forename "Henricus";
+  gndo:surname "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Bodo";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600833 .
+
+_:node1ji78aarmx2600833 gndo:personalName "Henricus";
+  gndo:nameAddition "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Boden";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600834 .
+
+_:node1ji78aarmx2600834 gndo:personalName "Henricus";
+  gndo:nameAddition "Boden" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Boden, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600835 .
+
+_:node1ji78aarmx2600835 gndo:forename "Henricus";
+  gndo:surname "Boden" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Boden, Heinrich";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600836 .
+
+_:node1ji78aarmx2600836 gndo:forename "Heinrich";
+  gndo:surname "Boden" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Bodon, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600837 .
+
+_:node1ji78aarmx2600837 gndo:forename "Henricus";
+  gndo:surname "Bodon" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Bodon";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600838 .
+
+_:node1ji78aarmx2600838 gndo:personalName "Henricus";
+  gndo:nameAddition "Bodon" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Angelonius";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600839 .
+
+_:node1ji78aarmx2600839 gndo:personalName "Henricus";
+  gndo:nameAddition "Angelonius" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Angelonius, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600840 .
+
+_:node1ji78aarmx2600840 gndo:forename "Henricus";
+  gndo:surname "Angelonius" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Bodo, Henri";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600841 .
+
+_:node1ji78aarmx2600841 gndo:forename "Henri";
+  gndo:surname "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:preferredNameForThePerson "Bodo, Heinrich";
+  gndo:preferredNameEntityForThePerson _:node1ji78aarmx2600842 .
+
+_:node1ji78aarmx2600842 gndo:forename "Heinrich";
+  gndo:surname "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male>;
+  gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE>;
+  wdrs:describedby <https://d-nb.info/gnd/10427526X/about> .
+
+<https://d-nb.info/gnd/10427526X/about> dcterms:creator <https://ld.zdb-services.de/resource/organisations/DE-12>;
+  dcatde:maintainer <https://ld.zdb-services.de/resource/organisations/DE-12> .
+
+<https://d-nb.info/gnd/10427526X> gndo:biographicalOrHistoricalInformation "OSB; Chronist im Kloster Clusa bei Gandersheim"@de;
+  gndo:professionOrOccupation _:node1ji78aarmx2600843 .
+
+_:node1ji78aarmx2600843 a rdf:Seq;
+  rdf:_1 <https://d-nb.info/gnd/4528560-3> .
+
+<https://d-nb.info/gnd/10427526X> gndo:dateOfDeath "1553"^^xsd:gYear .
+
+<https://d-nb.info/gnd/118525530> a gndo:DifferentiatedPerson;
+  wdrs:describedby <https://d-nb.info/gnd/118525530/about> .
+
+<https://d-nb.info/gnd/118525530/about> dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
+  dcterms:modified "2024-04-05T15:43:34.000"^^xsd:dateTime;
+  gndo:descriptionLevel <https://d-nb.info/standards/vocab/gnd/description-level#1> .
+
+<https://d-nb.info/gnd/118525530> gndo:gndIdentifier "118525530";
+  foaf:page <https://de.wikipedia.org/wiki/Dietrich_II._von_Moers>;
+  owl:sameAs <http://viaf.org/viaf/42629109>, <http://www.wikidata.org/entity/Q658788>;
+  gndo:oldAuthorityNumber "(DE-588a)118525530", "(DE-588c)4012223-2";
+  gndo:variantNameForThePerson "Dietrich, von Moers";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx231914165 .
+
+_:node1jh69j9nsx231914165 gndo:personalName "Dietrich";
+  gndo:nameAddition "von Moers" .
+
+<https://d-nb.info/gnd/118525530> gndo:variantNameForThePerson "Dietrich, Köln, Kurfürst";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx231914166 .
+
+_:node1jh69j9nsx231914166 gndo:personalName "Dietrich";
+  gndo:nameAddition "Köln, Kurfürst" .
+
+<https://d-nb.info/gnd/118525530> gndo:variantNameForThePerson "Dietrich III., Paderborn, Bischof";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx231914167 .
+
+_:node1jh69j9nsx231914167 gndo:personalName "Dietrich";
+  gndo:counting "III.";
+  gndo:nameAddition "Paderborn, Bischof" .
+
+<https://d-nb.info/gnd/118525530> gndo:variantNameForThePerson "Moers, Dietrich von";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx231914168 .
+
+_:node1jh69j9nsx231914168 gndo:forename "Dietrich";
+  gndo:prefix "von";
+  gndo:surname "Moers" .
+
+<https://d-nb.info/gnd/118525530> gndo:variantNameForThePerson "Dietrich, de Meurs";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx231914169 .
+
+_:node1jh69j9nsx231914169 gndo:personalName "Dietrich";
+  gndo:nameAddition "de Meurs" .
+
+<https://d-nb.info/gnd/118525530> gndo:preferredNameForThePerson "Dietrich II., Köln, Erzbischof, Kurfürst";
+  gndo:preferredNameEntityForThePerson _:node1jh69j9nsx231914170 .
+
+_:node1jh69j9nsx231914170 gndo:personalName "Dietrich";
+  gndo:counting "II.";
+  gndo:nameAddition "Köln, Erzbischof, Kurfürst" .
+
+<https://d-nb.info/gnd/118525530> gndo:affiliation <https://d-nb.info/gnd/2029646-0>,
+    <https://d-nb.info/gnd/1112633138>;
+  gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male>;
+  gndo:titleOfNobility <https://d-nb.info/gnd/4166203-9>;
+  gndo:broaderTermInstantial <https://d-nb.info/gnd/4000464-8>;
+  gndo:gndSubjectCategory <https://d-nb.info/standards/vocab/gnd/gnd-sc#16.5p>, <https://d-nb.info/standards/vocab/gnd/gnd-sc#3.6p>;
+  gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE>;
+  wdrs:describedby <https://d-nb.info/gnd/118525530/about> .
+
+<https://d-nb.info/gnd/118525530/about> dcterms:creator <https://ld.zdb-services.de/resource/organisations/DE-101>;
+  dcatde:maintainer <https://ld.zdb-services.de/resource/organisations/DE-101> .
+
+<https://d-nb.info/gnd/118525530> gndo:biographicalOrHistoricalInformation "Erzbischof von Köln 1414-1463, ab 1415 als Dietrich III. Administrator des Bistums Paderborn"@de;
+  gndo:placeOfActivity <https://d-nb.info/gnd/4031483-2>, <https://d-nb.info/gnd/4044283-4>;
+  gndo:placeOfDeath <https://d-nb.info/gnd/2031812-1>;
+  gndo:professionOrOccupation _:node1jh69j9nsx231914171 .
+
+_:node1jh69j9nsx231914171 a rdf:Seq;
+  rdf:_1 <https://d-nb.info/gnd/4015471-3> .
+
+<https://d-nb.info/gnd/118525530> gndo:dateOfBirth "1385"^^xsd:gYear;
+  gndo:dateOfDeath "1463-02-14"^^xsd:date .
+
+<https://d-nb.info/gnd/136175414> a gndo:DifferentiatedPerson;
+  wdrs:describedby <https://d-nb.info/gnd/136175414/about> .
+
+<https://d-nb.info/gnd/136175414/about> dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
+  dcterms:modified "2008-09-02T14:36:23.000"^^xsd:dateTime;
+  gndo:descriptionLevel <https://d-nb.info/standards/vocab/gnd/description-level#1> .
+
+<https://d-nb.info/gnd/136175414> gndo:gndIdentifier "136175414";
+  foaf:page <https://de.wikipedia.org/wiki/Gerhard_III._%28Bremen%29>;
+  owl:sameAs <http://viaf.org/viaf/80564658>, <http://www.wikidata.org/entity/Q15811935>;
+  gndo:oldAuthorityNumber "(DE-588a)136175414";
+  gndo:variantNameForThePerson "Hoya, Gerhard von";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx5084235 .
+
+_:node1ji78aarmx5084235 gndo:forename "Gerhard";
+  gndo:prefix "von";
+  gndo:surname "Hoya" .
+
+<https://d-nb.info/gnd/136175414> gndo:preferredNameForThePerson "Gerhard, von Hoya";
+  gndo:preferredNameEntityForThePerson _:node1ji78aarmx5084236 .
+
+_:node1ji78aarmx5084236 gndo:personalName "Gerhard";
+  gndo:nameAddition "von Hoya" .
+
+<https://d-nb.info/gnd/136175414> gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE>;
+  wdrs:describedby <https://d-nb.info/gnd/136175414/about> .
+
+<https://d-nb.info/gnd/136175414/about> dcterms:creator <https://ld.zdb-services.de/resource/organisations/DE-12>;
+  dcatde:maintainer <https://ld.zdb-services.de/resource/organisations/DE-12> .
+
+<https://d-nb.info/gnd/136175414> gndo:biographicalOrHistoricalInformation "Erzbischof von Bremen"@de;
+  gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#notKnown>;
+  gndo:professionOrOccupation _:node1ji78aarmx5084237 .
+
+_:node1ji78aarmx5084237 a rdf:Seq;
+  rdf:_1 <https://d-nb.info/gnd/4015471-3> .
+
+<https://d-nb.info/gnd/136175414> gndo:dateOfDeath "1463"^^xsd:gYear .
+
+<https://d-nb.info/gnd/137509782> a gndo:DifferentiatedPerson;
+  wdrs:describedby <https://d-nb.info/gnd/137509782/about> .
+
+<https://d-nb.info/gnd/137509782/about> dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
+  dcterms:modified "2016-06-29T10:08:25.000"^^xsd:dateTime;
+  gndo:descriptionLevel <https://d-nb.info/standards/vocab/gnd/description-level#1> .
+
+<https://d-nb.info/gnd/137509782> gndo:gndIdentifier "137509782";
+  foaf:page <https://de.wikipedia.org/wiki/Friedrich_%28Arnsberg%29>;
+  owl:sameAs <http://viaf.org/viaf/81691042>, <http://www.wikidata.org/entity/Q873278>;
+  gndo:oldAuthorityNumber "(DE-588a)137509782";
+  gndo:variantNameForThePerson "Friedrich I., Arnsbeg, Graf";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx233923600 .
+
+_:node1jh69j9nsx233923600 gndo:personalName "Friedrich";
+  gndo:counting "I.";
+  gndo:nameAddition "Arnsbeg, Graf" .
+
+<https://d-nb.info/gnd/137509782> gndo:variantNameForThePerson "Streitbare, Friedrich der";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx233923601 .
+
+_:node1jh69j9nsx233923601 gndo:forename "Friedrich";
+  gndo:prefix "der";
+  gndo:surname "Streitbare" .
+
+<https://d-nb.info/gnd/137509782> gndo:variantNameForThePerson "Friedrich";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx233923602 .
+
+_:node1jh69j9nsx233923602 gndo:personalName "Friedrich" .
+
+<https://d-nb.info/gnd/137509782> gndo:variantNameForThePerson "Friedrich, von Arnsberg";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx233923603 .
+
+_:node1jh69j9nsx233923603 gndo:personalName "Friedrich";
+  gndo:nameAddition "von Arnsberg" .
+
+<https://d-nb.info/gnd/137509782> gndo:variantNameForThePerson "Arnsberg, Friedrich von";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx233923604 .
+
+_:node1jh69j9nsx233923604 gndo:forename "Friedrich";
+  gndo:prefix "von";
+  gndo:surname "Arnsberg" .
+
+<https://d-nb.info/gnd/137509782> gndo:variantNameForThePerson "Friedrich, Arnsberg, Graf";
+  gndo:variantNameEntityForThePerson _:node1jh69j9nsx233923605 .
+
+_:node1jh69j9nsx233923605 gndo:personalName "Friedrich";
+  gndo:nameAddition "Arnsberg, Graf" .
+
+<https://d-nb.info/gnd/137509782> gndo:preferredNameForThePerson "Friedrich, der Streitbare";
+  gndo:preferredNameEntityForThePerson _:node1jh69j9nsx233923606 .
+
+_:node1jh69j9nsx233923606 gndo:personalName "Friedrich";
+  gndo:nameAddition "der Streitbare" .
+
+<https://d-nb.info/gnd/137509782> gndo:familialRelationship <https://d-nb.info/gnd/139811974>;
+  agrelon:hasChild <https://d-nb.info/gnd/139811974>;
+  gndo:hasRelation _:node1jh69j9nsx233923607 .
+
+_:node1jh69j9nsx233923607 agrelon:hasChild <https://d-nb.info/gnd/139811974>;
+  a gndo:Relationship .
+
+<https://d-nb.info/gnd/137509782> gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male>;
+  gndo:broaderTermInstantial <https://d-nb.info/gnd/4000464-8>;
+  gndo:titleOfNobility <https://d-nb.info/gnd/4021778-4>;
+  gndo:gndSubjectCategory <https://d-nb.info/standards/vocab/gnd/gnd-sc#16.5p>;
+  gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE>;
+  wdrs:describedby <https://d-nb.info/gnd/137509782/about> .
+
+<https://d-nb.info/gnd/137509782/about> dcterms:creator <https://ld.zdb-services.de/resource/organisations/DE-12>;
+  dcatde:maintainer <https://ld.zdb-services.de/resource/organisations/DE-12> .
+
+<https://d-nb.info/gnd/137509782> gndo:biographicalOrHistoricalInformation "Friedrich der Streitbare, Graf von Arnsberg war Regent der Grafschaft Arnsberg-Werl von 1092-1124"@de;
+  gndo:placeOfActivity <https://d-nb.info/gnd/4837951-7>;
+  gndo:dateOfBirth "1075"^^xsd:gYear;
+  gndo:dateOfDeath "1124-02-11"^^xsd:date .
+

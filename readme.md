@@ -95,6 +95,46 @@ Project mappings use the following GS namespace prefix:
 - Docker
 - Python3 + uv
 
+## Data Variants and Switching
+
+Each source directory under `data/raw/` now supports three files:
+
+- `full.ttl`: complete source snapshot
+- `example.ttl`: reduced sample dataset (four selected example persons)
+- `statements.ttl`: active file used by the rest of the pipeline
+
+This keeps downstream steps agnostic: they always read `statements.ttl`.
+
+### Build reduced samples
+
+Run all reducers:
+
+```bash
+just reduce
+```
+
+Or per source:
+
+```bash
+just gs-reduce
+just dnb-reduce
+just rgo-reduce
+```
+
+### Switch active pipeline input
+
+Use full data:
+
+```bash
+just use-full
+```
+
+Use reduced examples:
+
+```bash
+just use-example
+```
+
 
 ## Maybe?
 

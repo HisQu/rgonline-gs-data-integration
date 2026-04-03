@@ -3,7 +3,7 @@
 The GS API paginates alphabetically by surname (~2 775 pages total).
 
 Pages are cached under data/raw/gs/pages/ so re-runs skip already-fetched
-pages. Merged output is written to data/raw/gs/statements.ttl.
+pages. Merged output is written to data/raw/gs/full.ttl.
 
 Polite scraping: 1.5 s between requests, User-Agent identifies the project.
 """
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PAGES_DIR = PROJECT_ROOT / "data" / "raw" / "gs" / "pages"
-OUTPUT = PROJECT_ROOT / "data" / "raw" / "gs" / "statements.ttl"
+OUTPUT = PROJECT_ROOT / "data" / "raw" / "gs" / "full.ttl"
 
 # API endpoint — square brackets in field names require percent-encoding so
 # that httpx / curl do not interpret them as glob patterns.

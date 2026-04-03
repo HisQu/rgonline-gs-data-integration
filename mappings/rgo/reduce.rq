@@ -1,0 +1,37 @@
+PREFIX ex:   <https://example.org/ontology/>
+
+CONSTRUCT {
+  ?person ?pp ?po .
+  ?lemma ?lp ?lo .
+  ?sublemma ?sp ?so .
+  ?place ?plp ?plo .
+}
+WHERE {
+  VALUES ?person {
+    <https://example.org/rg/person/10504820>
+    <https://example.org/rg/person/10517697>
+    <https://example.org/rg/person/10505909>
+    <https://example.org/rg/person/10504302>
+  }
+
+  {
+    ?person ?pp ?po .
+  }
+  UNION
+  {
+    ?person ex:appearsInLemma ?lemma .
+    ?lemma ?lp ?lo .
+  }
+  UNION
+  {
+    ?person ex:appearsInLemma ?lemma .
+    ?lemma ex:hasSubEntry ?sublemma .
+    ?sublemma ?sp ?so .
+  }
+  UNION
+  {
+    ?person ex:appearsInLemma ?lemma .
+    ?place ex:appearsInLemma ?lemma .
+    ?place ?plp ?plo .
+  }
+}

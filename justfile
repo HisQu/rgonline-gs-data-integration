@@ -28,7 +28,42 @@ clean: gs-clean
 
 # Normalize fuzzy GS date literals in data/raw/gs/clean.ttl to xsd:gYear.
 gs-fix-dates *args:
-    UV_CACHE_DIR=/tmp/uv-cache uv run python src/gs/fix_gs_clean_dates.py {{ args }}
+    UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/fix_gs_clean_dates.py {{ args }}
+
+# Reduce all raw sources to example subsets.
+reduce: gs-reduce dnb-reduce rgo-reduce
+
+# Reduce GS raw data to four example persons.
+gs-reduce:
+    @mkdir -p data/raw/gs
+    just robot query \
+        --input data/raw/gs/full.ttl \
+        --tdb true \
+        --query mappings/gs/reduce.rq data/raw/gs/example.ttl
+
+# Reduce DNB raw data to four example persons.
+dnb-reduce:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce.py
+
+# Reduce RGO source data to four example persons.
+rgo-reduce:
+    @mkdir -p data/raw/rgo
+    just robot query \
+        --input data/raw/rgo/full.ttl \
+        --tdb true \
+        --query mappings/rgo/reduce.rq data/raw/rgo/example.ttl
+
+# Activate full variants as pipeline inputs.
+use-full:
+    cp data/raw/gs/full.ttl data/raw/gs/statements.ttl
+    cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
+    cp data/raw/rgo/full.ttl data/raw/rgo/statements.ttl
+
+# Activate reduced example variants as pipeline inputs.
+use-example:
+    cp data/raw/gs/example.ttl data/raw/gs/statements.ttl
+    cp data/raw/dnb/example.ttl data/raw/dnb/statements.ttl
+    cp data/raw/rgo/example.ttl data/raw/rgo/statements.ttl
 
 # Harmonize GS and RGO source graphs to GNDO-oriented projections using ROBOT.
 # Writes outputs to data/harmonized/.
@@ -42,13 +77,18 @@ harmonize: gs-fix-dates
         --input data/raw/rgo/rg5_aligned.ttl \
         --tdb true \
         --query mappings/rgo/harmonize.rq data/harmonized/rgo.ttl
+    just robot merge \
+        --input data/harmonized/gs.ttl \
+        --input data/harmonized/rgo.ttl \
+        --output data/harmonized/full.ttl
 
 # Fetch Germania Sacra persons active in the RG5 timeframe (1361–1447).
 # Downloads all ~2775 pages, caches under data/raw/gs/pages/, filters by date,
-# and writes merged output to data/raw/gs/statements.ttl.
+# and writes merged output to data/raw/gs/full.ttl.
 # Use --start-page N to resume from a specific page.
 gs-fetch *args:
     uv run python src/gs/fetch.py {{ args }}
+    cp data/raw/gs/full.ttl data/raw/gs/statements.ttl
 
 # Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
 # writing data/raw/gs/clean.ttl.  --tdb true bypasses the OWL API so that
@@ -67,13 +107,14 @@ gs-clean:
         --input data/raw/gs/clean-amts.ttl \
         --output data/raw/gs/clean.ttl
 
-# Download the GND person authority dump and extract to data/raw/dnb/statements.ttl
+# Download the GND person authority dump and extract to data/raw/dnb/full.ttl
 dnb-fetch:
     @mkdir -p data/raw/dnb
     curl -L -o data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
         https://data.dnb.de/opendata/authorities-gnd-person_lds.ttl.gz
     gunzip -c data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
-        > data/raw/dnb/statements.ttl
+        > data/raw/dnb/full.ttl
+    cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
 
 qlever-restart: qlever-stop qlever-start
 
