@@ -21,9 +21,12 @@ fetch: gs-fetch dnb-fetch
 
 clean: gs-clean
 
-# Fetch Germania Sacra source data
-gs-fetch:
-    uv run python src/gs/fetch.py
+# Fetch Germania Sacra persons active in the RG5 timeframe (1361–1447).
+# Downloads all ~2775 pages, caches under data/raw/gs/pages/, filters by date,
+# and writes merged output to data/raw/gs/statements.ttl.
+# Use --start-page N to resume from a specific page.
+gs-fetch *args:
+    uv run python src/gs/fetch.py {{ args }}
 
 # Run the GS cleaning SPARQL UPDATE against the QLever endpoint
 gs-clean:
@@ -32,17 +35,30 @@ gs-clean:
         --data-urlencode "access-token=ecclesiastical-persons-token" \
     | uv run python scripts/report_update.py Persons Organisations Offices
 
-# Count ecclesiastical persons on the DNB endpoint (no data fetched)
-dnb-count:
-    uv run python src/dnb/fetch.py --dry-run
+# Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
+# writing data/raw/gs/clean.ttl.  --tdb true bypasses the OWL API so that
+# blank-node persons and their owl:sameAs links are preserved.
+gs-clean-file:
+    @mkdir -p data/raw/gs
+    just robot query \
+        --input data/raw/gs/statements.ttl \
+        --tdb true \
+        --query mappings/gs/clean-persons.rq data/raw/gs/clean-persons.ttl \
+        --query mappings/gs/clean-orgs.rq    data/raw/gs/clean-orgs.ttl \
+        --query mappings/gs/clean-amts.rq    data/raw/gs/clean-amts.ttl
+    just robot merge \
+        --input data/raw/gs/clean-persons.ttl \
+        --input data/raw/gs/clean-orgs.ttl \
+        --input data/raw/gs/clean-amts.ttl \
+        --output data/raw/gs/clean.ttl
 
-# Fetch and materialize DNB source data
-dnb-fetch *args:
-    uv run python src/dnb/fetch.py {{ args }}
-
-# Fetch DNB data with verbose logging
-dnb-fetch-verbose:
-    uv run python src/dnb/fetch.py -v
+# Download the GND person authority dump and extract to data/raw/dnb/statements.ttl
+dnb-fetch:
+    @mkdir -p data/raw/dnb
+    curl -L -o data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
+        https://data.dnb.de/opendata/authorities-gnd-person_lds.ttl.gz
+    gunzip -c data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
+        > data/raw/dnb/statements.ttl
 
 qlever-restart: qlever-stop qlever-start
 

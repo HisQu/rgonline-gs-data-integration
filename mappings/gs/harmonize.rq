@@ -1,0 +1,109 @@
+# Harmonize GS person data to GNDO.
+#
+# Input expectations:
+# - raw GS pages (blank-node persons typed as "foaf:Person"^^xsd:string), or
+# - cleaned GS data (IRI persons typed as foaf:Person).
+#
+# Output:
+# - GNDO person-centric triples for SPARQL interoperability.
+# - Use GNDO terms wherever GS semantics can be represented in GNDO.
+
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+  ?personOut a gndo:DifferentiatedPerson ;
+    gndo:preferredNameForThePerson ?preferredName ;
+    gndo:preferredNameEntityForThePerson ?nameEntity ;
+    gndo:dateOfBirth ?birthDate ;
+    gndo:dateOfDeath ?deathDate ;
+    owl:sameAs ?gndURI ;
+    gndo:professionOrOccupationAsLiteral ?officeName ;
+    gndo:affiliation ?organization ;
+    gndo:affiliationAsLiteral ?organizationName ;
+    gndo:periodOfActivity ?periodOfActivity .
+
+  ?nameEntity a gndo:NameOfThePerson ;
+    gndo:forename ?givenName ;
+    gndo:surname ?familyName .
+
+  ?organization a gndo:CorporateBody ;
+    gndo:preferredNameForTheCorporateBody ?organizationName ;
+    owl:sameAs ?organizationSameAs .
+}
+WHERE {
+  {
+    ?person a foaf:Person .
+  }
+  UNION
+  {
+    ?person a "foaf:Person"^^xsd:string .
+  }
+
+  OPTIONAL {
+    ?person owl:sameAs ?gsCanonicalURI .
+    FILTER(STRSTARTS(STR(?gsCanonicalURI), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+  }
+  BIND(COALESCE(?gsCanonicalURI, ?person) AS ?personOut)
+
+  OPTIONAL {
+    ?person owl:sameAs ?gndURI .
+    FILTER(
+      STRSTARTS(STR(?gndURI), "http://d-nb.info/gnd/") ||
+      STRSTARTS(STR(?gndURI), "https://d-nb.info/gnd/")
+    )
+  }
+
+  OPTIONAL { ?person schema:givenName ?givenName }
+  OPTIONAL { ?person schema:familyName ?familyName }
+
+  BIND(
+    REPLACE(
+      CONCAT(COALESCE(STR(?givenName), ""), " ", COALESCE(STR(?familyName), "")),
+      "^\\s+|\\s+$",
+      ""
+    )
+    AS ?preferredName
+  )
+
+  BIND(
+    IRI(CONCAT("https://data.rgonline-integration.de/id/name/", ENCODE_FOR_URI(STR(?personOut))))
+    AS ?nameEntity
+  )
+
+  OPTIONAL { ?person schema:birthDate ?birthDate }
+  OPTIONAL { ?person schema:deathDate ?deathDate }
+
+  OPTIONAL { ?person part:holder_of ?office }
+  OPTIONAL { ?person org:memberOf ?organization }
+
+  OPTIONAL { ?office foaf:name ?officeName }
+  OPTIONAL {
+    ?office part:startDate ?officeStart ;
+      part:endDate ?officeEnd .
+    BIND(CONCAT(STR(?officeStart), " - ", STR(?officeEnd)) AS ?periodOfActivity)
+  }
+  OPTIONAL {
+    ?office part:startDate ?officeStartOnly .
+    FILTER NOT EXISTS { ?office part:endDate ?_officeEndAny }
+    BIND(CONCAT("from ", STR(?officeStartOnly)) AS ?periodOfActivity)
+  }
+  OPTIONAL {
+    ?office part:endDate ?officeEndOnly .
+    FILTER NOT EXISTS { ?office part:startDate ?_officeStartAny }
+    BIND(CONCAT("until ", STR(?officeEndOnly)) AS ?periodOfActivity)
+  }
+
+  OPTIONAL { ?organization foaf:name ?organizationName }
+  OPTIONAL {
+    ?organization owl:sameAs ?organizationSameAs .
+    FILTER(STRSTARTS(STR(?organizationSameAs), "https://klosterdatenbank.germania-sacra.de/"))
+  }
+
+  FILTER(STRLEN(?preferredName) > 0)
+}

@@ -54,6 +54,8 @@ four-digit year.  Many values are natural-language descriptions:
 "13. Jh."^^xsd:string
 "Mitte 10. Jahrhundert"^^xsd:string
 "993/994"^^xsd:string
+"zwischen Anfang 13. und 15. Jahrhundert"^^xsd:string
+"Anfang 15. Jahrhundert"^^xsd:string
 ```
 
 The clean pass promotes unambiguous four-digit year strings to `xsd:gYear` and
@@ -85,3 +87,4 @@ _:bn rdfs:Container _:bn2 .
 
 `rdfs:Container` is a class, not a property.  This appears to be a serialisation
 artefact with no semantic meaning.  The clean pass silently drops it.
+

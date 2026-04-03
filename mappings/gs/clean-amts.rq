@@ -1,0 +1,44 @@
+# Offices (Ämter) – local CONSTRUCT variant of clean.rq block 3.
+# See clean-persons.rq for notes on --tdb and default-graph access.
+
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+  ?amt foaf:name      ?officeName ;
+       part:startDate ?startDate ;
+       part:endDate   ?endDate ;
+       part:role_at   ?orgURI .
+}
+WHERE {
+  ?amt foaf:name ?officeName .
+
+  FILTER(STRSTARTS(STR(?amt), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+  FILTER(CONTAINS(STR(?amt), "#amt-"))
+
+  OPTIONAL {
+    ?amt part:startDate ?startDateRaw .
+    BIND(
+      IF(REGEX(STR(?startDateRaw), "^[0-9]{4}$"),
+         STRDT(STR(?startDateRaw), xsd:gYear),
+         STRLANG(STR(?startDateRaw), "de"))
+      AS ?startDate)
+  }
+  OPTIONAL {
+    ?amt part:endDate ?endDateRaw .
+    BIND(
+      IF(REGEX(STR(?endDateRaw), "^[0-9]{4}$"),
+         STRDT(STR(?endDateRaw), xsd:gYear),
+         STRLANG(STR(?endDateRaw), "de"))
+      AS ?endDate)
+  }
+  OPTIONAL {
+    ?amt part:role_at ?roleAtRaw .
+    BIND(
+      IRI(CONCAT(
+        "https://personendatenbank.germania-sacra.de/index/gsn/",
+        SUBSTR(STR(?roleAtRaw), 8)))
+      AS ?orgURI)
+  }
+}
