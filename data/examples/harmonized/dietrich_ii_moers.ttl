@@ -1,36 +1,17 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix gnd: <https://d-nb.info/gnd/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix gsn: <https://personendatenbank.germania-sacra.de/index/gsn/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rgo: <https://example.org/ontology/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://d-nb.info/gnd/118525530> a gndo:DifferentiatedPerson ;
-    owl:sameAs <http://viaf.org/viaf/42629109>,
-        <http://www.wikidata.org/entity/Q658788> ;
-    foaf:page <https://de.wikipedia.org/wiki/Dietrich_II._von_Moers> ;
-    gndo:biographicalOrHistoricalInformation "Erzbischof von Köln 1414-1463, ab 1415 als Dietrich III. Administrator des Bistums Paderborn"@de ;
-    gndo:dateOfBirth "1385"^^xsd:gYear ;
-    gndo:dateOfDeath "1463-02-14"^^xsd:date ;
-    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male> ;
-    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
-    gndo:gndIdentifier "118525530" ;
-    gndo:gndSubjectCategory <https://d-nb.info/standards/vocab/gnd/gnd-sc#16.5p>,
-        <https://d-nb.info/standards/vocab/gnd/gnd-sc#3.6p> ;
-    gndo:oldAuthorityNumber "(DE-588a)118525530",
-        "(DE-588c)4012223-2" ;
-    gndo:preferredNameEntityForThePerson [ ] ;
-    gndo:preferredNameForThePerson "Dietrich II., Köln, Erzbischof, Kurfürst" ;
-    gndo:professionOrOccupation [ ] ;
-    gndo:variantNameEntityForThePerson [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ] ;
-    gndo:variantNameForThePerson "Dietrich III., Paderborn, Bischof",
-        "Dietrich, Köln, Kurfürst",
-        "Dietrich, de Meurs",
-        "Dietrich, von Moers",
-        "Moers, Dietrich von" .
+gndo:NameOfThePerson a owl:Class .
+
+<https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F012-00347-001> a owl:NamedIndividual,
+        gndo:NameOfThePerson ;
+    gndo:forename "Dietrich II." ;
+    gndo:surname "Moers" .
 
 <https://example.org/rg/ort/10500782> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -5363,7 +5344,35 @@
     rgo:text "Guillelmus Wander: l.b. oct. 1446 T 6 149v." ;
     rgo:volume "5" .
 
-gndo:DifferentiatedPerson a owl:Class .
+gnd:118525530 a gndo:DifferentiatedPerson ;
+    owl:sameAs <http://viaf.org/viaf/42629109>,
+        <http://www.wikidata.org/entity/Q658788>,
+        <https://example.org/rg/person/10517697>,
+        gsn:012-00347-001 ;
+    foaf:page <https://de.wikipedia.org/wiki/Dietrich_II._von_Moers> ;
+    gndo:biographicalOrHistoricalInformation "Erzbischof von Köln 1414-1463, ab 1415 als Dietrich III. Administrator des Bistums Paderborn"@de ;
+    gndo:dateOfBirth "1385"^^xsd:gYear ;
+    gndo:dateOfDeath "1463-02-14"^^xsd:date ;
+    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male> ;
+    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
+    gndo:gndIdentifier "118525530" ;
+    gndo:gndSubjectCategory <https://d-nb.info/standards/vocab/gnd/gnd-sc#16.5p>,
+        <https://d-nb.info/standards/vocab/gnd/gnd-sc#3.6p> ;
+    gndo:oldAuthorityNumber "(DE-588a)118525530",
+        "(DE-588c)4012223-2" ;
+    gndo:preferredNameEntityForThePerson [ ] ;
+    gndo:preferredNameForThePerson "Dietrich II., Köln, Erzbischof, Kurfürst" ;
+    gndo:professionOrOccupation [ ] ;
+    gndo:variantNameEntityForThePerson [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ] ;
+    gndo:variantNameForThePerson "Dietrich III., Paderborn, Bischof",
+        "Dietrich, Köln, Kurfürst",
+        "Dietrich, de Meurs",
+        "Dietrich, von Moers",
+        "Moers, Dietrich von" .
 
 <https://example.org/rg/ort/10500050> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -10856,6 +10865,26 @@ gndo:DifferentiatedPerson a owl:Class .
         <https://example.org/rg/lemma/10503123> ;
     rgo:sourceId "10522912" .
 
+gsn:012-00347-001 a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:118525530,
+        <https://example.org/rg/person/10517697> ;
+    gndo:affiliationAsLiteral "Domstift Köln"@de,
+        "Kollegiatstift St. Cassius, Bonn"@de ;
+    gndo:dateOfBirth "1375"^^xsd:gYear ;
+    gndo:dateOfDeath "1463"^^xsd:gYear ;
+    gndo:periodOfActivity "1399 - 1463",
+        "1414 - 1463",
+        "from 1400" ;
+    gndo:preferredNameEntityForThePerson <https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F012-00347-001> ;
+    gndo:preferredNameForThePerson "Dietrich II. Moers" ;
+    gndo:professionOrOccupationAsLiteral "Administrator"@de,
+        "Domherr"@de,
+        "Erzbischof"@de,
+        "Propst"@de .
+
+gndo:DifferentiatedPerson a owl:Class .
+
 <https://example.org/rg/ort/10502326> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Brabantia: dux" ;
@@ -13880,8 +13909,63 @@ gndo:DifferentiatedPerson a owl:Class .
     rgo:sourceId "10506232" ;
     rgo:volume "5" .
 
+<https://example.org/rg/lemma/10508640> a owl:NamedIndividual,
+        rgo:Lemma ;
+    gndo:relatedPerson <https://example.org/rg/person/10517697> ;
+    gndo:relatedPlaceOrGeographicName <https://example.org/rg/ort/10500149>,
+        <https://example.org/rg/ort/10501040>,
+        <https://example.org/rg/ort/10503911>,
+        <https://example.org/rg/ort/10503919>,
+        <https://example.org/rg/ort/10503947>,
+        <https://example.org/rg/ort/10503966>,
+        <https://example.org/rg/ort/10504016>,
+        <https://example.org/rg/ort/10504302>,
+        <https://example.org/rg/ort/10504303>,
+        <https://example.org/rg/ort/10504305>,
+        <https://example.org/rg/ort/10509484>,
+        <https://example.org/rg/ort/10510333>,
+        <https://example.org/rg/ort/10514644>,
+        <https://example.org/rg/ort/10514714>,
+        <https://example.org/rg/ort/10515323>,
+        <https://example.org/rg/ort/10515328>,
+        <https://example.org/rg/ort/10515849>,
+        <https://example.org/rg/ort/10518692>,
+        <https://example.org/rg/ort/10519057>,
+        <https://example.org/rg/ort/10520312>,
+        <https://example.org/rg/ort/10521443> ;
+    rgo:hasSublemma <https://example.org/rg/sublemma/10508640-1>,
+        <https://example.org/rg/sublemma/10508640-10>,
+        <https://example.org/rg/sublemma/10508640-11>,
+        <https://example.org/rg/sublemma/10508640-12>,
+        <https://example.org/rg/sublemma/10508640-13>,
+        <https://example.org/rg/sublemma/10508640-14>,
+        <https://example.org/rg/sublemma/10508640-15>,
+        <https://example.org/rg/sublemma/10508640-16>,
+        <https://example.org/rg/sublemma/10508640-17>,
+        <https://example.org/rg/sublemma/10508640-18>,
+        <https://example.org/rg/sublemma/10508640-19>,
+        <https://example.org/rg/sublemma/10508640-2>,
+        <https://example.org/rg/sublemma/10508640-20>,
+        <https://example.org/rg/sublemma/10508640-21>,
+        <https://example.org/rg/sublemma/10508640-22>,
+        <https://example.org/rg/sublemma/10508640-23>,
+        <https://example.org/rg/sublemma/10508640-24>,
+        <https://example.org/rg/sublemma/10508640-25>,
+        <https://example.org/rg/sublemma/10508640-3>,
+        <https://example.org/rg/sublemma/10508640-4>,
+        <https://example.org/rg/sublemma/10508640-5>,
+        <https://example.org/rg/sublemma/10508640-6>,
+        <https://example.org/rg/sublemma/10508640-7>,
+        <https://example.org/rg/sublemma/10508640-8>,
+        <https://example.org/rg/sublemma/10508640-9> ;
+    rgo:headText "Theodericus de Loedich de Wesalia Theodericus Theodoricus de, van den Loedich Loedick, Lodick, Leodick, Loedijck, Loddich de Wesalia licent. in decr." ;
+    rgo:sourceId "10508640" ;
+    rgo:volume "5" .
+
 <https://example.org/rg/person/10517697> a owl:NamedIndividual,
         gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:118525530,
+        gsn:012-00347-001 ;
     gndo:associatedDate "1430-07-07"^^xsd:date,
         "1431-03-11"^^xsd:date,
         "1431-03-28"^^xsd:date,
@@ -14773,59 +14857,6 @@ gndo:DifferentiatedPerson a owl:Class .
         <https://example.org/rg/lemma/10509283>,
         <https://example.org/rg/lemma/10509307> ;
     rgo:sourceId "10517697" .
-
-<https://example.org/rg/lemma/10508640> a owl:NamedIndividual,
-        rgo:Lemma ;
-    gndo:relatedPerson <https://example.org/rg/person/10517697> ;
-    gndo:relatedPlaceOrGeographicName <https://example.org/rg/ort/10500149>,
-        <https://example.org/rg/ort/10501040>,
-        <https://example.org/rg/ort/10503911>,
-        <https://example.org/rg/ort/10503919>,
-        <https://example.org/rg/ort/10503947>,
-        <https://example.org/rg/ort/10503966>,
-        <https://example.org/rg/ort/10504016>,
-        <https://example.org/rg/ort/10504302>,
-        <https://example.org/rg/ort/10504303>,
-        <https://example.org/rg/ort/10504305>,
-        <https://example.org/rg/ort/10509484>,
-        <https://example.org/rg/ort/10510333>,
-        <https://example.org/rg/ort/10514644>,
-        <https://example.org/rg/ort/10514714>,
-        <https://example.org/rg/ort/10515323>,
-        <https://example.org/rg/ort/10515328>,
-        <https://example.org/rg/ort/10515849>,
-        <https://example.org/rg/ort/10518692>,
-        <https://example.org/rg/ort/10519057>,
-        <https://example.org/rg/ort/10520312>,
-        <https://example.org/rg/ort/10521443> ;
-    rgo:hasSublemma <https://example.org/rg/sublemma/10508640-1>,
-        <https://example.org/rg/sublemma/10508640-10>,
-        <https://example.org/rg/sublemma/10508640-11>,
-        <https://example.org/rg/sublemma/10508640-12>,
-        <https://example.org/rg/sublemma/10508640-13>,
-        <https://example.org/rg/sublemma/10508640-14>,
-        <https://example.org/rg/sublemma/10508640-15>,
-        <https://example.org/rg/sublemma/10508640-16>,
-        <https://example.org/rg/sublemma/10508640-17>,
-        <https://example.org/rg/sublemma/10508640-18>,
-        <https://example.org/rg/sublemma/10508640-19>,
-        <https://example.org/rg/sublemma/10508640-2>,
-        <https://example.org/rg/sublemma/10508640-20>,
-        <https://example.org/rg/sublemma/10508640-21>,
-        <https://example.org/rg/sublemma/10508640-22>,
-        <https://example.org/rg/sublemma/10508640-23>,
-        <https://example.org/rg/sublemma/10508640-24>,
-        <https://example.org/rg/sublemma/10508640-25>,
-        <https://example.org/rg/sublemma/10508640-3>,
-        <https://example.org/rg/sublemma/10508640-4>,
-        <https://example.org/rg/sublemma/10508640-5>,
-        <https://example.org/rg/sublemma/10508640-6>,
-        <https://example.org/rg/sublemma/10508640-7>,
-        <https://example.org/rg/sublemma/10508640-8>,
-        <https://example.org/rg/sublemma/10508640-9> ;
-    rgo:headText "Theodericus de Loedich de Wesalia Theodericus Theodoricus de, van den Loedich Loedick, Lodick, Leodick, Loedijck, Loddich de Wesalia licent. in decr." ;
-    rgo:sourceId "10508640" ;
-    rgo:volume "5" .
 
 <https://example.org/rg/lemma/10502543> a owl:NamedIndividual,
         rgo:Lemma ;

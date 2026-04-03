@@ -88,6 +88,12 @@ harmonize:
 # broad traversal behavior, pass: --mode neighborhood
 examples-export *args:
     UV_CACHE_DIR=/tmp/uv-cache uv run python src/export_harmonized_examples.py {{ args }}
+    for file in data/examples/harmonized/*.ttl; do \
+        case "$file" in \
+            *.reasoned.ttl) ;; \
+            *) just robot reason --input "$file" --reasoner ELK --output "${file%.ttl}.reasoned.ttl" ;; \
+        esac; \
+    done
 
 # Fetch Germania Sacra persons active in the RG5 timeframe (1361–1447).
 # Downloads all ~2775 pages, caches under data/raw/gs/pages/, filters by date,

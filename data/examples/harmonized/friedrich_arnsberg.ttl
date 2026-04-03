@@ -1,36 +1,17 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix gnd: <https://d-nb.info/gnd/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix gsn: <https://personendatenbank.germania-sacra.de/index/gsn/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rgo: <https://example.org/ontology/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://d-nb.info/gnd/137509782> a gndo:DifferentiatedPerson ;
-    owl:sameAs <http://viaf.org/viaf/81691042>,
-        <http://www.wikidata.org/entity/Q873278> ;
-    foaf:page <https://de.wikipedia.org/wiki/Friedrich_%28Arnsberg%29> ;
-    gndo:biographicalOrHistoricalInformation "Friedrich der Streitbare, Graf von Arnsberg war Regent der Grafschaft Arnsberg-Werl von 1092-1124"@de ;
-    gndo:dateOfBirth "1075"^^xsd:gYear ;
-    gndo:dateOfDeath "1124-02-11"^^xsd:date ;
-    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male> ;
-    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
-    gndo:gndIdentifier "137509782" ;
-    gndo:gndSubjectCategory <https://d-nb.info/standards/vocab/gnd/gnd-sc#16.5p> ;
-    gndo:hasRelation [ ] ;
-    gndo:oldAuthorityNumber "(DE-588a)137509782" ;
-    gndo:preferredNameEntityForThePerson [ ] ;
-    gndo:preferredNameForThePerson "Friedrich, der Streitbare" ;
-    gndo:variantNameEntityForThePerson [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ] ;
-    gndo:variantNameForThePerson "Arnsberg, Friedrich von",
-        "Friedrich",
-        "Friedrich I., Arnsbeg, Graf",
-        "Friedrich, Arnsberg, Graf",
-        "Friedrich, von Arnsberg",
-        "Streitbare, Friedrich der" .
+gndo:NameOfThePerson a owl:Class .
+
+<https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F048-02156-001> a owl:NamedIndividual,
+        gndo:NameOfThePerson ;
+    gndo:forename "Friedrich" ;
+    gndo:surname "Arnsberg" .
 
 <https://example.org/rg/ort/10500111> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -4162,7 +4143,35 @@
     rgo:text "Guillelmus Wander: l.b. oct. 1446 T 6 149v." ;
     rgo:volume "5" .
 
-gndo:DifferentiatedPerson a owl:Class .
+gnd:137509782 a gndo:DifferentiatedPerson ;
+    owl:sameAs <http://viaf.org/viaf/81691042>,
+        <http://www.wikidata.org/entity/Q873278>,
+        <https://example.org/rg/person/10504302>,
+        gsn:048-02156-001 ;
+    foaf:page <https://de.wikipedia.org/wiki/Friedrich_%28Arnsberg%29> ;
+    gndo:biographicalOrHistoricalInformation "Friedrich der Streitbare, Graf von Arnsberg war Regent der Grafschaft Arnsberg-Werl von 1092-1124"@de ;
+    gndo:dateOfBirth "1075"^^xsd:gYear ;
+    gndo:dateOfDeath "1124-02-11"^^xsd:date ;
+    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male> ;
+    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
+    gndo:gndIdentifier "137509782" ;
+    gndo:gndSubjectCategory <https://d-nb.info/standards/vocab/gnd/gnd-sc#16.5p> ;
+    gndo:hasRelation [ ] ;
+    gndo:oldAuthorityNumber "(DE-588a)137509782" ;
+    gndo:preferredNameEntityForThePerson [ ] ;
+    gndo:preferredNameForThePerson "Friedrich, der Streitbare" ;
+    gndo:variantNameEntityForThePerson [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ] ;
+    gndo:variantNameForThePerson "Arnsberg, Friedrich von",
+        "Friedrich",
+        "Friedrich I., Arnsbeg, Graf",
+        "Friedrich, Arnsberg, Graf",
+        "Friedrich, von Arnsberg",
+        "Streitbare, Friedrich der" .
 
 <https://example.org/rg/ort/10501602> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -4590,6 +4599,32 @@ gndo:DifferentiatedPerson a owl:Class .
         <https://example.org/rg/lemma/10506679> ;
     rgo:sourceId "10521635" .
 
+gsn:048-02156-001 a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:137509782,
+        <https://example.org/rg/person/10504302> ;
+    gndo:affiliationAsLiteral "Abt"@de,
+        "Administrator"@de,
+        "Benediktinerabtei Steina, Nörten-Hardenberg"@de,
+        "Benediktinerkloster Clus"@de,
+        "Domherr"@de,
+        "Dompropst"@de,
+        "Domstift Bremen"@de,
+        "Domstift Köln"@de,
+        "Erzbischof"@de,
+        "Graf"@de,
+        "Kollegiatstift St. Cassius, Bonn"@de,
+        "Mönch"@de,
+        "Propst"@de ;
+    gndo:dateOfBirth "1065"^^xsd:gYear ;
+    gndo:dateOfDeath "1124"^^xsd:gYear ;
+    gndo:periodOfActivity "1092 - 1124" ;
+    gndo:preferredNameEntityForThePerson <https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F048-02156-001> ;
+    gndo:preferredNameForThePerson "Friedrich Arnsberg" ;
+    gndo:professionOrOccupationAsLiteral "Graf"@de .
+
+gndo:DifferentiatedPerson a owl:Class .
+
 <https://example.org/rg/ort/10503947> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Colon.: s. Gereonis colleg. eccl." ;
@@ -4889,64 +4924,6 @@ gndo:DifferentiatedPerson a owl:Class .
         <https://example.org/rg/lemma/10508791> ;
     rgo:sourceId "10518597" .
 
-<https://example.org/rg/person/10504302> a owl:NamedIndividual,
-        gndo:DifferentiatedPerson ;
-    gndo:associatedDate "1431-03-11"^^xsd:date,
-        "1431-04-03"^^xsd:date,
-        "1431-08-03"^^xsd:date,
-        "1432-09-27"^^xsd:date,
-        "1432-10-14"^^xsd:date,
-        "1433-01-08"^^xsd:date,
-        "1433-02-24"^^xsd:date,
-        "1433-05-09"^^xsd:date,
-        "1436-03-30"^^xsd:date,
-        "1436-05-19"^^xsd:date,
-        "1431-06"^^xsd:gYearMonth,
-        "1431-11"^^xsd:gYearMonth ;
-    gndo:placeOfActivity <https://example.org/rg/ort/10501602>,
-        <https://example.org/rg/ort/10502217>,
-        <https://example.org/rg/ort/10502785>,
-        <https://example.org/rg/ort/10502787>,
-        <https://example.org/rg/ort/10502914>,
-        <https://example.org/rg/ort/10503523>,
-        <https://example.org/rg/ort/10503572>,
-        <https://example.org/rg/ort/10503928>,
-        <https://example.org/rg/ort/10503946>,
-        <https://example.org/rg/ort/10503952>,
-        <https://example.org/rg/ort/10503988>,
-        <https://example.org/rg/ort/10504059>,
-        <https://example.org/rg/ort/10504080>,
-        <https://example.org/rg/ort/10504084>,
-        <https://example.org/rg/ort/10504121>,
-        <https://example.org/rg/ort/10504122>,
-        <https://example.org/rg/ort/10504159>,
-        <https://example.org/rg/ort/10504229>,
-        <https://example.org/rg/ort/10504257>,
-        <https://example.org/rg/ort/10504368>,
-        <https://example.org/rg/ort/10504416>,
-        <https://example.org/rg/ort/10504419>,
-        <https://example.org/rg/ort/10504473>,
-        <https://example.org/rg/ort/10505777>,
-        <https://example.org/rg/ort/10505778>,
-        <https://example.org/rg/ort/10506969>,
-        <https://example.org/rg/ort/10509545>,
-        <https://example.org/rg/ort/10509632>,
-        <https://example.org/rg/ort/10509634>,
-        <https://example.org/rg/ort/10509642>,
-        <https://example.org/rg/ort/10510483>,
-        <https://example.org/rg/ort/10512396>,
-        <https://example.org/rg/ort/10516786>,
-        <https://example.org/rg/ort/10518597>,
-        <https://example.org/rg/ort/10521494>,
-        <https://example.org/rg/ort/10521635> ;
-    gndo:preferredNameForThePerson "Fridericus" ;
-    gndo:variantNameForThePerson "Hunt Hund [de Arnsberg]" ;
-    rgo:appearsInLemma <https://example.org/rg/lemma/10501581>,
-        <https://example.org/rg/lemma/10501933>,
-        <https://example.org/rg/lemma/10508767>,
-        <https://example.org/rg/lemma/10508780> ;
-    rgo:sourceId "10504302" .
-
 <https://example.org/rg/lemma/10502337> a owl:NamedIndividual,
         rgo:Lemma ;
     gndo:relatedPlaceOrGeographicName <https://example.org/rg/ort/10502217>,
@@ -5060,6 +5037,66 @@ gndo:DifferentiatedPerson a owl:Class .
         <https://example.org/rg/lemma/10502150>,
         <https://example.org/rg/lemma/10502211> ;
     rgo:sourceId "10503928" .
+
+<https://example.org/rg/person/10504302> a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:137509782,
+        gsn:048-02156-001 ;
+    gndo:associatedDate "1431-03-11"^^xsd:date,
+        "1431-04-03"^^xsd:date,
+        "1431-08-03"^^xsd:date,
+        "1432-09-27"^^xsd:date,
+        "1432-10-14"^^xsd:date,
+        "1433-01-08"^^xsd:date,
+        "1433-02-24"^^xsd:date,
+        "1433-05-09"^^xsd:date,
+        "1436-03-30"^^xsd:date,
+        "1436-05-19"^^xsd:date,
+        "1431-06"^^xsd:gYearMonth,
+        "1431-11"^^xsd:gYearMonth ;
+    gndo:placeOfActivity <https://example.org/rg/ort/10501602>,
+        <https://example.org/rg/ort/10502217>,
+        <https://example.org/rg/ort/10502785>,
+        <https://example.org/rg/ort/10502787>,
+        <https://example.org/rg/ort/10502914>,
+        <https://example.org/rg/ort/10503523>,
+        <https://example.org/rg/ort/10503572>,
+        <https://example.org/rg/ort/10503928>,
+        <https://example.org/rg/ort/10503946>,
+        <https://example.org/rg/ort/10503952>,
+        <https://example.org/rg/ort/10503988>,
+        <https://example.org/rg/ort/10504059>,
+        <https://example.org/rg/ort/10504080>,
+        <https://example.org/rg/ort/10504084>,
+        <https://example.org/rg/ort/10504121>,
+        <https://example.org/rg/ort/10504122>,
+        <https://example.org/rg/ort/10504159>,
+        <https://example.org/rg/ort/10504229>,
+        <https://example.org/rg/ort/10504257>,
+        <https://example.org/rg/ort/10504368>,
+        <https://example.org/rg/ort/10504416>,
+        <https://example.org/rg/ort/10504419>,
+        <https://example.org/rg/ort/10504473>,
+        <https://example.org/rg/ort/10505777>,
+        <https://example.org/rg/ort/10505778>,
+        <https://example.org/rg/ort/10506969>,
+        <https://example.org/rg/ort/10509545>,
+        <https://example.org/rg/ort/10509632>,
+        <https://example.org/rg/ort/10509634>,
+        <https://example.org/rg/ort/10509642>,
+        <https://example.org/rg/ort/10510483>,
+        <https://example.org/rg/ort/10512396>,
+        <https://example.org/rg/ort/10516786>,
+        <https://example.org/rg/ort/10518597>,
+        <https://example.org/rg/ort/10521494>,
+        <https://example.org/rg/ort/10521635> ;
+    gndo:preferredNameForThePerson "Fridericus" ;
+    gndo:variantNameForThePerson "Hunt Hund [de Arnsberg]" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501581>,
+        <https://example.org/rg/lemma/10501933>,
+        <https://example.org/rg/lemma/10508767>,
+        <https://example.org/rg/lemma/10508780> ;
+    rgo:sourceId "10504302" .
 
 <https://example.org/rg/lemma/10508780> a owl:NamedIndividual,
         rgo:Lemma ;

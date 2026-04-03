@@ -1,43 +1,17 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix gnd: <https://d-nb.info/gnd/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix gsn: <https://personendatenbank.germania-sacra.de/index/gsn/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rgo: <https://example.org/ontology/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://d-nb.info/gnd/10427526X> a gndo:DifferentiatedPerson ;
-    owl:sameAs <http://viaf.org/viaf/34887579>,
-        <http://www.wikidata.org/entity/Q48405285>,
-        <https://isni.org/isni/0000000078553490> ;
-    foaf:page <https://de.wikipedia.org/wiki/Henricus_Bodo> ;
-    gndo:biographicalOrHistoricalInformation "OSB; Chronist im Kloster Clusa bei Gandersheim"@de ;
-    gndo:dateOfDeath "1553"^^xsd:gYear ;
-    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male> ;
-    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
-    gndo:gndIdentifier "10427526X" ;
-    gndo:oldAuthorityNumber "(DE-588a)10427526X" ;
-    gndo:preferredNameEntityForThePerson [ ] ;
-    gndo:preferredNameForThePerson "Bodo, Heinrich" ;
-    gndo:professionOrOccupation [ ] ;
-    gndo:variantNameEntityForThePerson [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ],
-        [ ] ;
-    gndo:variantNameForThePerson "Angelonius, Henricus",
-        "Boden, Heinrich",
-        "Boden, Henricus",
-        "Bodo, Henri",
-        "Bodo, Henricus",
-        "Bodon, Henricus",
-        "Henricus, Angelonius",
-        "Henricus, Boden",
-        "Henricus, Bodo",
-        "Henricus, Bodon" .
+gndo:NameOfThePerson a owl:Class .
+
+<https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F015-00498-001> a owl:NamedIndividual,
+        gndo:NameOfThePerson ;
+    gndo:forename "Heinrich" ;
+    gndo:surname "Bodo" .
 
 <https://example.org/rg/ort/10500157> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -617,7 +591,42 @@
     rgo:text "litig. in R. cur. sup. suprad. par. eccl. vac. p.o. Henrici Bodonis contra Johannem Proel can. eccl. Razeburg.: m. instit. 20. decb. 36 m. ad ep. Ortan., prep. eccl. Sleswic. et dec. eccl. b. Marie Hamburgen. Bremen. dioc. L 341 133vss, l.b. decb. 1436 T 5 41v." ;
     rgo:volume "5" .
 
-gndo:DifferentiatedPerson a owl:Class .
+gnd:10427526X a gndo:DifferentiatedPerson ;
+    owl:sameAs <http://viaf.org/viaf/34887579>,
+        <http://www.wikidata.org/entity/Q48405285>,
+        <https://example.org/rg/person/10505909>,
+        <https://isni.org/isni/0000000078553490>,
+        gsn:015-00498-001 ;
+    foaf:page <https://de.wikipedia.org/wiki/Henricus_Bodo> ;
+    gndo:biographicalOrHistoricalInformation "OSB; Chronist im Kloster Clusa bei Gandersheim"@de ;
+    gndo:dateOfDeath "1553"^^xsd:gYear ;
+    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male> ;
+    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
+    gndo:gndIdentifier "10427526X" ;
+    gndo:oldAuthorityNumber "(DE-588a)10427526X" ;
+    gndo:preferredNameEntityForThePerson [ ] ;
+    gndo:preferredNameForThePerson "Bodo, Heinrich" ;
+    gndo:professionOrOccupation [ ] ;
+    gndo:variantNameEntityForThePerson [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ] ;
+    gndo:variantNameForThePerson "Angelonius, Henricus",
+        "Boden, Heinrich",
+        "Boden, Henricus",
+        "Bodo, Henri",
+        "Bodo, Henricus",
+        "Bodon, Henricus",
+        "Henricus, Angelonius",
+        "Henricus, Boden",
+        "Henricus, Bodo",
+        "Henricus, Bodon" .
 
 <https://example.org/rg/ort/10501880> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -691,28 +700,21 @@ gndo:DifferentiatedPerson a owl:Class .
         <https://example.org/rg/lemma/10508579> ;
     rgo:sourceId "10517880" .
 
-<https://example.org/rg/person/10505909> a owl:NamedIndividual,
+gsn:015-00498-001 a owl:NamedIndividual,
         gndo:DifferentiatedPerson ;
-    gndo:associatedDate "1436-01-14"^^xsd:date,
-        "1436-07-09"^^xsd:date,
-        "1436-10-07"^^xsd:date,
-        "1436-12"^^xsd:gYearMonth ;
-    gndo:placeOfActivity <https://example.org/rg/ort/10501880>,
-        <https://example.org/rg/ort/10501881>,
-        <https://example.org/rg/ort/10514257>,
-        <https://example.org/rg/ort/10516258>,
-        <https://example.org/rg/ort/10516265>,
-        <https://example.org/rg/ort/10516269>,
-        <https://example.org/rg/ort/10516270>,
-        <https://example.org/rg/ort/10517402>,
-        <https://example.org/rg/ort/10517875>,
-        <https://example.org/rg/ort/10517880> ;
-    gndo:preferredNameForThePerson "Henricus" ;
-    gndo:variantNameForThePerson "Bodonis Bedonis",
-        "Budonis" ;
-    rgo:appearsInLemma <https://example.org/rg/lemma/10505413>,
-        <https://example.org/rg/lemma/10508579> ;
-    rgo:sourceId "10505909" .
+    owl:sameAs gnd:10427526X,
+        <https://example.org/rg/person/10505909> ;
+    gndo:affiliationAsLiteral "Benediktinerabtei Steina, Nörten-Hardenberg"@de,
+        "Benediktinerkloster Clus"@de ;
+    gndo:dateOfDeath "1553"^^xsd:gYear ;
+    gndo:periodOfActivity "1490 - 1541",
+        "1541 - 1553" ;
+    gndo:preferredNameEntityForThePerson <https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F015-00498-001> ;
+    gndo:preferredNameForThePerson "Heinrich Bodo" ;
+    gndo:professionOrOccupationAsLiteral "Abt"@de,
+        "Mönch"@de .
+
+gndo:DifferentiatedPerson a owl:Class .
 
 <https://example.org/rg/ort/10514257> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -811,6 +813,31 @@ gndo:DifferentiatedPerson a owl:Class .
     rgo:sourceId "10517402" .
 
 rgo:Lemma a owl:Class .
+
+<https://example.org/rg/person/10505909> a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:10427526X,
+        gsn:015-00498-001 ;
+    gndo:associatedDate "1436-01-14"^^xsd:date,
+        "1436-07-09"^^xsd:date,
+        "1436-10-07"^^xsd:date,
+        "1436-12"^^xsd:gYearMonth ;
+    gndo:placeOfActivity <https://example.org/rg/ort/10501880>,
+        <https://example.org/rg/ort/10501881>,
+        <https://example.org/rg/ort/10514257>,
+        <https://example.org/rg/ort/10516258>,
+        <https://example.org/rg/ort/10516265>,
+        <https://example.org/rg/ort/10516269>,
+        <https://example.org/rg/ort/10516270>,
+        <https://example.org/rg/ort/10517402>,
+        <https://example.org/rg/ort/10517875>,
+        <https://example.org/rg/ort/10517880> ;
+    gndo:preferredNameForThePerson "Henricus" ;
+    gndo:variantNameForThePerson "Bodonis Bedonis",
+        "Budonis" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10505413>,
+        <https://example.org/rg/lemma/10508579> ;
+    rgo:sourceId "10505909" .
 
 <https://example.org/rg/lemma/10505413> a owl:NamedIndividual,
         rgo:Lemma ;

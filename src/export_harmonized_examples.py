@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Export per-person harmonized example graphs.
 
-Reads harmonized output plus DNB statements (if present) and writes one Turtle
-file per selected person into data/examples/harmonized/.
+Reads harmonized output plus DNB and GS statements (if present) and writes one
+Turtle file per selected person into data/examples/harmonized/.
 """
 
 from __future__ import annotations
@@ -12,24 +12,28 @@ from collections import deque
 from pathlib import Path
 
 from rdflib import Graph, URIRef
-from rdflib.namespace import RDF
+from rdflib.namespace import OWL, RDF
 
 PERSONS = {
     "gerhard_hoya": {
         "gnd": "136175414",
         "rgo": "https://example.org/rg/person/10504820",
+        "gs": "https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001",
     },
     "dietrich_ii_moers": {
         "gnd": "118525530",
         "rgo": "https://example.org/rg/person/10517697",
+        "gs": "https://personendatenbank.germania-sacra.de/index/gsn/012-00347-001",
     },
     "heinrich_bodo": {
         "gnd": "10427526X",
         "rgo": "https://example.org/rg/person/10505909",
+        "gs": "https://personendatenbank.germania-sacra.de/index/gsn/015-00498-001",
     },
     "friedrich_arnsberg": {
         "gnd": "137509782",
         "rgo": "https://example.org/rg/person/10504302",
+        "gs": "https://personendatenbank.germania-sacra.de/index/gsn/048-02156-001",
     },
 }
 
@@ -37,7 +41,9 @@ GNDO_DIFFERENTIATED_PERSON = URIRef(
     "https://d-nb.info/standards/elementset/gnd#DifferentiatedPerson"
 )
 PREFERRED_PREFIXES = {
+    "gnd": "https://d-nb.info/gnd/",
     "gndo": "https://d-nb.info/standards/elementset/gnd#",
+    "gsn": "https://personendatenbank.germania-sacra.de/index/gsn/",
     "rgo": "https://example.org/ontology/",
     "rg": "https://example.org/rg/",
 }
@@ -102,6 +108,8 @@ def extract_subgraph_focused(
             or node_str.startswith("http://example.org/rg/person/")
             or node_str.startswith("https://d-nb.info/gnd/")
             or node_str.startswith("http://d-nb.info/gnd/")
+            or node_str.startswith("https://personendatenbank.germania-sacra.de/index/gsn/")
+            or node_str.startswith("http://personendatenbank.germania-sacra.de/index/gsn/")
         )
 
     while queue:
@@ -124,9 +132,22 @@ def extract_subgraph_focused(
     return out
 
 
+def add_cross_source_same_as(graph: Graph, meta: dict[str, str]) -> None:
+    person_uris = [
+        URIRef(f"https://d-nb.info/gnd/{meta['gnd']}"),
+        URIRef(meta["rgo"]),
+        URIRef(meta["gs"]),
+    ]
+    for idx, left in enumerate(person_uris):
+        for right in person_uris[idx + 1 :]:
+            graph.add((left, OWL.sameAs, right))
+            graph.add((right, OWL.sameAs, left))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--harmonized", default="data/harmonized/full.ttl")
+    parser.add_argument("--gs", default="data/harmonized/gs.ttl")
     parser.add_argument("--dnb", default="data/raw/dnb/statements.ttl")
     parser.add_argument("--output-dir", default="data/examples/harmonized")
     parser.add_argument("--depth", type=int, default=3)
@@ -142,7 +163,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    source = build_source_graph([Path(args.harmonized), Path(args.dnb)])
+    source = build_source_graph([Path(args.harmonized), Path(args.gs), Path(args.dnb)])
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -152,11 +173,13 @@ def main() -> None:
             URIRef(f"https://d-nb.info/gnd/{gnd}"),
             URIRef(f"http://d-nb.info/gnd/{gnd}"),
             URIRef(meta["rgo"]),
+            URIRef(meta["gs"]),
         ]
         if args.mode == "neighborhood":
             sub = extract_subgraph_neighborhood(source, seeds, max_depth=args.depth)
         else:
             sub = extract_subgraph_focused(source, seeds, max_depth=args.depth)
+        add_cross_source_same_as(sub, meta)
         bind_prefixes(sub, source)
         out_path = output_dir / f"{slug}.ttl"
         sub.serialize(destination=str(out_path), format="turtle")

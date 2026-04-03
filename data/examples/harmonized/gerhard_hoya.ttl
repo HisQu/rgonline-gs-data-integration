@@ -1,24 +1,17 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix gnd: <https://d-nb.info/gnd/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix gsn: <https://personendatenbank.germania-sacra.de/index/gsn/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rgo: <https://example.org/ontology/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://d-nb.info/gnd/136175414> a gndo:DifferentiatedPerson ;
-    owl:sameAs <http://viaf.org/viaf/80564658>,
-        <http://www.wikidata.org/entity/Q15811935> ;
-    foaf:page <https://de.wikipedia.org/wiki/Gerhard_III._%28Bremen%29> ;
-    gndo:biographicalOrHistoricalInformation "Erzbischof von Bremen"@de ;
-    gndo:dateOfDeath "1463"^^xsd:gYear ;
-    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#notKnown> ;
-    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
-    gndo:gndIdentifier "136175414" ;
-    gndo:oldAuthorityNumber "(DE-588a)136175414" ;
-    gndo:preferredNameEntityForThePerson [ ] ;
-    gndo:preferredNameForThePerson "Gerhard, von Hoya" ;
-    gndo:professionOrOccupation [ ] ;
-    gndo:variantNameEntityForThePerson [ ] ;
-    gndo:variantNameForThePerson "Hoya, Gerhard von" .
+gndo:NameOfThePerson a owl:Class .
+
+<https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F005-02827-001> a owl:NamedIndividual,
+        gndo:NameOfThePerson ;
+    gndo:forename "Gerhard" ;
+    gndo:surname "Hoya" .
 
 <https://example.org/rg/ort/10502432> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
@@ -550,32 +543,6 @@
         <https://example.org/rg/lemma/10509469> ;
     rgo:sourceId "10520329" .
 
-<https://example.org/rg/person/10504820> a owl:NamedIndividual,
-        gndo:DifferentiatedPerson ;
-    gndo:associatedDate "1431-05-20"^^xsd:date,
-        "1431-05-25"^^xsd:date,
-        "1431-10-25"^^xsd:date,
-        "1432-12-30"^^xsd:date,
-        "1433-11-16"^^xsd:date,
-        "1436-12-10"^^xsd:date,
-        "1440-03-09"^^xsd:date,
-        "1431-07"^^xsd:gYearMonth,
-        "1437-11"^^xsd:gYearMonth ;
-    gndo:placeOfActivity <https://example.org/rg/ort/10500782>,
-        <https://example.org/rg/ort/10501007>,
-        <https://example.org/rg/ort/10503024>,
-        <https://example.org/rg/ort/10508980>,
-        <https://example.org/rg/ort/10513499>,
-        <https://example.org/rg/ort/10514716>,
-        <https://example.org/rg/ort/10518892>,
-        <https://example.org/rg/ort/10519101>,
-        <https://example.org/rg/ort/10519114>,
-        <https://example.org/rg/ort/10519417> ;
-    gndo:preferredNameForThePerson "Gerardus" ;
-    gndo:variantNameForThePerson "de Hoya" ;
-    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    rgo:sourceId "10504820" .
-
 <https://example.org/rg/sublemma/10501952-1> a owl:NamedIndividual,
         rgo:Sublemma ;
     gndo:associatedDate "1432-08-30"^^xsd:date ;
@@ -886,7 +853,23 @@
     rgo:text "de prorog. exped. litt. prov. de benef. Nanneten. dioc. 9. mart. 1440 S 364 16r." ;
     rgo:volume "5" .
 
-gndo:DifferentiatedPerson a owl:Class .
+gnd:136175414 a gndo:DifferentiatedPerson ;
+    owl:sameAs <http://viaf.org/viaf/80564658>,
+        <http://www.wikidata.org/entity/Q15811935>,
+        <https://example.org/rg/person/10504820>,
+        gsn:005-02827-001 ;
+    foaf:page <https://de.wikipedia.org/wiki/Gerhard_III._%28Bremen%29> ;
+    gndo:biographicalOrHistoricalInformation "Erzbischof von Bremen"@de ;
+    gndo:dateOfDeath "1463"^^xsd:gYear ;
+    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#notKnown> ;
+    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
+    gndo:gndIdentifier "136175414" ;
+    gndo:oldAuthorityNumber "(DE-588a)136175414" ;
+    gndo:preferredNameEntityForThePerson [ ] ;
+    gndo:preferredNameForThePerson "Gerhard, von Hoya" ;
+    gndo:professionOrOccupation [ ] ;
+    gndo:variantNameEntityForThePerson [ ] ;
+    gndo:variantNameForThePerson "Hoya, Gerhard von" .
 
 rgo:Lemma a owl:Class .
 
@@ -975,6 +958,21 @@ rgo:Lemma a owl:Class .
     rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
     rgo:sourceId "10519417" .
 
+gsn:005-02827-001 a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:136175414,
+        <https://example.org/rg/person/10504820> ;
+    gndo:affiliationAsLiteral "Domstift Bremen"@de ;
+    gndo:dateOfDeath "1463"^^xsd:gYear ;
+    gndo:periodOfActivity "1438 - 1442",
+        "1442 - 1463" ;
+    gndo:preferredNameEntityForThePerson <https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F005-02827-001> ;
+    gndo:preferredNameForThePerson "Gerhard Hoya" ;
+    gndo:professionOrOccupationAsLiteral "Dompropst"@de,
+        "Erzbischof"@de .
+
+gndo:DifferentiatedPerson a owl:Class .
+
 <https://example.org/rg/ort/10503024> a owl:NamedIndividual,
         gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Camerac d i o c" ;
@@ -1008,6 +1006,34 @@ rgo:Lemma a owl:Class .
         <https://example.org/rg/lemma/10509059>,
         <https://example.org/rg/lemma/10509348> ;
     rgo:sourceId "10503024" .
+
+<https://example.org/rg/person/10504820> a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:136175414,
+        gsn:005-02827-001 ;
+    gndo:associatedDate "1431-05-20"^^xsd:date,
+        "1431-05-25"^^xsd:date,
+        "1431-10-25"^^xsd:date,
+        "1432-12-30"^^xsd:date,
+        "1433-11-16"^^xsd:date,
+        "1436-12-10"^^xsd:date,
+        "1440-03-09"^^xsd:date,
+        "1431-07"^^xsd:gYearMonth,
+        "1437-11"^^xsd:gYearMonth ;
+    gndo:placeOfActivity <https://example.org/rg/ort/10500782>,
+        <https://example.org/rg/ort/10501007>,
+        <https://example.org/rg/ort/10503024>,
+        <https://example.org/rg/ort/10508980>,
+        <https://example.org/rg/ort/10513499>,
+        <https://example.org/rg/ort/10514716>,
+        <https://example.org/rg/ort/10518892>,
+        <https://example.org/rg/ort/10519101>,
+        <https://example.org/rg/ort/10519114>,
+        <https://example.org/rg/ort/10519417> ;
+    gndo:preferredNameForThePerson "Gerardus" ;
+    gndo:variantNameForThePerson "de Hoya" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10504820" .
 
 <https://example.org/rg/lemma/10502199> a owl:NamedIndividual,
         rgo:Lemma ;
