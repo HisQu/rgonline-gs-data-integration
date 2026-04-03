@@ -1,7 +1,9 @@
 @prefix rgo:    <https://example.org/ontology/> .
 @prefix rg:     <https://example.org/ontology/> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix gnd:    <https://d-nb.info/gnd/> .
 @prefix gndo:   <https://d-nb.info/standards/elementset/gnd#> .
+@prefix gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/> .
 @prefix org:    <http://www.w3.org/ns/org#> .
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -14,6 +16,26 @@
     rdfs:label "RG/GS harmonization ontology"@en ;
     rdfs:comment "Captures ontology-safe alignments already explicit in GS and RGO harmonize queries. No direct GS-RGO mappings are asserted; GNDO is the bridge."@en ;
     rdfs:comment "Scope: class/property correspondences and source-specific class refinements. Out of scope: string construction, IRI minting, literal normalization, and multi-hop joins requiring SPARQL rules."@en .
+
+#################################################################
+# Curated example identity links
+#################################################################
+
+gnd:136175414
+    owl:sameAs <https://example.org/rg/person/10504820>,
+        gsn:005-02827-001 .
+
+gnd:118525530
+    owl:sameAs <https://example.org/rg/person/10517697>,
+        gsn:012-00347-001 .
+
+gnd:10427526X
+    owl:sameAs <https://example.org/rg/person/10505909>,
+        gsn:015-00498-001 .
+
+gnd:137509782
+    owl:sameAs <https://example.org/rg/person/10504302>,
+        gsn:048-02156-001 .
 
 #################################################################
 # Class alignments
