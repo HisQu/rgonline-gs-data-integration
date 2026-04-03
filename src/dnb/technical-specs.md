@@ -10,6 +10,7 @@ For this project, the relevant DNB dataset is the **GND authority data** for per
 - **GND-only API endpoint:** `https://sparql.dnb.de/api/gnd`
 - **Combined DNB + GND API endpoint:** `https://sparql.dnb.de/api/dnbgnd`
 
+
 The GND-only endpoint shall be preferred unless bibliographic title data from the Deutsche Nationalbibliografie must be queried together with GND entities.
 
 ## 2. Normative sources
@@ -26,6 +27,8 @@ The implementation and data modeling shall follow these official DNB resources:
    `https://wiki.dnb.de/spaces/LINKEDDATASERVICE/pages/480810660/Sammlung+SPARQL+Anfragen`
 5. **RDF vocabularies overview**  
    `https://www.dnb.de/EN/Professionell/Metadatendienste/Exportformate/RDF-Vokabulare/rdf.html`
+6. **TTL dump**
+   `https://data.dnb.de/opendata/authorities-gnd-person_lds.ttl.gz`
 
 ## 3. Service characteristics
 
