@@ -1,4 +1,5 @@
 PREFIX ex:   <https://example.org/ontology/>
+PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
 
 CONSTRUCT {
   ?person ?pp ?po .
@@ -31,7 +32,8 @@ WHERE {
   UNION
   {
     ?person ex:appearsInLemma ?lemma .
-    ?place ex:appearsInLemma ?lemma .
+    ?place a gndo:PlaceOrGeographicName ;
+      ex:appearsInLemma ?lemma .
     ?place ?plp ?plo .
   }
 }

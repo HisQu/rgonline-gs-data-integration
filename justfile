@@ -2,8 +2,9 @@
 default:
     @just --list
 
-# Set up the entire project environment and starts all services
-go: sync test gndo-doc-fetch gs-fetch gs-clean dnb-fetch qlever ui
+# Set up dependencies, build reduced example inputs, run harmonization,
+# export person-focused examples, and start query services.
+go: sync test fetch reduce use-example clean harmonize examples-export qlever ui
 setup: go
 
 # Install project and dev dependencies
@@ -67,7 +68,7 @@ use-example:
 
 # Harmonize GS and RGO source graphs to GNDO-oriented projections using ROBOT.
 # Writes outputs to data/harmonized/.
-harmonize: gs-fix-dates
+harmonize:
     @mkdir -p data/harmonized
     just robot query \
         --input data/raw/gs/clean.ttl \
@@ -82,6 +83,12 @@ harmonize: gs-fix-dates
         --input data/harmonized/rgo.ttl \
         --output data/harmonized/full.ttl
 
+# Export per-person harmonized examples from data/harmonized/full.ttl.
+# Default mode is focused (one person per file). To reproduce the previous
+# broad traversal behavior, pass: --mode neighborhood
+examples-export *args:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python src/export_harmonized_examples.py {{ args }}
+
 # Fetch Germania Sacra persons active in the RG5 timeframe (1361–1447).
 # Downloads all ~2775 pages, caches under data/raw/gs/pages/, filters by date,
 # and writes merged output to data/raw/gs/full.ttl.
@@ -91,8 +98,9 @@ gs-fetch *args:
     cp data/raw/gs/full.ttl data/raw/gs/statements.ttl
 
 # Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
-# writing data/raw/gs/clean.ttl.  --tdb true bypasses the OWL API so that
-# blank-node persons and their owl:sameAs links are preserved.
+# then normalize fuzzy date literals in the cleaned output.
+# --tdb true bypasses the OWL API so that blank-node persons and their
+# owl:sameAs links are preserved.
 gs-clean:
     @mkdir -p data/raw/gs
     just robot query \
@@ -106,6 +114,7 @@ gs-clean:
         --input data/raw/gs/clean-orgs.ttl \
         --input data/raw/gs/clean-amts.ttl \
         --output data/raw/gs/clean.ttl
+    just gs-fix-dates
 
 # Download the GND person authority dump and extract to data/raw/dnb/full.ttl
 dnb-fetch:

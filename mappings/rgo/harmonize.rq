@@ -51,21 +51,6 @@ WHERE {
   # GNDO-native mappings for RGO source fields.
   UNION
   {
-    ?s ex:headText ?o .
-    BIND(gndo:preferredNameForTheSubjectHeading AS ?p)
-  }
-  UNION
-  {
-    ?s ex:text ?o .
-    BIND(gndo:definition AS ?p)
-  }
-  UNION
-  {
-    ?s ex:text ?o .
-    BIND(gndo:biographicalOrHistoricalInformation AS ?p)
-  }
-  UNION
-  {
     ?s ex:mentionsPerson ?o .
     BIND(gndo:relatedPerson AS ?p)
   }
@@ -83,7 +68,8 @@ WHERE {
   # Lift sublemma dates to person activity dates.
   UNION
   {
-    ?person ex:appearsInLemma ?lemma .
+    ?person a gndo:DifferentiatedPerson ;
+      ex:appearsInLemma ?lemma .
     ?lemma ex:hasSubEntry ?sublemma .
     ?sublemma ex:dateValue ?dateValue .
     BIND(?person AS ?s)
@@ -94,7 +80,8 @@ WHERE {
   # Lift places linked at lemma level to person place of activity.
   UNION
   {
-    ?person ex:appearsInLemma ?lemma .
+    ?person a gndo:DifferentiatedPerson ;
+      ex:appearsInLemma ?lemma .
     ?place a gndo:PlaceOrGeographicName ;
       ex:appearsInLemma ?lemma .
     BIND(?person AS ?s)
@@ -106,6 +93,8 @@ WHERE {
   UNION
   {
     VALUES (?srcProp ?dstProp) {
+      (ex:headText           rgont:headText)
+      (ex:text               rgont:text)
       (ex:sourceId           rgont:sourceId)
       (ex:volume             rgont:volume)
       (ex:appearsInLemma     rgont:appearsInLemma)
