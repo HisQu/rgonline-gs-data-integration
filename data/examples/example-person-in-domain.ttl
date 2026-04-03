@@ -1,0 +1,28 @@
+@prefix ns0: <http://purl.org/vocab/participation/schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/002-01715-003#amt-365998>
+  ns0:role_at "person:002-01715-003#organisation-365998"^^xsd:string ;
+  ns0:startDate "1439/1445/1447"^^xsd:string ;
+  foaf:name "Äbtissin"@de .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/002-01715-003#organisation-365998>
+  ns0:role "person:002-01715-003#amt-365998"^^xsd:string ;
+  a "foaf:Organization"^^xsd:string, "prov:Agent"^^xsd:string ;
+  owl:sameAs <https://klosterdatenbank.germania-sacra.de/gsn/743> ;
+  foaf:name "Zisterzienserinnenkloster Jüterbog"^^xsd:string .
+
+[] rdfs:Container [
+    ns0:holder_of <https://personendatenbank.germania-sacra.de/index/gsn/002-01715-003#amt-365998> ;
+    schema:deathDate "ca. 1451"^^xsd:string ;
+    schema:familyName "Ilow"^^xsd:string ;
+    schema:givenName "Adelheid"^^xsd:string ;
+    a "foaf:Person"^^xsd:string ;
+    owl:sameAs <https://personendatenbank.germania-sacra.de/index/gsn/002-01715-003> ;
+    org:memberOf <https://personendatenbank.germania-sacra.de/index/gsn/002-01715-003#organisation-365998>
+  ] .

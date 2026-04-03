@@ -1,0 +1,434 @@
+# Heinrich Bodo — integrated example from GS, DNB, and RGO
+# GND ID: 10427526X
+# GS page source: data/raw/gs/pages/page-01053.ttl
+# RGO person source: https://example.org/rg/person/10505909
+# GS canonical person URIs:
+#   https://personendatenbank.germania-sacra.de/index/gsn/015-00498-001
+#   https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001
+#   https://personendatenbank.germania-sacra.de/index/gsn/030-02222-001
+
+# --- GS (current source stage) ---
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns0: <http://purl.org/vocab/participation/schema#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350100> ns0:endDate "1541"^^xsd:string ;
+    ns0:role_at "person:016-00289-001#organisation-350100"^^xsd:string ;
+    ns0:startDate "circa 1500"^^xsd:string ;
+    foaf:name "Mönch"@de .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350101> ns0:endDate "1553"^^xsd:string ;
+    ns0:role_at "person:016-00289-001#organisation-350101"^^xsd:string ;
+    ns0:startDate "1541"^^xsd:string ;
+    foaf:name "Abt"@de .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350100> a "foaf:Organization"^^xsd:string,
+        "prov:Agent"^^xsd:string ;
+    ns0:role "person:016-00289-001#amt-350100"^^xsd:string ;
+    owl:sameAs <https://klosterdatenbank.germania-sacra.de/gsn/65> ;
+    foaf:name "Benediktinerkloster Clus"^^xsd:string .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350101> a "foaf:Organization"^^xsd:string,
+        "prov:Agent"^^xsd:string ;
+    ns0:role "person:016-00289-001#amt-350101"^^xsd:string ;
+    owl:sameAs <https://klosterdatenbank.germania-sacra.de/gsn/895> ;
+    foaf:name "Benediktinerabtei Steina, Nörten-Hardenberg"^^xsd:string .
+
+[] rdfs:Container [ a "foaf:Person"^^xsd:string ;
+            ns0:holder_of <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350100>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350101> ;
+            schema1:deathDate "1553"^^xsd:string ;
+            schema1:familyName "Bodo"^^xsd:string ;
+            schema1:givenName "Heinrich"^^xsd:string ;
+            owl:sameAs <http://d-nb.info/gnd/10427526X>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/015-00498-001>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/030-02222-001> ;
+            org:memberOf <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350100>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350101> ] .
+
+# --- DNB (current source stage) ---
+@prefix schema: <http://schema.org/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix lib: <http://purl.org/library/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix editeur: <https://ns.editeur.org/thema/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix umbel: <http://umbel.org/umbel#> .
+@prefix naf: <https://id.loc.gov/authorities/names/> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix rdau: <http://rdaregistry.info/Elements/u/> .
+@prefix bflc: <http://id.loc.gov/ontologies/bflc/> .
+@prefix thesoz: <http://lod.gesis.org/thesoz/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix isbd: <http://iflastandards.info/ns/isbd/elements/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mesh: <http://id.nlm.nih.gov/mesh/vocab#> .
+@prefix ram: <https://data.bnf.fr/ark:/12148/> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix marcRole: <http://id.loc.gov/vocabulary/relators/> .
+@prefix agrelon: <https://d-nb.info/standards/elementset/agrelon#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix nsogg: <https://purl.org/bncf/tid/> .
+@prefix dnbt: <https://d-nb.info/standards/elementset/dnb#> .
+@prefix dbp: <http://dbpedia.org/property/> .
+@prefix embne: <https://datos.bne.es/resource/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dnb_intern: <http://dnb.de/> .
+@prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix v: <http://www.w3.org/2006/vcard/ns#> .
+@prefix cidoc: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix dcatde: <http://dcat-ap.de/def/dcatde/> .
+@prefix ebu: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .
+@prefix wdrs: <http://www.w3.org/2007/05/powder-s#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix gbv: <http://purl.org/ontology/gbv/> .
+@prefix agrovoc: <https://aims.fao.org/aos/agrovoc/> .
+@prefix lcsh: <https://id.loc.gov/authorities/subjects/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://d-nb.info/gnd/10427526X> a gndo:DifferentiatedPerson;
+  wdrs:describedby <https://d-nb.info/gnd/10427526X/about> .
+
+<https://d-nb.info/gnd/10427526X/about> dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
+  dcterms:modified "2013-06-24T12:07:38.000"^^xsd:dateTime;
+  gndo:descriptionLevel <https://d-nb.info/standards/vocab/gnd/description-level#1> .
+
+<https://d-nb.info/gnd/10427526X> gndo:gndIdentifier "10427526X";
+  foaf:page <https://de.wikipedia.org/wiki/Henricus_Bodo>;
+  owl:sameAs <http://viaf.org/viaf/34887579>, <https://isni.org/isni/0000000078553490>,
+    <http://www.wikidata.org/entity/Q48405285>;
+  gndo:oldAuthorityNumber "(DE-588a)10427526X";
+  gndo:variantNameForThePerson "Bodo, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600832 .
+
+_:node1ji78aarmx2600832 gndo:forename "Henricus";
+  gndo:surname "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Bodo";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600833 .
+
+_:node1ji78aarmx2600833 gndo:personalName "Henricus";
+  gndo:nameAddition "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Boden";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600834 .
+
+_:node1ji78aarmx2600834 gndo:personalName "Henricus";
+  gndo:nameAddition "Boden" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Boden, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600835 .
+
+_:node1ji78aarmx2600835 gndo:forename "Henricus";
+  gndo:surname "Boden" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Boden, Heinrich";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600836 .
+
+_:node1ji78aarmx2600836 gndo:forename "Heinrich";
+  gndo:surname "Boden" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Bodon, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600837 .
+
+_:node1ji78aarmx2600837 gndo:forename "Henricus";
+  gndo:surname "Bodon" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Bodon";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600838 .
+
+_:node1ji78aarmx2600838 gndo:personalName "Henricus";
+  gndo:nameAddition "Bodon" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Henricus, Angelonius";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600839 .
+
+_:node1ji78aarmx2600839 gndo:personalName "Henricus";
+  gndo:nameAddition "Angelonius" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Angelonius, Henricus";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600840 .
+
+_:node1ji78aarmx2600840 gndo:forename "Henricus";
+  gndo:surname "Angelonius" .
+
+<https://d-nb.info/gnd/10427526X> gndo:variantNameForThePerson "Bodo, Henri";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx2600841 .
+
+_:node1ji78aarmx2600841 gndo:forename "Henri";
+  gndo:surname "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:preferredNameForThePerson "Bodo, Heinrich";
+  gndo:preferredNameEntityForThePerson _:node1ji78aarmx2600842 .
+
+_:node1ji78aarmx2600842 gndo:forename "Heinrich";
+  gndo:surname "Bodo" .
+
+<https://d-nb.info/gnd/10427526X> gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#male>;
+  gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE>;
+  wdrs:describedby <https://d-nb.info/gnd/10427526X/about> .
+
+<https://d-nb.info/gnd/10427526X/about> dcterms:creator <https://ld.zdb-services.de/resource/organisations/DE-12>;
+  dcatde:maintainer <https://ld.zdb-services.de/resource/organisations/DE-12> .
+
+<https://d-nb.info/gnd/10427526X> gndo:biographicalOrHistoricalInformation "OSB; Chronist im Kloster Clusa bei Gandersheim"@de;
+  gndo:professionOrOccupation _:node1ji78aarmx2600843 .
+
+_:node1ji78aarmx2600843 a rdf:Seq;
+  rdf:_1 <https://d-nb.info/gnd/4528560-3> .
+
+<https://d-nb.info/gnd/10427526X> gndo:dateOfDeath "1553"^^xsd:gYear .
+
+# --- RGO (current source stage) ---
+@prefix ex: <https://example.org/ontology/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/rg/lemma/10505413> a ex:RegestEntry ;
+    ex:hasSubEntry <https://example.org/rg/sublemma/10505413-1> ;
+    ex:headText "Johannes Prol can. eccl. Razeburg. o. Prem., qui ad par. eccl. s. Petri in Bergerdarse c. capel. s. Crucis annexa Razeburg. dioc. insimul 10 m. arg. p. vac. p.o. Henrici Budonis p. Wernerum Cock advocatum present. est prep. eccl. Razeburg. ad quem ex donatione Erici [V.] ducis Saxonie ius present. spectat dummodo unum ex can. eccl. Razeburg. presentaret" ;
+    ex:mentionsPerson <https://example.org/rg/person/10503918>,
+        <https://example.org/rg/person/10505909>,
+        <https://example.org/rg/person/10511347>,
+        <https://example.org/rg/person/10517534>,
+        <https://example.org/rg/person/10518717> ;
+    ex:mentionsPlace <https://example.org/rg/ort/10501880>,
+        <https://example.org/rg/ort/10516258>,
+        <https://example.org/rg/ort/10516265>,
+        <https://example.org/rg/ort/10516269>,
+        <https://example.org/rg/ort/10517402> ;
+    ex:sourceId "10505413" ;
+    ex:volume "5" .
+
+<https://example.org/rg/lemma/10508579> a ex:RegestEntry ;
+    ex:hasSubEntry <https://example.org/rg/sublemma/10508579-1>,
+        <https://example.org/rg/sublemma/10508579-2>,
+        <https://example.org/rg/sublemma/10508579-3> ;
+    ex:headText "Theodericus Coppeken Coepeken procur. in audientia litt. contradictarum" ;
+    ex:mentionsPerson <https://example.org/rg/person/10505909>,
+        <https://example.org/rg/person/10511347>,
+        <https://example.org/rg/person/10517534> ;
+    ex:mentionsPlace <https://example.org/rg/ort/10501881>,
+        <https://example.org/rg/ort/10514257>,
+        <https://example.org/rg/ort/10516258>,
+        <https://example.org/rg/ort/10516265>,
+        <https://example.org/rg/ort/10516270>,
+        <https://example.org/rg/ort/10517875>,
+        <https://example.org/rg/ort/10517880> ;
+    ex:sourceId "10508579" ;
+    ex:volume "5" .
+
+<https://example.org/rg/ort/10501880> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Bergerdarse Razeburg. dioc." ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10505413> ;
+    ex:sourceId "10501880" .
+
+<https://example.org/rg/ort/10501881> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Bergherdorpe Razeburg. dioc." ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10502830>,
+        <https://example.org/rg/lemma/10508579> ;
+    ex:sourceId "10501881" .
+
+<https://example.org/rg/ort/10514257> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Ortan.: ep." ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10500128>,
+        <https://example.org/rg/lemma/10500306>,
+        <https://example.org/rg/lemma/10501317>,
+        <https://example.org/rg/lemma/10501367>,
+        <https://example.org/rg/lemma/10501599>,
+        <https://example.org/rg/lemma/10502089>,
+        <https://example.org/rg/lemma/10502673>,
+        <https://example.org/rg/lemma/10502928>,
+        <https://example.org/rg/lemma/10503049>,
+        <https://example.org/rg/lemma/10503709>,
+        <https://example.org/rg/lemma/10503823>,
+        <https://example.org/rg/lemma/10503909>,
+        <https://example.org/rg/lemma/10503938>,
+        <https://example.org/rg/lemma/10503983>,
+        <https://example.org/rg/lemma/10504154>,
+        <https://example.org/rg/lemma/10504948>,
+        <https://example.org/rg/lemma/10505017>,
+        <https://example.org/rg/lemma/10505414>,
+        <https://example.org/rg/lemma/10505450>,
+        <https://example.org/rg/lemma/10505469>,
+        <https://example.org/rg/lemma/10505504>,
+        <https://example.org/rg/lemma/10505858>,
+        <https://example.org/rg/lemma/10506510>,
+        <https://example.org/rg/lemma/10506667>,
+        <https://example.org/rg/lemma/10506691>,
+        <https://example.org/rg/lemma/10507654>,
+        <https://example.org/rg/lemma/10508441>,
+        <https://example.org/rg/lemma/10508579>,
+        <https://example.org/rg/lemma/10508877>,
+        <https://example.org/rg/lemma/10508934>,
+        <https://example.org/rg/lemma/10509096>,
+        <https://example.org/rg/lemma/10509150>,
+        <https://example.org/rg/lemma/10509384> ;
+    ex:sourceId "10514257" .
+
+<https://example.org/rg/ort/10516258> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Razeburg." ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10500586>,
+        <https://example.org/rg/lemma/10501838>,
+        <https://example.org/rg/lemma/10501890>,
+        <https://example.org/rg/lemma/10502502>,
+        <https://example.org/rg/lemma/10502650>,
+        <https://example.org/rg/lemma/10502830>,
+        <https://example.org/rg/lemma/10503157>,
+        <https://example.org/rg/lemma/10503411>,
+        <https://example.org/rg/lemma/10504251>,
+        <https://example.org/rg/lemma/10504406>,
+        <https://example.org/rg/lemma/10505413>,
+        <https://example.org/rg/lemma/10506457>,
+        <https://example.org/rg/lemma/10507483>,
+        <https://example.org/rg/lemma/10507995>,
+        <https://example.org/rg/lemma/10508579>,
+        <https://example.org/rg/lemma/10508850>,
+        <https://example.org/rg/lemma/10509234> ;
+    ex:sourceId "10516258" .
+
+<https://example.org/rg/ort/10516265> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Razeburg.: eccl." ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10501838>,
+        <https://example.org/rg/lemma/10502502>,
+        <https://example.org/rg/lemma/10502650>,
+        <https://example.org/rg/lemma/10502830>,
+        <https://example.org/rg/lemma/10505413>,
+        <https://example.org/rg/lemma/10507483>,
+        <https://example.org/rg/lemma/10507995>,
+        <https://example.org/rg/lemma/10508579> ;
+    ex:sourceId "10516265" .
+
+<https://example.org/rg/ort/10516269> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Razeburg. d i o c , Bergerdarse" ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10505413> ;
+    ex:sourceId "10516269" .
+
+<https://example.org/rg/ort/10516270> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Razeburg. d i o c , Bergherdorpe" ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10502830>,
+        <https://example.org/rg/lemma/10508579> ;
+    ex:sourceId "10516270" .
+
+<https://example.org/rg/ort/10517402> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Saxonia: dux" ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10500099>,
+        <https://example.org/rg/lemma/10500936>,
+        <https://example.org/rg/lemma/10501482>,
+        <https://example.org/rg/lemma/10501601>,
+        <https://example.org/rg/lemma/10501753>,
+        <https://example.org/rg/lemma/10501954>,
+        <https://example.org/rg/lemma/10502059>,
+        <https://example.org/rg/lemma/10502743>,
+        <https://example.org/rg/lemma/10502847>,
+        <https://example.org/rg/lemma/10502901>,
+        <https://example.org/rg/lemma/10503147>,
+        <https://example.org/rg/lemma/10505004>,
+        <https://example.org/rg/lemma/10505082>,
+        <https://example.org/rg/lemma/10505413>,
+        <https://example.org/rg/lemma/10506853>,
+        <https://example.org/rg/lemma/10507366>,
+        <https://example.org/rg/lemma/10507398>,
+        <https://example.org/rg/lemma/10508570> ;
+    ex:sourceId "10517402" .
+
+<https://example.org/rg/ort/10517875> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Sleswic." ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10500767>,
+        <https://example.org/rg/lemma/10500769>,
+        <https://example.org/rg/lemma/10501071>,
+        <https://example.org/rg/lemma/10501084>,
+        <https://example.org/rg/lemma/10502150>,
+        <https://example.org/rg/lemma/10502192>,
+        <https://example.org/rg/lemma/10502424>,
+        <https://example.org/rg/lemma/10502868>,
+        <https://example.org/rg/lemma/10502904>,
+        <https://example.org/rg/lemma/10503066>,
+        <https://example.org/rg/lemma/10503673>,
+        <https://example.org/rg/lemma/10503779>,
+        <https://example.org/rg/lemma/10504849>,
+        <https://example.org/rg/lemma/10505682>,
+        <https://example.org/rg/lemma/10505753>,
+        <https://example.org/rg/lemma/10506381>,
+        <https://example.org/rg/lemma/10506599>,
+        <https://example.org/rg/lemma/10506931>,
+        <https://example.org/rg/lemma/10507226>,
+        <https://example.org/rg/lemma/10507278>,
+        <https://example.org/rg/lemma/10508579>,
+        <https://example.org/rg/lemma/10509565> ;
+    ex:sourceId "10517875" .
+
+<https://example.org/rg/ort/10517880> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Sleswic: eccl." ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10500767>,
+        <https://example.org/rg/lemma/10501071>,
+        <https://example.org/rg/lemma/10501084>,
+        <https://example.org/rg/lemma/10502150>,
+        <https://example.org/rg/lemma/10502424>,
+        <https://example.org/rg/lemma/10502868>,
+        <https://example.org/rg/lemma/10503673>,
+        <https://example.org/rg/lemma/10504849>,
+        <https://example.org/rg/lemma/10505682>,
+        <https://example.org/rg/lemma/10506599>,
+        <https://example.org/rg/lemma/10506931>,
+        <https://example.org/rg/lemma/10507226>,
+        <https://example.org/rg/lemma/10507278>,
+        <https://example.org/rg/lemma/10508579> ;
+    ex:sourceId "10517880" .
+
+<https://example.org/rg/person/10505909> a gndo:DifferentiatedPerson ;
+    gndo:preferredNameForThePerson "Henricus" ;
+    gndo:variantNameForThePerson "Bodonis Bedonis",
+        "Budonis" ;
+    ex:appearsInLemma <https://example.org/rg/lemma/10505413>,
+        <https://example.org/rg/lemma/10508579> ;
+    ex:sourceId "10505909" .
+
+<https://example.org/rg/sublemma/10505413-1> a ex:SubEntry ;
+    ex:dateValue "1436-01-14"^^xsd:date ;
+    ex:fundReferencePart1 "S" ;
+    ex:fundReferencePart2 "318" ;
+    ex:fundReferencePart3 "234rs" ;
+    ex:partOfLemma <https://example.org/rg/lemma/10505413> ;
+    ex:text "de nova prov. de d. par. eccl. et capel. sup. quib. litig. in R. cur. contra Theodericum Copeken; n.o. can. et canonicali portione et cantor. eccl. Razeburg. insimul 4 m. arg. p. 14. ian. 1436 S 318 234rs." ;
+    ex:volume "5" .
+
+<https://example.org/rg/sublemma/10508579-1> a ex:SubEntry ;
+    ex:dateValue "1436-07-09"^^xsd:date ;
+    ex:fundReferencePart1 "S" ;
+    ex:fundReferencePart2 "309",
+        "325" ;
+    ex:fundReferencePart3 "127rs",
+        "23r" ;
+    ex:partOfLemma <https://example.org/rg/lemma/10508579> ;
+    ex:text "de nova prov. de par. eccl. in Bergherdorpe Razeburg. dioc. 6 m. arg. vac. p.o. Henrici Bodonis Bedonis, Budonis 18. iul. 35 S 309 127rs, de prorog. exped. litt. 9. iul. 1436 S 325 23r." ;
+    ex:volume "5" .
+
+<https://example.org/rg/sublemma/10508579-2> a ex:SubEntry ;
+    ex:dateValue "1436-10-07"^^xsd:date ;
+    ex:fundReferencePart1 "S" ;
+    ex:fundReferencePart2 "327" ;
+    ex:fundReferencePart3 "77vs" ;
+    ex:partOfLemma <https://example.org/rg/lemma/10508579> ;
+    ex:text "de prov. si neutri de suprad. par. eccl. 6 m. arg. sup. qua vac. p.o. Henrici Bodonis litig. in R. cur. contra Johannem Proel can. eccl. Razeburg. o. Prem. detentorem; n.o. vicar. in eccl. Zwerin. 8 m. arg. 7. oct. 1436 S 327 77vs." ;
+    ex:volume "5" .
+
+<https://example.org/rg/sublemma/10508579-3> a ex:SubEntry ;
+    ex:dateValue "1436-12"^^xsd:gYearMonth ;
+    ex:fundReferencePart1 "L",
+        "T" ;
+    ex:fundReferencePart2 "341",
+        "5" ;
+    ex:fundReferencePart3 "133vss",
+        "41v" ;
+    ex:partOfLemma <https://example.org/rg/lemma/10508579> ;
+    ex:text "litig. in R. cur. sup. suprad. par. eccl. vac. p.o. Henrici Bodonis contra Johannem Proel can. eccl. Razeburg.: m. instit. 20. decb. 36 m. ad ep. Ortan., prep. eccl. Sleswic. et dec. eccl. b. Marie Hamburgen. Bremen. dioc. L 341 133vss, l.b. decb. 1436 T 5 41v." ;
+    ex:volume "5" .
