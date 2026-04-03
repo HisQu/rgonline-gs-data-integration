@@ -4,6 +4,8 @@
 data/raw/*/*
 !data/raw/**/.gitkeep
 !data/raw/**/example*
+data/harmonized/*
+!data/harmonized/.gitkeep
 *.pyc
 __pycache__/
 .venv/

@@ -9,6 +9,7 @@
 # - Use GNDO terms wherever GS semantics can be represented in GNDO.
 
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
 PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX owl:    <http://www.w3.org/2002/07/owl#>
@@ -47,7 +48,7 @@ WHERE {
 
   OPTIONAL {
     ?person owl:sameAs ?gsCanonicalURI .
-    FILTER(STRSTARTS(STR(?gsCanonicalURI), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    FILTER(STRSTARTS(STR(?gsCanonicalURI), STR(gsn:)))
   }
   BIND(COALESCE(?gsCanonicalURI, ?person) AS ?personOut)
 

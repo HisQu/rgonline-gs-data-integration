@@ -26,6 +26,23 @@ fetch: gndo-doc-fetch gs-fetch dnb-fetch
 
 clean: gs-clean
 
+# Normalize fuzzy GS date literals in data/raw/gs/clean.ttl to xsd:gYear.
+gs-fix-dates *args:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/fix_gs_clean_dates.py {{ args }}
+
+# Harmonize GS and RGO source graphs to GNDO-oriented projections using ROBOT.
+# Writes outputs to data/harmonized/.
+harmonize: gs-fix-dates
+    @mkdir -p data/harmonized
+    just robot query \
+        --input data/raw/gs/clean.ttl \
+        --tdb true \
+        --query mappings/gs/harmonize.rq data/harmonized/gs.ttl
+    just robot query \
+        --input data/raw/rgo/rg5_aligned.ttl \
+        --tdb true \
+        --query mappings/rgo/harmonize.rq data/harmonized/rgo.ttl
+
 # Fetch Germania Sacra persons active in the RG5 timeframe (1361–1447).
 # Downloads all ~2775 pages, caches under data/raw/gs/pages/, filters by date,
 # and writes merged output to data/raw/gs/statements.ttl.
@@ -33,17 +50,10 @@ clean: gs-clean
 gs-fetch *args:
     uv run python src/gs/fetch.py {{ args }}
 
-# Run the GS cleaning SPARQL UPDATE against the QLever endpoint
-gs-clean:
-    curl -s -X POST "http://localhost:7001" \
-        --data-urlencode "update@mappings/gs/clean.rq" \
-        --data-urlencode "access-token=ecclesiastical-persons-token" \
-    | uv run python scripts/report_update.py Persons Organisations Offices
-
 # Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
 # writing data/raw/gs/clean.ttl.  --tdb true bypasses the OWL API so that
 # blank-node persons and their owl:sameAs links are preserved.
-gs-clean-file:
+gs-clean:
     @mkdir -p data/raw/gs
     just robot query \
         --input data/raw/gs/statements.ttl \
