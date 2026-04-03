@@ -81,9 +81,9 @@ harmonize:
     just robot merge \
         --input data/harmonized/gs.ttl \
         --input data/harmonized/rgo.ttl \
-        --output data/harmonized/full.ttl
+        --output data/harmonized/statements.ttl
 
-# Export per-person harmonized examples from data/harmonized/full.ttl.
+# Export per-person harmonized examples from data/harmonized/statements.ttl.
 # Default mode is focused (one person per file). To reproduce the previous
 # broad traversal behavior, pass: --mode neighborhood
 examples-export *args:
