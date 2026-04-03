@@ -163,22 +163,26 @@ The initial RDF conversion should therefore model at least:
 A minimal target pattern is:
 
 ```turtle
-rg:lemma/10500001 a ex:RegestEntry ;
-    ex:sourceId "10500001" ;
-    ex:hasSubEntry rg:sublemma/10500001-1 ;
-    ex:hasSubEntry rg:sublemma/10500001-2 .
+@prefix rg: <https://example.org/rg/> .
+@prefix rgo: <https://example.org/ontology/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
 
-rg:sublemma/10500001-1 a ex:SubEntry ;
-    ex:hasDate rg:date/10500001-1 ;
-    ex:hasSourceReference rg:fund/10500001-1 .
+rg:lemma/10500001 a rgo:RegestEntry ;
+    rgo:sourceId "10500001" ;
+    rgo:hasSubEntry rg:sublemma/10500001-1 ;
+    rgo:hasSubEntry rg:sublemma/10500001-2 .
 
-rg:person/10513906 a ex:Person ;
-    ex:preferredName "Mauritius" ;
-    ex:appearsInLemma rg:lemma/10500001 .
+rg:sublemma/10500001-1 a rgo:SubEntry ;
+    rgo:dateValue rg:date/10500001-1 ;
+    rgo:fundReferencePart1 rg:fund/10500001-1 .
 
-rg:place/10519882 a ex:PlaceOrInstitution ;
-    ex:preferredName "Traiect. Leod. dioc: s. Servatii colleg. eccl." ;
-    ex:appearsInLemma rg:lemma/10500001 .
+rg:person/10513906 a gndo:DifferentiatedPerson ;
+    gndo:preferredNameForThePerson "Mauritius" ;
+    rgo:appearsInLemma rg:lemma/10500001 .
+
+rg:place/10519882 a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Traiect. Leod. dioc: s. Servatii colleg. eccl." ;
+    rgo:appearsInLemma rg:lemma/10500001 .
 ```
 ## Licensing
 

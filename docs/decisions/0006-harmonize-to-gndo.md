@@ -19,7 +19,7 @@ A pure GNDO projection is not sufficient because parts of GS/RGO carry source se
 ## Decision
 
 1. GNDO is the primary query vocabulary for cross-source person access.
-2. Statements that cannot be expressed cleanly in GNDO are preserved under RG ontology terms (`rgont:*`).
+2. Statements that cannot be expressed cleanly in GNDO are preserved under RG ontology terms (`rgo:*`).
 3. Harmonization is implemented as SPARQL `CONSTRUCT` queries:
    - `mappings/gs/harmonize.rq`
    - `mappings/rgo/harmonize.rq`
@@ -65,24 +65,22 @@ A pure GNDO projection is not sufficient because parts of GS/RGO carry source se
 
 RGO already contains partial GNDO person modeling; harmonization adds:
 
-- `ex:headText` -> `gndo:preferredNameForTheSubjectHeading`
-- `ex:text` -> `gndo:definition` (+ `gndo:biographicalOrHistoricalInformation`)
-- `ex:mentionsPerson` -> `gndo:relatedPerson`
-- `ex:mentionsPlace` -> `gndo:relatedPlaceOrGeographicName`
-- `ex:dateValue` -> `gndo:associatedDate`
+- `rgo:mentionsPerson` -> `gndo:relatedPerson`
+- `rgo:mentionsPlace` -> `gndo:relatedPlaceOrGeographicName`
+- `rgo:dateValue` -> `gndo:associatedDate`
 - lift sublemma dates to person level as `gndo:associatedDate`
 - lift place linkage through lemmas to person level as `gndo:placeOfActivity`
 
 RGO source structure is retained in RG ontology fallback:
 
-- `ex:RegestEntry` / `ex:SubEntry` class distinction (`rgont:Lemma`, `rgont:Sublemma`)
-- `ex:sourceId`, `ex:appearsInLemma`, `ex:hasSubEntry`, `ex:partOfLemma`
+- `rgo:RegestEntry` / `rgo:SubEntry` class distinction (`rgo:Lemma`, `rgo:Sublemma`)
+- `rgo:sourceId`, `rgo:appearsInLemma`, `rgo:hasSubEntry`, `rgo:partOfLemma`
 - fields without practical GNDO equivalents in this dataset (currently `volume`, `fundReferencePart*`)
 
 ## Consequences
 
 - Cross-source person queries can use GNDO as the default schema.
-- Source-faithful lemma/sublemma semantics remain available via `rgont:*` where GNDO has no direct equivalent.
+- Source-faithful lemma/sublemma semantics remain available via `rgo:*` where GNDO has no direct equivalent.
 - Some identity alignments remain historical-source dependent and should be treated as curated links (not guaranteed modern authority equivalence in every case).
 
 ## Future Work

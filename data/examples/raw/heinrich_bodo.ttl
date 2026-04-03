@@ -188,58 +188,58 @@ _:node1ji78aarmx2600843 a rdf:Seq;
 <https://d-nb.info/gnd/10427526X> gndo:dateOfDeath "1553"^^xsd:gYear .
 
 # --- RGO (current source stage) ---
-@prefix ex: <https://example.org/ontology/> .
+@prefix rgo: <https://example.org/ontology/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://example.org/rg/lemma/10505413> a ex:RegestEntry ;
-    ex:hasSubEntry <https://example.org/rg/sublemma/10505413-1> ;
-    ex:headText "Johannes Prol can. eccl. Razeburg. o. Prem., qui ad par. eccl. s. Petri in Bergerdarse c. capel. s. Crucis annexa Razeburg. dioc. insimul 10 m. arg. p. vac. p.o. Henrici Budonis p. Wernerum Cock advocatum present. est prep. eccl. Razeburg. ad quem ex donatione Erici [V.] ducis Saxonie ius present. spectat dummodo unum ex can. eccl. Razeburg. presentaret" ;
-    ex:mentionsPerson <https://example.org/rg/person/10503918>,
+<https://example.org/rg/lemma/10505413> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10505413-1> ;
+    rgo:headText "Johannes Prol can. eccl. Razeburg. o. Prem., qui ad par. eccl. s. Petri in Bergerdarse c. capel. s. Crucis annexa Razeburg. dioc. insimul 10 m. arg. p. vac. p.o. Henrici Budonis p. Wernerum Cock advocatum present. est prep. eccl. Razeburg. ad quem ex donatione Erici [V.] ducis Saxonie ius present. spectat dummodo unum ex can. eccl. Razeburg. presentaret" ;
+    rgo:mentionsPerson <https://example.org/rg/person/10503918>,
         <https://example.org/rg/person/10505909>,
         <https://example.org/rg/person/10511347>,
         <https://example.org/rg/person/10517534>,
         <https://example.org/rg/person/10518717> ;
-    ex:mentionsPlace <https://example.org/rg/ort/10501880>,
+    rgo:mentionsPlace <https://example.org/rg/ort/10501880>,
         <https://example.org/rg/ort/10516258>,
         <https://example.org/rg/ort/10516265>,
         <https://example.org/rg/ort/10516269>,
         <https://example.org/rg/ort/10517402> ;
-    ex:sourceId "10505413" ;
-    ex:volume "5" .
+    rgo:sourceId "10505413" ;
+    rgo:volume "5" .
 
-<https://example.org/rg/lemma/10508579> a ex:RegestEntry ;
-    ex:hasSubEntry <https://example.org/rg/sublemma/10508579-1>,
+<https://example.org/rg/lemma/10508579> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10508579-1>,
         <https://example.org/rg/sublemma/10508579-2>,
         <https://example.org/rg/sublemma/10508579-3> ;
-    ex:headText "Theodericus Coppeken Coepeken procur. in audientia litt. contradictarum" ;
-    ex:mentionsPerson <https://example.org/rg/person/10505909>,
+    rgo:headText "Theodericus Coppeken Coepeken procur. in audientia litt. contradictarum" ;
+    rgo:mentionsPerson <https://example.org/rg/person/10505909>,
         <https://example.org/rg/person/10511347>,
         <https://example.org/rg/person/10517534> ;
-    ex:mentionsPlace <https://example.org/rg/ort/10501881>,
+    rgo:mentionsPlace <https://example.org/rg/ort/10501881>,
         <https://example.org/rg/ort/10514257>,
         <https://example.org/rg/ort/10516258>,
         <https://example.org/rg/ort/10516265>,
         <https://example.org/rg/ort/10516270>,
         <https://example.org/rg/ort/10517875>,
         <https://example.org/rg/ort/10517880> ;
-    ex:sourceId "10508579" ;
-    ex:volume "5" .
+    rgo:sourceId "10508579" ;
+    rgo:volume "5" .
 
 <https://example.org/rg/ort/10501880> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Bergerdarse Razeburg. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10505413> ;
-    ex:sourceId "10501880" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10505413> ;
+    rgo:sourceId "10501880" .
 
 <https://example.org/rg/ort/10501881> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Bergherdorpe Razeburg. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502830>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502830>,
         <https://example.org/rg/lemma/10508579> ;
-    ex:sourceId "10501881" .
+    rgo:sourceId "10501881" .
 
 <https://example.org/rg/ort/10514257> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Ortan.: ep." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500128>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500128>,
         <https://example.org/rg/lemma/10500306>,
         <https://example.org/rg/lemma/10501317>,
         <https://example.org/rg/lemma/10501367>,
@@ -272,11 +272,11 @@ _:node1ji78aarmx2600843 a rdf:Seq;
         <https://example.org/rg/lemma/10509096>,
         <https://example.org/rg/lemma/10509150>,
         <https://example.org/rg/lemma/10509384> ;
-    ex:sourceId "10514257" .
+    rgo:sourceId "10514257" .
 
 <https://example.org/rg/ort/10516258> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Razeburg." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500586>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500586>,
         <https://example.org/rg/lemma/10501838>,
         <https://example.org/rg/lemma/10501890>,
         <https://example.org/rg/lemma/10502502>,
@@ -293,11 +293,11 @@ _:node1ji78aarmx2600843 a rdf:Seq;
         <https://example.org/rg/lemma/10508579>,
         <https://example.org/rg/lemma/10508850>,
         <https://example.org/rg/lemma/10509234> ;
-    ex:sourceId "10516258" .
+    rgo:sourceId "10516258" .
 
 <https://example.org/rg/ort/10516265> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Razeburg.: eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501838>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501838>,
         <https://example.org/rg/lemma/10502502>,
         <https://example.org/rg/lemma/10502650>,
         <https://example.org/rg/lemma/10502830>,
@@ -305,22 +305,22 @@ _:node1ji78aarmx2600843 a rdf:Seq;
         <https://example.org/rg/lemma/10507483>,
         <https://example.org/rg/lemma/10507995>,
         <https://example.org/rg/lemma/10508579> ;
-    ex:sourceId "10516265" .
+    rgo:sourceId "10516265" .
 
 <https://example.org/rg/ort/10516269> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Razeburg. d i o c , Bergerdarse" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10505413> ;
-    ex:sourceId "10516269" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10505413> ;
+    rgo:sourceId "10516269" .
 
 <https://example.org/rg/ort/10516270> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Razeburg. d i o c , Bergherdorpe" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502830>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502830>,
         <https://example.org/rg/lemma/10508579> ;
-    ex:sourceId "10516270" .
+    rgo:sourceId "10516270" .
 
 <https://example.org/rg/ort/10517402> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Saxonia: dux" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500099>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500099>,
         <https://example.org/rg/lemma/10500936>,
         <https://example.org/rg/lemma/10501482>,
         <https://example.org/rg/lemma/10501601>,
@@ -338,11 +338,11 @@ _:node1ji78aarmx2600843 a rdf:Seq;
         <https://example.org/rg/lemma/10507366>,
         <https://example.org/rg/lemma/10507398>,
         <https://example.org/rg/lemma/10508570> ;
-    ex:sourceId "10517402" .
+    rgo:sourceId "10517402" .
 
 <https://example.org/rg/ort/10517875> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Sleswic." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500767>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500767>,
         <https://example.org/rg/lemma/10500769>,
         <https://example.org/rg/lemma/10501071>,
         <https://example.org/rg/lemma/10501084>,
@@ -364,11 +364,11 @@ _:node1ji78aarmx2600843 a rdf:Seq;
         <https://example.org/rg/lemma/10507278>,
         <https://example.org/rg/lemma/10508579>,
         <https://example.org/rg/lemma/10509565> ;
-    ex:sourceId "10517875" .
+    rgo:sourceId "10517875" .
 
 <https://example.org/rg/ort/10517880> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Sleswic: eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500767>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500767>,
         <https://example.org/rg/lemma/10501071>,
         <https://example.org/rg/lemma/10501084>,
         <https://example.org/rg/lemma/10502150>,
@@ -382,53 +382,53 @@ _:node1ji78aarmx2600843 a rdf:Seq;
         <https://example.org/rg/lemma/10507226>,
         <https://example.org/rg/lemma/10507278>,
         <https://example.org/rg/lemma/10508579> ;
-    ex:sourceId "10517880" .
+    rgo:sourceId "10517880" .
 
 <https://example.org/rg/person/10505909> a gndo:DifferentiatedPerson ;
     gndo:preferredNameForThePerson "Henricus" ;
     gndo:variantNameForThePerson "Bodonis Bedonis",
         "Budonis" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10505413>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10505413>,
         <https://example.org/rg/lemma/10508579> ;
-    ex:sourceId "10505909" .
+    rgo:sourceId "10505909" .
 
-<https://example.org/rg/sublemma/10505413-1> a ex:SubEntry ;
-    ex:dateValue "1436-01-14"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "318" ;
-    ex:fundReferencePart3 "234rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10505413> ;
-    ex:text "de nova prov. de d. par. eccl. et capel. sup. quib. litig. in R. cur. contra Theodericum Copeken; n.o. can. et canonicali portione et cantor. eccl. Razeburg. insimul 4 m. arg. p. 14. ian. 1436 S 318 234rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10505413-1> a rgo:SubEntry ;
+    rgo:dateValue "1436-01-14"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "318" ;
+    rgo:fundReferencePart3 "234rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10505413> ;
+    rgo:text "de nova prov. de d. par. eccl. et capel. sup. quib. litig. in R. cur. contra Theodericum Copeken; n.o. can. et canonicali portione et cantor. eccl. Razeburg. insimul 4 m. arg. p. 14. ian. 1436 S 318 234rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10508579-1> a ex:SubEntry ;
-    ex:dateValue "1436-07-09"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "309",
+<https://example.org/rg/sublemma/10508579-1> a rgo:SubEntry ;
+    rgo:dateValue "1436-07-09"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "309",
         "325" ;
-    ex:fundReferencePart3 "127rs",
+    rgo:fundReferencePart3 "127rs",
         "23r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10508579> ;
-    ex:text "de nova prov. de par. eccl. in Bergherdorpe Razeburg. dioc. 6 m. arg. vac. p.o. Henrici Bodonis Bedonis, Budonis 18. iul. 35 S 309 127rs, de prorog. exped. litt. 9. iul. 1436 S 325 23r." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10508579> ;
+    rgo:text "de nova prov. de par. eccl. in Bergherdorpe Razeburg. dioc. 6 m. arg. vac. p.o. Henrici Bodonis Bedonis, Budonis 18. iul. 35 S 309 127rs, de prorog. exped. litt. 9. iul. 1436 S 325 23r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10508579-2> a ex:SubEntry ;
-    ex:dateValue "1436-10-07"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "327" ;
-    ex:fundReferencePart3 "77vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10508579> ;
-    ex:text "de prov. si neutri de suprad. par. eccl. 6 m. arg. sup. qua vac. p.o. Henrici Bodonis litig. in R. cur. contra Johannem Proel can. eccl. Razeburg. o. Prem. detentorem; n.o. vicar. in eccl. Zwerin. 8 m. arg. 7. oct. 1436 S 327 77vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10508579-2> a rgo:SubEntry ;
+    rgo:dateValue "1436-10-07"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "327" ;
+    rgo:fundReferencePart3 "77vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10508579> ;
+    rgo:text "de prov. si neutri de suprad. par. eccl. 6 m. arg. sup. qua vac. p.o. Henrici Bodonis litig. in R. cur. contra Johannem Proel can. eccl. Razeburg. o. Prem. detentorem; n.o. vicar. in eccl. Zwerin. 8 m. arg. 7. oct. 1436 S 327 77vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10508579-3> a ex:SubEntry ;
-    ex:dateValue "1436-12"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "L",
+<https://example.org/rg/sublemma/10508579-3> a rgo:SubEntry ;
+    rgo:dateValue "1436-12"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "L",
         "T" ;
-    ex:fundReferencePart2 "341",
+    rgo:fundReferencePart2 "341",
         "5" ;
-    ex:fundReferencePart3 "133vss",
+    rgo:fundReferencePart3 "133vss",
         "41v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10508579> ;
-    ex:text "litig. in R. cur. sup. suprad. par. eccl. vac. p.o. Henrici Bodonis contra Johannem Proel can. eccl. Razeburg.: m. instit. 20. decb. 36 m. ad ep. Ortan., prep. eccl. Sleswic. et dec. eccl. b. Marie Hamburgen. Bremen. dioc. L 341 133vss, l.b. decb. 1436 T 5 41v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10508579> ;
+    rgo:text "litig. in R. cur. sup. suprad. par. eccl. vac. p.o. Henrici Bodonis contra Johannem Proel can. eccl. Razeburg.: m. instit. 20. decb. 36 m. ad ep. Ortan., prep. eccl. Sleswic. et dec. eccl. b. Marie Hamburgen. Bremen. dioc. L 341 133vss, l.b. decb. 1436 T 5 41v." ;
+    rgo:volume "5" .

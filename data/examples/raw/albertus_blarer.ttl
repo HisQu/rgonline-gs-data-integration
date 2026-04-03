@@ -164,38 +164,38 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
 <https://d-nb.info/gnd/1017854483> gndo:dateOfDeath "1441-04-08"^^xsd:date .
 
 # --- RGO (current source stage) ---
-@prefix ex: <https://example.org/ontology/> .
+@prefix rgo: <https://example.org/ontology/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://example.org/rg/lemma/10500093> a ex:RegestEntry ;
-    ex:hasSubEntry <https://example.org/rg/sublemma/10500093-1>,
+<https://example.org/rg/lemma/10500093> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10500093-1>,
         <https://example.org/rg/sublemma/10500093-2>,
         <https://example.org/rg/sublemma/10500093-3> ;
-    ex:headText "Albertus Blarer I can. eccl. Constant." ;
-    ex:mentionsPerson <https://example.org/rg/person/10500219>,
+    rgo:headText "Albertus Blarer I can. eccl. Constant." ;
+    rgo:mentionsPerson <https://example.org/rg/person/10500219>,
         <https://example.org/rg/person/10501310>,
         <https://example.org/rg/person/10502636>,
         <https://example.org/rg/person/10510588> ;
-    ex:mentionsPlace <https://example.org/rg/ort/10504563>,
+    rgo:mentionsPlace <https://example.org/rg/ort/10504563>,
         <https://example.org/rg/ort/10504567> ;
-    ex:sourceId "10500093" ;
-    ex:volume "5" .
+    rgo:sourceId "10500093" ;
+    rgo:volume "5" .
 
-<https://example.org/rg/lemma/10501167> a ex:RegestEntry ;
-    ex:hasSubEntry <https://example.org/rg/sublemma/10501167-1>,
+<https://example.org/rg/lemma/10501167> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10501167-1>,
         <https://example.org/rg/sublemma/10501167-2>,
         <https://example.org/rg/sublemma/10501167-3>,
         <https://example.org/rg/sublemma/10501167-4>,
         <https://example.org/rg/sublemma/10501167-5> ;
-    ex:headText "Conradus de Hohenrechbergh Hohen Rechberg, Habenrechberg" ;
-    ex:mentionsPerson <https://example.org/rg/person/10500219>,
+    rgo:headText "Conradus de Hohenrechbergh Hohen Rechberg, Habenrechberg" ;
+    rgo:mentionsPerson <https://example.org/rg/person/10500219>,
         <https://example.org/rg/person/10502557>,
         <https://example.org/rg/person/10502925>,
         <https://example.org/rg/person/10506388>,
         <https://example.org/rg/person/10507331>,
         <https://example.org/rg/person/10515257> ;
-    ex:mentionsPlace <https://example.org/rg/ort/10500058>,
+    rgo:mentionsPlace <https://example.org/rg/ort/10500058>,
         <https://example.org/rg/ort/10501091>,
         <https://example.org/rg/ort/10501097>,
         <https://example.org/rg/ort/10501120>,
@@ -207,11 +207,11 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/ort/10505381>,
         <https://example.org/rg/ort/10512314>,
         <https://example.org/rg/ort/10512853> ;
-    ex:sourceId "10501167" ;
-    ex:volume "5" .
+    rgo:sourceId "10501167" ;
+    rgo:volume "5" .
 
-<https://example.org/rg/lemma/10502695> a ex:RegestEntry ;
-    ex:hasSubEntry <https://example.org/rg/sublemma/10502695-1>,
+<https://example.org/rg/lemma/10502695> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10502695-1>,
         <https://example.org/rg/sublemma/10502695-10>,
         <https://example.org/rg/sublemma/10502695-11>,
         <https://example.org/rg/sublemma/10502695-12>,
@@ -225,8 +225,8 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/sublemma/10502695-7>,
         <https://example.org/rg/sublemma/10502695-8>,
         <https://example.org/rg/sublemma/10502695-9> ;
-    ex:headText "Henricus de Hewen ep. Constant. Henricus de Hewen [deinde ep. Constant.] de bar. gen. et Henricus de Randegg" ;
-    ex:mentionsPerson <https://example.org/rg/person/10500219>,
+    rgo:headText "Henricus de Hewen ep. Constant. Henricus de Hewen [deinde ep. Constant.] de bar. gen. et Henricus de Randegg" ;
+    rgo:mentionsPerson <https://example.org/rg/person/10500219>,
         <https://example.org/rg/person/10500849>,
         <https://example.org/rg/person/10502557>,
         <https://example.org/rg/person/10502923>,
@@ -240,7 +240,7 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/person/10514545>,
         <https://example.org/rg/person/10515257>,
         <https://example.org/rg/person/10516505> ;
-    ex:mentionsPlace <https://example.org/rg/ort/10501912>,
+    rgo:mentionsPlace <https://example.org/rg/ort/10501912>,
         <https://example.org/rg/ort/10504563>,
         <https://example.org/rg/ort/10504575>,
         <https://example.org/rg/ort/10504576>,
@@ -252,11 +252,11 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/ort/10505381>,
         <https://example.org/rg/ort/10508519>,
         <https://example.org/rg/ort/10515246> ;
-    ex:sourceId "10502695" ;
-    ex:volume "5" .
+    rgo:sourceId "10502695" ;
+    rgo:volume "5" .
 
-<https://example.org/rg/lemma/10503497> a ex:RegestEntry ;
-    ex:hasSubEntry <https://example.org/rg/sublemma/10503497-1>,
+<https://example.org/rg/lemma/10503497> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10503497-1>,
         <https://example.org/rg/sublemma/10503497-10>,
         <https://example.org/rg/sublemma/10503497-11>,
         <https://example.org/rg/sublemma/10503497-12>,
@@ -281,8 +281,8 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/sublemma/10503497-7>,
         <https://example.org/rg/sublemma/10503497-8>,
         <https://example.org/rg/sublemma/10503497-9> ;
-    ex:headText "Hugo Arcuini Dorre de Landoya Hugo Arcuini Dorre Durre de Landoya Spira cler. Spiren. dioc., mag. in art. et utr. iur. doct., consiliarius et orator in R. cur. <Rabani> [de Helmstadt] aep. Trever." ;
-    ex:mentionsPerson <https://example.org/rg/person/10500219>,
+    rgo:headText "Hugo Arcuini Dorre de Landoya Hugo Arcuini Dorre Durre de Landoya Spira cler. Spiren. dioc., mag. in art. et utr. iur. doct., consiliarius et orator in R. cur. <Rabani> [de Helmstadt] aep. Trever." ;
+    rgo:mentionsPerson <https://example.org/rg/person/10500219>,
         <https://example.org/rg/person/10501461>,
         <https://example.org/rg/person/10502269>,
         <https://example.org/rg/person/10503234>,
@@ -294,7 +294,7 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/person/10511807>,
         <https://example.org/rg/person/10515866>,
         <https://example.org/rg/person/10516275> ;
-    ex:mentionsPlace <https://example.org/rg/ort/10500788>,
+    rgo:mentionsPlace <https://example.org/rg/ort/10500788>,
         <https://example.org/rg/ort/10500805>,
         <https://example.org/rg/ort/10500900>,
         <https://example.org/rg/ort/10500916>,
@@ -327,28 +327,28 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/ort/10521814>,
         <https://example.org/rg/ort/10522232>,
         <https://example.org/rg/ort/10522327> ;
-    ex:sourceId "10503497" ;
-    ex:volume "5" .
+    rgo:sourceId "10503497" ;
+    rgo:volume "5" .
 
 <https://example.org/rg/ort/10500058> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Affeltrang August. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167> ;
-    ex:sourceId "10500058" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:sourceId "10500058" .
 
 <https://example.org/rg/ort/10500788> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Argent: offic" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500444>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500444>,
         <https://example.org/rg/lemma/10501974>,
         <https://example.org/rg/lemma/10502351>,
         <https://example.org/rg/lemma/10503497>,
         <https://example.org/rg/lemma/10503688>,
         <https://example.org/rg/lemma/10507975>,
         <https://example.org/rg/lemma/10508229> ;
-    ex:sourceId "10500788" .
+    rgo:sourceId "10500788" .
 
 <https://example.org/rg/ort/10500805> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Argent: s. Petri iunioris colleg. eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500321>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500321>,
         <https://example.org/rg/lemma/10500406>,
         <https://example.org/rg/lemma/10500444>,
         <https://example.org/rg/lemma/10500904>,
@@ -387,26 +387,26 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10508266>,
         <https://example.org/rg/lemma/10508970>,
         <https://example.org/rg/lemma/10509217> ;
-    ex:sourceId "10500805" .
+    rgo:sourceId "10500805" .
 
 <https://example.org/rg/ort/10500900> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Argent. d i o c , Onheym" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10500900" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10500900" .
 
 <https://example.org/rg/ort/10500916> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Argent. d i o c , Sant" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10500916" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10500916" .
 
 <https://example.org/rg/ort/10500931> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Argent. dioc, Stint" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10500931" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10500931" .
 
 <https://example.org/rg/ort/10501091> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "August." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500150>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500150>,
         <https://example.org/rg/lemma/10500165>,
         <https://example.org/rg/lemma/10500178>,
         <https://example.org/rg/lemma/10500258>,
@@ -425,11 +425,11 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10501153>,
         <https://example.org/rg/lemma/10501167>,
         <https://example.org/rg/lemma/10501205> ;
-    ex:sourceId "10501091" .
+    rgo:sourceId "10501091" .
 
 <https://example.org/rg/ort/10501097> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "A u g u s t : eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500150>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500150>,
         <https://example.org/rg/lemma/10500165>,
         <https://example.org/rg/lemma/10500178>,
         <https://example.org/rg/lemma/10500287>,
@@ -444,37 +444,37 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10501153>,
         <https://example.org/rg/lemma/10501167>,
         <https://example.org/rg/lemma/10501205> ;
-    ex:sourceId "10501097" .
+    rgo:sourceId "10501097" .
 
 <https://example.org/rg/ort/10501120> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "August. d i o c , Affeltrang" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167> ;
-    ex:sourceId "10501120" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:sourceId "10501120" .
 
 <https://example.org/rg/ort/10501247> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "August. dioc, Meere" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167> ;
-    ex:sourceId "10501247" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:sourceId "10501247" .
 
 <https://example.org/rg/ort/10501252> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "August. dioc, Mirce" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167> ;
-    ex:sourceId "10501252" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:sourceId "10501252" .
 
 <https://example.org/rg/ort/10501860> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Berencassel Trever. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10501860" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10501860" .
 
 <https://example.org/rg/ort/10501897> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Berncastel Trever. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497>,
         <https://example.org/rg/lemma/10506977> ;
-    ex:sourceId "10501897" .
+    rgo:sourceId "10501897" .
 
 <https://example.org/rg/ort/10501912> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Berronen. Constant. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500774>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500774>,
         <https://example.org/rg/lemma/10501863>,
         <https://example.org/rg/lemma/10501944>,
         <https://example.org/rg/lemma/10501975>,
@@ -483,41 +483,41 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10507050>,
         <https://example.org/rg/lemma/10509013>,
         <https://example.org/rg/lemma/10509259> ;
-    ex:sourceId "10501912" .
+    rgo:sourceId "10501912" .
 
 <https://example.org/rg/ort/10503621> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Kermossel Trever. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10503621" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10503621" .
 
 <https://example.org/rg/ort/10504562> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant: archidiacon. Brisgaudie" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501863>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501863>,
         <https://example.org/rg/lemma/10501894>,
         <https://example.org/rg/lemma/10501975>,
         <https://example.org/rg/lemma/10502937>,
         <https://example.org/rg/lemma/10503153>,
         <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10504562" .
+    rgo:sourceId "10504562" .
 
 <https://example.org/rg/ort/10504563> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant: archidiacon. Ergoye Ergaudie" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500093>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500093>,
         <https://example.org/rg/lemma/10501894>,
         <https://example.org/rg/lemma/10501967>,
         <https://example.org/rg/lemma/10501975>,
         <https://example.org/rg/lemma/10502695>,
         <https://example.org/rg/lemma/10503021> ;
-    ex:sourceId "10504563" .
+    rgo:sourceId "10504563" .
 
 <https://example.org/rg/ort/10504567> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant: archidiacon. Turgoye" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500093> ;
-    ex:sourceId "10504567" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500093> ;
+    rgo:sourceId "10504567" .
 
 <https://example.org/rg/ort/10504573> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant.: s. Stephani colleg. eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500143>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500143>,
         <https://example.org/rg/lemma/10500185>,
         <https://example.org/rg/lemma/10500899>,
         <https://example.org/rg/lemma/10500901>,
@@ -553,11 +553,11 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10507949>,
         <https://example.org/rg/lemma/10508990>,
         <https://example.org/rg/lemma/10508997> ;
-    ex:sourceId "10504573" .
+    rgo:sourceId "10504573" .
 
 <https://example.org/rg/ort/10504575> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant: Crutzlingen e.m." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501975>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501975>,
         <https://example.org/rg/lemma/10501996>,
         <https://example.org/rg/lemma/10502030>,
         <https://example.org/rg/lemma/10502695>,
@@ -568,11 +568,11 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10506167>,
         <https://example.org/rg/lemma/10506286>,
         <https://example.org/rg/lemma/10506425> ;
-    ex:sourceId "10504575" .
+    rgo:sourceId "10504575" .
 
 <https://example.org/rg/ort/10504576> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant: Petridomus e.m." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167>,
         <https://example.org/rg/lemma/10501280>,
         <https://example.org/rg/lemma/10501506>,
         <https://example.org/rg/lemma/10501975>,
@@ -581,16 +581,16 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10505651>,
         <https://example.org/rg/lemma/10506167>,
         <https://example.org/rg/lemma/10507050> ;
-    ex:sourceId "10504576" .
+    rgo:sourceId "10504576" .
 
 <https://example.org/rg/ort/10504585> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant: not." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502695> ;
-    ex:sourceId "10504585" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:sourceId "10504585" .
 
 <https://example.org/rg/ort/10504587> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant. civit et dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500185>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500185>,
         <https://example.org/rg/lemma/10500899>,
         <https://example.org/rg/lemma/10501043>,
         <https://example.org/rg/lemma/10501164>,
@@ -603,11 +603,11 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10506286>,
         <https://example.org/rg/lemma/10507949>,
         <https://example.org/rg/lemma/10508132> ;
-    ex:sourceId "10504587" .
+    rgo:sourceId "10504587" .
 
 <https://example.org/rg/ort/10504618> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant. dioc, Berronen." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500774>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500774>,
         <https://example.org/rg/lemma/10501863>,
         <https://example.org/rg/lemma/10501944>,
         <https://example.org/rg/lemma/10501975>,
@@ -616,16 +616,16 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10507050>,
         <https://example.org/rg/lemma/10509013>,
         <https://example.org/rg/lemma/10509259> ;
-    ex:sourceId "10504618" .
+    rgo:sourceId "10504618" .
 
 <https://example.org/rg/ort/10504818> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Constant. dioc, Peronen." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502695> ;
-    ex:sourceId "10504818" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:sourceId "10504818" .
 
 <https://example.org/rg/ort/10505374> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Cur." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500747>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500747>,
         <https://example.org/rg/lemma/10500899>,
         <https://example.org/rg/lemma/10500937>,
         <https://example.org/rg/lemma/10501167>,
@@ -664,16 +664,16 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10508746>,
         <https://example.org/rg/lemma/10508971>,
         <https://example.org/rg/lemma/10509349> ;
-    ex:sourceId "10505374" .
+    rgo:sourceId "10505374" .
 
 <https://example.org/rg/ort/10505378> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Cur.:el." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167> ;
-    ex:sourceId "10505378" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:sourceId "10505378" .
 
 <https://example.org/rg/ort/10505381> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Cur.: eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500899>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500899>,
         <https://example.org/rg/lemma/10500937>,
         <https://example.org/rg/lemma/10501167>,
         <https://example.org/rg/lemma/10501296>,
@@ -699,41 +699,41 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10507625>,
         <https://example.org/rg/lemma/10507878>,
         <https://example.org/rg/lemma/10508167> ;
-    ex:sourceId "10505381" .
+    rgo:sourceId "10505381" .
 
 <https://example.org/rg/ort/10506117> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Emghenheim Spiren. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10506117" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10506117" .
 
 <https://example.org/rg/ort/10506146> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Engenheym Spiren. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10506146" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10506146" .
 
 <https://example.org/rg/ort/10506912> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Genheim Spiren. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10506912" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10506912" .
 
 <https://example.org/rg/ort/10508519> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Hewen: com." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502695> ;
-    ex:sourceId "10508519" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:sourceId "10508519" .
 
 <https://example.org/rg/ort/10509035> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Ingenheym Spiren. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10509035" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10509035" .
 
 <https://example.org/rg/ort/10509210> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Landow Spiren. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10509210" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10509210" .
 
 <https://example.org/rg/ort/10509476> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Leod.: s. Dionisii colleg. eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500487>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500487>,
         <https://example.org/rg/lemma/10500499>,
         <https://example.org/rg/lemma/10500519>,
         <https://example.org/rg/lemma/10500559>,
@@ -793,36 +793,36 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10509265>,
         <https://example.org/rg/lemma/10509276>,
         <https://example.org/rg/lemma/10509420> ;
-    ex:sourceId "10509476" .
+    rgo:sourceId "10509476" .
 
 <https://example.org/rg/ort/10512314> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Meere August. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167> ;
-    ex:sourceId "10512314" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:sourceId "10512314" .
 
 <https://example.org/rg/ort/10512853> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Mirce August. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10501167> ;
-    ex:sourceId "10512853" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:sourceId "10512853" .
 
 <https://example.org/rg/ort/10514194> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Onheym Argent. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10514194" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10514194" .
 
 <https://example.org/rg/ort/10515246> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Peronen. Constant. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502695> ;
-    ex:sourceId "10515246" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:sourceId "10515246" .
 
 <https://example.org/rg/ort/10517367> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Sant Argent. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10517367" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10517367" .
 
 <https://example.org/rg/ort/10518047> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren.: eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500139>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500139>,
         <https://example.org/rg/lemma/10500160>,
         <https://example.org/rg/lemma/10500224>,
         <https://example.org/rg/lemma/10500273>,
@@ -887,11 +887,11 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10507252>,
         <https://example.org/rg/lemma/10507764>,
         <https://example.org/rg/lemma/10507863> ;
-    ex:sourceId "10518047" .
+    rgo:sourceId "10518047" .
 
 <https://example.org/rg/ort/10518054> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren.: s. Germani colleg. eccl. e.m." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500105>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500105>,
         <https://example.org/rg/lemma/10501122>,
         <https://example.org/rg/lemma/10501592>,
         <https://example.org/rg/lemma/10501985>,
@@ -928,36 +928,36 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10508378>,
         <https://example.org/rg/lemma/10508957>,
         <https://example.org/rg/lemma/10509487> ;
-    ex:sourceId "10518054" .
+    rgo:sourceId "10518054" .
 
 <https://example.org/rg/ort/10518113> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren. dioc, Emghenheim" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10518113" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10518113" .
 
 <https://example.org/rg/ort/10518115> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren. dioc, Engenheym" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10518115" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10518115" .
 
 <https://example.org/rg/ort/10518130> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren. dioc, Genheim" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10518130" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10518130" .
 
 <https://example.org/rg/ort/10518163> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren. dioc, Ingenheym" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10518163" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10518163" .
 
 <https://example.org/rg/ort/10518170> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren. dioc, Landow" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10518170" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10518170" .
 
 <https://example.org/rg/ort/10518275> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Spiren. dioc: cler." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500105>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500105>,
         <https://example.org/rg/lemma/10500407>,
         <https://example.org/rg/lemma/10500602>,
         <https://example.org/rg/lemma/10500795>,
@@ -1014,37 +1014,37 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10508691>,
         <https://example.org/rg/lemma/10508864>,
         <https://example.org/rg/lemma/10508957> ;
-    ex:sourceId "10518275" .
+    rgo:sourceId "10518275" .
 
 <https://example.org/rg/ort/10518409> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Stint Argent. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10518409" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10518409" .
 
 <https://example.org/rg/ort/10519994> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Trever. dioc, Berencassel" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10519994" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10519994" .
 
 <https://example.org/rg/ort/10519996> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Trever. dioc, Berncastel" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497>,
         <https://example.org/rg/lemma/10506977> ;
-    ex:sourceId "10519996" .
+    rgo:sourceId "10519996" .
 
 <https://example.org/rg/ort/10520032> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Trever. dioc, Kermossel" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10520032" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10520032" .
 
 <https://example.org/rg/ort/10521814> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Weschafen Wormat. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10521814" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10521814" .
 
 <https://example.org/rg/ort/10522232> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Wormat: eccl." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500116>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500116>,
         <https://example.org/rg/lemma/10500273>,
         <https://example.org/rg/lemma/10500362>,
         <https://example.org/rg/lemma/10500397>,
@@ -1111,191 +1111,191 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         <https://example.org/rg/lemma/10508973>,
         <https://example.org/rg/lemma/10509158>,
         <https://example.org/rg/lemma/10509301> ;
-    ex:sourceId "10522232" .
+    rgo:sourceId "10522232" .
 
 <https://example.org/rg/ort/10522327> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Wormat. dioc, Weschafen" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10522327" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:sourceId "10522327" .
 
 <https://example.org/rg/person/10500219> a gndo:DifferentiatedPerson ;
     gndo:preferredNameForThePerson "Albertus" ;
     gndo:variantNameForThePerson "Blarer Blaer I" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500093>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500093>,
         <https://example.org/rg/lemma/10501167>,
         <https://example.org/rg/lemma/10502695>,
         <https://example.org/rg/lemma/10503497> ;
-    ex:sourceId "10500219" .
+    rgo:sourceId "10500219" .
 
-<https://example.org/rg/sublemma/10500093-1> a ex:SubEntry ;
-    ex:dateValue "1432-01-14"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "273" ;
-    ex:fundReferencePart3 "266rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10500093> ;
-    ex:text "de archidiac. Ergoye in eccl. Constant. 4 m. arg. vac. p.o. Johannis Helling qui surrogatus erat ad iur. Conradi Munchwil can. eccl. Constant. transl. p. Johannem XXIII. ad archidiac. Turgoye in d. eccl. C.; n.o. can. et preb. et custod. eccl. Constant. et can. et preb. eccl. ss. Felicis et Regule prepos. Thuricen. Constant. dioc. insimul 30 m. arg. 14. ian. 1432 S 273 266rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10500093-1> a rgo:SubEntry ;
+    rgo:dateValue "1432-01-14"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "273" ;
+    rgo:fundReferencePart3 "266rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10500093> ;
+    rgo:text "de archidiac. Ergoye in eccl. Constant. 4 m. arg. vac. p.o. Johannis Helling qui surrogatus erat ad iur. Conradi Munchwil can. eccl. Constant. transl. p. Johannem XXIII. ad archidiac. Turgoye in d. eccl. C.; n.o. can. et preb. et custod. eccl. Constant. et can. et preb. eccl. ss. Felicis et Regule prepos. Thuricen. Constant. dioc. insimul 30 m. arg. 14. ian. 1432 S 273 266rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10500093-2> a ex:SubEntry ;
-    ex:dateValue "1432-11"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "T" ;
-    ex:fundReferencePart2 "3" ;
-    ex:fundReferencePart3 "88v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10500093> ;
-    ex:text "l.b. nov. 1432 T 3 88v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10500093-2> a rgo:SubEntry ;
+    rgo:dateValue "1432-11"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "3" ;
+    rgo:fundReferencePart3 "88v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10500093> ;
+    rgo:text "l.b. nov. 1432 T 3 88v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10500093-3> a ex:SubEntry ;
-    ex:dateValue "1438-10-28"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "353" ;
-    ex:fundReferencePart3 "281vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10500093> ;
-    ex:text "subdiac.: de lic. elig. confess. 28. oct. 1438 S 353 281vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10500093-3> a rgo:SubEntry ;
+    rgo:dateValue "1438-10-28"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "353" ;
+    rgo:fundReferencePart3 "281vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10500093> ;
+    rgo:text "subdiac.: de lic. elig. confess. 28. oct. 1438 S 353 281vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10501167-1> a ex:SubEntry ;
-    ex:dateValue "1432-05"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "T" ;
-    ex:fundReferencePart2 "3" ;
-    ex:fundReferencePart3 "70v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10501167> ;
-    ex:text "l.b. mai. 1432 T 3 70v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10501167-1> a rgo:SubEntry ;
+    rgo:dateValue "1432-05"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "3" ;
+    rgo:fundReferencePart3 "70v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:text "l.b. mai. 1432 T 3 70v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10501167-2> a ex:SubEntry ;
-    ex:dateValue "1440-08-06"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "366" ;
-    ex:fundReferencePart3 "97rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10501167> ;
-    ex:text "de nob. et potentium gen., can. et prep. eccl. Cur., p. capit. d. eccl. in ep. el.: de nova prov. de omn. beneff. que adhuc obtin. et expectat, quia possessiones et iura d. eccl. occupate sint 6. aug. 1440 S 366 97rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10501167-2> a rgo:SubEntry ;
+    rgo:dateValue "1440-08-06"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "366" ;
+    rgo:fundReferencePart3 "97rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:text "de nob. et potentium gen., can. et prep. eccl. Cur., p. capit. d. eccl. in ep. el.: de nova prov. de omn. beneff. que adhuc obtin. et expectat, quia possessiones et iura d. eccl. occupate sint 6. aug. 1440 S 366 97rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10501167-3> a ex:SubEntry ;
-    ex:dateValue "1441-03-18"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "372" ;
-    ex:fundReferencePart3 "148vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10501167> ;
-    ex:text "olim el. Cur., qui gravi infirmitate affligitur: de conc. ut omn. sua beneff. que ante suprad. electionem obtin. retin. val. d. electione cass. et d. eccl. Cur. commiss. Henrico [de Höwen] ep. Constant., ut eam unac. eccl. Constant. regat 18. mart. 1441 S 372 148vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10501167-3> a rgo:SubEntry ;
+    rgo:dateValue "1441-03-18"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "372" ;
+    rgo:fundReferencePart3 "148vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:text "olim el. Cur., qui gravi infirmitate affligitur: de conc. ut omn. sua beneff. que ante suprad. electionem obtin. retin. val. d. electione cass. et d. eccl. Cur. commiss. Henrico [de Höwen] ep. Constant., ut eam unac. eccl. Constant. regat 18. mart. 1441 S 372 148vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10501167-4> a ex:SubEntry ;
-    ex:dateValue "1441-08-30"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "372",
+<https://example.org/rg/sublemma/10501167-4> a rgo:SubEntry ;
+    rgo:dateValue "1441-08-30"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "372",
         "376" ;
-    ex:fundReferencePart3 "183rs",
+    rgo:fundReferencePart3 "183rs",
         "4vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10501167> ;
-    ex:text "prep. eccl. Cur., ex patre de magnis nob., ex matre de com. gen.: de prepos. eccl. Constant. 90 m. arg. vac. p. prom. Henrici [de Höwen] ad d. eccl. 31. mart. 41 S 372 183rs, de ref. c. express. n.o. statut. 30. aug. 1441 S 376 4vs." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:text "prep. eccl. Cur., ex patre de magnis nob., ex matre de com. gen.: de prepos. eccl. Constant. 90 m. arg. vac. p. prom. Henrici [de Höwen] ad d. eccl. 31. mart. 41 S 372 183rs, de ref. c. express. n.o. statut. 30. aug. 1441 S 376 4vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10501167-5> a ex:SubEntry ;
-    ex:dateValue "1441-09-16"^^xsd:date ;
-    ex:fundReferencePart1 "A",
+<https://example.org/rg/sublemma/10501167-5> a rgo:SubEntry ;
+    rgo:dateValue "1441-09-16"^^xsd:date ;
+    rgo:fundReferencePart1 "A",
         "IE",
         "L" ;
-    ex:fundReferencePart2 "381",
+    rgo:fundReferencePart2 "381",
         "406",
         "407",
         "8" ;
-    ex:fundReferencePart3 "228r",
+    rgo:fundReferencePart3 "228r",
         "251r",
         "54r",
         "55v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10501167> ;
-    ex:text "prov. de prepos. eccl. Constant. 90 m. arg., p. can. d. eccl. obtin. solita vac. p. resign. Henrici [de Höwen] ep. Constant. qui primum Alberto Blaer [Blarer I] can. eccl. Constant. et deinde Ottoni [de Hachberg–Rötteln] aep. Caesarien. olim ep. Constant. pens. annuam 260 m. arg. et ultra ex proventibus eccl. Constant. solv. debuit, quare d. prepos. unac. d. eccl. C. retin. et prov. de can. c. reserv. preb. d. eccl.; n.o. prepos. dim. et can. et preb. eccl. Cur. et can. et preb. eccl. August. c. off. in Meere Mirce et in Affeltrang insimul 45 m. arg. 30. aug. 41 exec.: abb. mon. de Petridomo e.m. Constant. exped. 5. sept. 41 L 381 228r–229v, o.s.a. p. Hermannum Henrici cler. Constant. dioc. 16. sept. 41 A 8 251r, solv. 190 fl. pro compositione ann. p.m. Cosme et sociorum de Medicis 15. sept. 41 IE 406 55v, IE 407 54r, 16. sept. 1441 Paris, Q. A. 1, microf. p. 305." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10501167> ;
+    rgo:text "prov. de prepos. eccl. Constant. 90 m. arg., p. can. d. eccl. obtin. solita vac. p. resign. Henrici [de Höwen] ep. Constant. qui primum Alberto Blaer [Blarer I] can. eccl. Constant. et deinde Ottoni [de Hachberg–Rötteln] aep. Caesarien. olim ep. Constant. pens. annuam 260 m. arg. et ultra ex proventibus eccl. Constant. solv. debuit, quare d. prepos. unac. d. eccl. C. retin. et prov. de can. c. reserv. preb. d. eccl.; n.o. prepos. dim. et can. et preb. eccl. Cur. et can. et preb. eccl. August. c. off. in Meere Mirce et in Affeltrang insimul 45 m. arg. 30. aug. 41 exec.: abb. mon. de Petridomo e.m. Constant. exped. 5. sept. 41 L 381 228r–229v, o.s.a. p. Hermannum Henrici cler. Constant. dioc. 16. sept. 41 A 8 251r, solv. 190 fl. pro compositione ann. p.m. Cosme et sociorum de Medicis 15. sept. 41 IE 406 55v, IE 407 54r, 16. sept. 1441 Paris, Q. A. 1, microf. p. 305." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-1> a ex:SubEntry ;
-    ex:dateValue "1435-05-06"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "305" ;
-    ex:fundReferencePart3 "68rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "de adm. resign. ex causa perm. et prov. ipsi H. de Hewen de prepos. eccl. Constant. 100 m. arg. p. et d. H. de Randegg de prepos. eccl. Beronen. Constant. dioc. ac archidiac. Ergoye in eccl. Constant. insimul 70 m. arg. p.; n.o. pro ipso H. de Hewen decan. eccl. Argent. et canonn. et prebb. eccl. Argent. ac eccl. Constant. insimul 60 m. a. p., quos obtin. et pro d. H. de Randegg can. et preb. eccl. Constant. 20 m. a. p., quos obtin. et disp. ad incompat. ad vitam 6. mai. 1435 S 305 68rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-1> a rgo:SubEntry ;
+    rgo:dateValue "1435-05-06"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "305" ;
+    rgo:fundReferencePart3 "68rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "de adm. resign. ex causa perm. et prov. ipsi H. de Hewen de prepos. eccl. Constant. 100 m. arg. p. et d. H. de Randegg de prepos. eccl. Beronen. Constant. dioc. ac archidiac. Ergoye in eccl. Constant. insimul 70 m. arg. p.; n.o. pro ipso H. de Hewen decan. eccl. Argent. et canonn. et prebb. eccl. Argent. ac eccl. Constant. insimul 60 m. a. p., quos obtin. et pro d. H. de Randegg can. et preb. eccl. Constant. 20 m. a. p., quos obtin. et disp. ad incompat. ad vitam 6. mai. 1435 S 305 68rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-10> a ex:SubEntry ;
-    ex:dateValue "1436-10-15"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "327" ;
-    ex:fundReferencePart3 "270v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "cui papa conc. ut prepos. eccl. Constant. 160 m. arg. unac. eccl. Constant. in commendam retin. val. quousque quedam penss. 260 m. arg. mensam episc. gravantes duraverint: de lic. etiam can. et preb. et oblegia in eccl. Argent. 24 m. arg. retin. donec d. penss. cessaverint 15. oct. 1436 S 327 270v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-10> a rgo:SubEntry ;
+    rgo:dateValue "1436-10-15"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "327" ;
+    rgo:fundReferencePart3 "270v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "cui papa conc. ut prepos. eccl. Constant. 160 m. arg. unac. eccl. Constant. in commendam retin. val. quousque quedam penss. 260 m. arg. mensam episc. gravantes duraverint: de lic. etiam can. et preb. et oblegia in eccl. Argent. 24 m. arg. retin. donec d. penss. cessaverint 15. oct. 1436 S 327 270v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-11> a ex:SubEntry ;
-    ex:dateValue "1440-08-19"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "366" ;
-    ex:fundReferencePart3 "119vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "de prorog. suprad. commendationis prepos. eccl. Constant. ad vitam ipsius H. conc. ad 2 an. 19. aug. 1440 S 366 119vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-11> a rgo:SubEntry ;
+    rgo:dateValue "1440-08-19"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "366" ;
+    rgo:fundReferencePart3 "119vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "de prorog. suprad. commendationis prepos. eccl. Constant. ad vitam ipsius H. conc. ad 2 an. 19. aug. 1440 S 366 119vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-12> a ex:SubEntry ;
-    ex:dateValue "1440-08-19"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "366" ;
-    ex:fundReferencePart3 "120rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "de pot. reserv. certa beneff. in civit. et dioc. Constant. pro viris litteratis libertati eccl. tuende necessariis c. prerog. fam. pape videlicet 4 canonn. c. reserv. prebb. in maior. eccl., 1 can. c. reserv. preb. in qualibet eccl. civit. et dioc., 1 benef. ad coll. cuiuslibet collatoris in civit. et dioc. conc. de 2 in maior. eccl., de 6 in 6 colleg. eccll. et de 6 aliis beneff. in civit. et dioc. pro servientibus 19. aug. 1440 S 366 120rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-12> a rgo:SubEntry ;
+    rgo:dateValue "1440-08-19"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "366" ;
+    rgo:fundReferencePart3 "120rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "de pot. reserv. certa beneff. in civit. et dioc. Constant. pro viris litteratis libertati eccl. tuende necessariis c. prerog. fam. pape videlicet 4 canonn. c. reserv. prebb. in maior. eccl., 1 can. c. reserv. preb. in qualibet eccl. civit. et dioc., 1 benef. ad coll. cuiuslibet collatoris in civit. et dioc. conc. de 2 in maior. eccl., de 6 in 6 colleg. eccll. et de 6 aliis beneff. in civit. et dioc. pro servientibus 19. aug. 1440 S 366 120rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-13> a ex:SubEntry ;
-    ex:dateValue "1441-03-27"^^xsd:date ;
-    ex:fundReferencePart1 "L",
+<https://example.org/rg/sublemma/10502695-13> a rgo:SubEntry ;
+    rgo:dateValue "1441-03-27"^^xsd:date ;
+    rgo:fundReferencePart1 "L",
         "OC",
         "OS" ;
-    ex:fundReferencePart2 "368",
+    rgo:fundReferencePart2 "368",
         "6",
         "64",
         "66" ;
-    ex:fundReferencePart3 "332r",
+    rgo:fundReferencePart3 "332r",
         "334r",
         "34v",
         "79v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "de comitibus de Hewen, ep. Constant., cuius affinium castra et dominia Constant. et Cur. eccll. vicina sunt: commendat ei eccl. Cur. vac. p.o. Johannis <Nasonis>, ad quam reserv. ap. neglecta capit. Conradum de Rehberg tunc prep. d. eccl. elegit, et disp. c. ipso H. ut d. eccl. Cur. unac. eccl. Constant. retin. val. ad vitam, m. ipsi H. quod fidelitatis iuram. in manibus abb. mon. in Petridomo et in Curtzlingen e.m. Constant. prestet, cass. elect. d. Conradi graviter morbidi 8. mart. 41 solite litt. L 368 332r–333v, referente Juliano [de Cesarinis] card. s. Sabine OS 66 79v, oblig. sup. 500 fl. commun. serv. et 5 min. serv. eccl. Cur. p. Nicolaum Gundelfinger instrumento confecto p. Hermannum Hider auct. imper. not. 27. mart. 1441 OS 64 334r, OC 6 34v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "de comitibus de Hewen, ep. Constant., cuius affinium castra et dominia Constant. et Cur. eccll. vicina sunt: commendat ei eccl. Cur. vac. p.o. Johannis <Nasonis>, ad quam reserv. ap. neglecta capit. Conradum de Rehberg tunc prep. d. eccl. elegit, et disp. c. ipso H. ut d. eccl. Cur. unac. eccl. Constant. retin. val. ad vitam, m. ipsi H. quod fidelitatis iuram. in manibus abb. mon. in Petridomo et in Curtzlingen e.m. Constant. prestet, cass. elect. d. Conradi graviter morbidi 8. mart. 41 solite litt. L 368 332r–333v, referente Juliano [de Cesarinis] card. s. Sabine OS 66 79v, oblig. sup. 500 fl. commun. serv. et 5 min. serv. eccl. Cur. p. Nicolaum Gundelfinger instrumento confecto p. Hermannum Hider auct. imper. not. 27. mart. 1441 OS 64 334r, OC 6 34v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-14> a ex:SubEntry ;
-    ex:dateValue "1441-03-21"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "372" ;
-    ex:fundReferencePart3 "83v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "ep. Constant. et admin. eccl. Cur.: motu pr. de lic. ut prepos. eccl. Constant. unac. eccl. Constant. retin. val. ratione suprad. penss. ad 2 an. post earum cessationem 21. mart. 1441 S 372 83v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-14> a rgo:SubEntry ;
+    rgo:dateValue "1441-03-21"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "372" ;
+    rgo:fundReferencePart3 "83v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "ep. Constant. et admin. eccl. Cur.: motu pr. de lic. ut prepos. eccl. Constant. unac. eccl. Constant. retin. val. ratione suprad. penss. ad 2 an. post earum cessationem 21. mart. 1441 S 372 83v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-2> a ex:SubEntry ;
-    ex:dateValue "1435-05-19"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "305" ;
-    ex:fundReferencePart3 "285rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "dec. eccl. Argent.: de ref. prov. de prepos. eccl. Constant. 19. mai. 1435 S 305 285rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-2> a rgo:SubEntry ;
+    rgo:dateValue "1435-05-19"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "305" ;
+    rgo:fundReferencePart3 "285rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "dec. eccl. Argent.: de ref. prov. de prepos. eccl. Constant. 19. mai. 1435 S 305 285rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-3> a ex:SubEntry ;
-    ex:dateValue "1435-05-31"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "306" ;
-    ex:fundReferencePart3 "222rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "qui prepos. eccl. Beronen. Constant. dioc. ac archidiac. Ergoye in eccl. Constant. insimul 70 m. arg. p. et Henricus de Randegg qui prepos. eccl. Constant. 100 m. arg. p. ex causa perm. resign. in manibus pape: de perinde valere d. perm. c. express. quod d. prepos. eccl. Beronen. de iure patron. laic. est patronis assentientibus et quod temp. perm. d. H. de Randegg ius in prepos. eccl. Constant. n. habuit 31. mai. 1435 S 306 222rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-3> a rgo:SubEntry ;
+    rgo:dateValue "1435-05-31"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "306" ;
+    rgo:fundReferencePart3 "222rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "qui prepos. eccl. Beronen. Constant. dioc. ac archidiac. Ergoye in eccl. Constant. insimul 70 m. arg. p. et Henricus de Randegg qui prepos. eccl. Constant. 100 m. arg. p. ex causa perm. resign. in manibus pape: de perinde valere d. perm. c. express. quod d. prepos. eccl. Beronen. de iure patron. laic. est patronis assentientibus et quod temp. perm. d. H. de Randegg ius in prepos. eccl. Constant. n. habuit 31. mai. 1435 S 306 222rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-4> a ex:SubEntry ;
-    ex:dateValue "1436-12-18"^^xsd:date ;
-    ex:fundReferencePart1 "IE",
+<https://example.org/rg/sublemma/10502695-4> a rgo:SubEntry ;
+    rgo:dateValue "1436-12-18"^^xsd:date ;
+    rgo:fundReferencePart1 "IE",
         "L",
         "OS",
         "SM" ;
-    ex:fundReferencePart2 "2",
+    rgo:fundReferencePart2 "2",
         "346",
         "399",
         "400",
@@ -1305,7 +1305,7 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         "67",
         "70",
         "74" ;
-    ex:fundReferencePart3 "144r",
+    rgo:fundReferencePart3 "144r",
         "17v",
         "181r",
         "190v",
@@ -1320,314 +1320,314 @@ _:node1jh69j9nsx235107309 a rdf:Seq;
         "62v",
         "76v",
         "87v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "<prep. eccl. Constant., presb., ad eccl. Constant. el.>: preficitur eccl. Constant. vac. p.o. Frederici <de Zolr ep.> el. Constant. 19. sept. 36 solite litt. L 346 62v–64r, OS 66 53r, solv. 500 fl. pro min. serv. 15. sept. 36 [rectius: 20.-21. sept. 36] OS 65 253v, oblig. p. Fredericum Sor can. eccl. Constant. et Nicolaum Gundellfeyr prep. eccl. s. Michaelis Peronen. Constant. dioc. instrumento confecto p. mag. Rigandum Crevesy Creneyr not. Constant. de 2500 fl. commun. serv. et de 5 min. serv. 2. oct. 36 OS 64 256v, OS 70 181r, oblig. solut. infra 4 menses p.m. nob. viri Antonii de La Casa et Cosme et Laurentii de Medicis 2. oct. 36 OS 64 256v, OS 67 28v, solv. 1250 fl. pro commun. serv. et 113 fl. 31 sol. 10 den. pro min. serv. p.m. Cosme et Laurentii de Medicis 3. oct. 36 OS 74 87v, solv. 1250 fl. pro commun. serv. p.m. Cosme et Laurentii de Medicis IE 399 29r, IE 400 30r, solv. 113 fl. 31 sol. 10 den. pro min. serv. oct. 36 SM 2 17v, solv. 62 fl. 25 sol. pro sacris oct. 36 SM 2 43v, solv. 7 fl. pro sigillo quitantie oct. 36 SM 2 76v, solv. 41 fl. 33 sol. 4 den. pro subdiacon. oct. 36 SM 2 144r, solv. 340 fl. 45 sol. 6 den. pro 3 min. serv. oct. 36 SM 2 190v, solv. 863 fl. 31 sol. 9 den. 18. decb. 1436 OS 65 257v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "<prep. eccl. Constant., presb., ad eccl. Constant. el.>: preficitur eccl. Constant. vac. p.o. Frederici <de Zolr ep.> el. Constant. 19. sept. 36 solite litt. L 346 62v–64r, OS 66 53r, solv. 500 fl. pro min. serv. 15. sept. 36 [rectius: 20.-21. sept. 36] OS 65 253v, oblig. p. Fredericum Sor can. eccl. Constant. et Nicolaum Gundellfeyr prep. eccl. s. Michaelis Peronen. Constant. dioc. instrumento confecto p. mag. Rigandum Crevesy Creneyr not. Constant. de 2500 fl. commun. serv. et de 5 min. serv. 2. oct. 36 OS 64 256v, OS 70 181r, oblig. solut. infra 4 menses p.m. nob. viri Antonii de La Casa et Cosme et Laurentii de Medicis 2. oct. 36 OS 64 256v, OS 67 28v, solv. 1250 fl. pro commun. serv. et 113 fl. 31 sol. 10 den. pro min. serv. p.m. Cosme et Laurentii de Medicis 3. oct. 36 OS 74 87v, solv. 1250 fl. pro commun. serv. p.m. Cosme et Laurentii de Medicis IE 399 29r, IE 400 30r, solv. 113 fl. 31 sol. 10 den. pro min. serv. oct. 36 SM 2 17v, solv. 62 fl. 25 sol. pro sacris oct. 36 SM 2 43v, solv. 7 fl. pro sigillo quitantie oct. 36 SM 2 76v, solv. 41 fl. 33 sol. 4 den. pro subdiacon. oct. 36 SM 2 144r, solv. 340 fl. 45 sol. 6 den. pro 3 min. serv. oct. 36 SM 2 190v, solv. 863 fl. 31 sol. 9 den. 18. decb. 1436 OS 65 257v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-5> a ex:SubEntry ;
-    ex:dateValue "1436-09"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "L",
+<https://example.org/rg/sublemma/10502695-5> a rgo:SubEntry ;
+    rgo:dateValue "1436-09"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "L",
         "S",
         "T" ;
-    ex:fundReferencePart2 "326",
+    rgo:fundReferencePart2 "326",
         "339",
         "5" ;
-    ex:fundReferencePart3 "211rs",
+    rgo:fundReferencePart3 "211rs",
         "23v",
         "284vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "el. Constant., cuius mensa episc. gravata est 2 pens. 260 m. arg. solv. Alberto Blarer I can. eccl. Constant. cui olim de d. eccl. Constant. prov. fuit et Ottoni [de Hachberg–Rötteln] olim ep. Constant. <nunc aep. Caesarien.> et aliis debitis, quare castra et opida d. eccl. impignorari debuerunt: motu pr. de lic. quod prepos. eccl. Constant. 160 m. arg., quam obtin. in commendam retin. val. quamdiu quedam d. pens. duraverit 22. sept. 36 S 326 284vs, L 339 211rs, l.b. sept. 1436 T 5 23v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "el. Constant., cuius mensa episc. gravata est 2 pens. 260 m. arg. solv. Alberto Blarer I can. eccl. Constant. cui olim de d. eccl. Constant. prov. fuit et Ottoni [de Hachberg–Rötteln] olim ep. Constant. <nunc aep. Caesarien.> et aliis debitis, quare castra et opida d. eccl. impignorari debuerunt: motu pr. de lic. quod prepos. eccl. Constant. 160 m. arg., quam obtin. in commendam retin. val. quamdiu quedam d. pens. duraverit 22. sept. 36 S 326 284vs, L 339 211rs, l.b. sept. 1436 T 5 23v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-6> a ex:SubEntry ;
-    ex:dateValue "1436-09-27"^^xsd:date ;
-    ex:fundReferencePart1 "L" ;
-    ex:fundReferencePart2 "336" ;
-    ex:fundReferencePart3 "147v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "lic. recip. consecr. a quocumque ep. 27. sept. 1436 L 336 147v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-6> a rgo:SubEntry ;
+    rgo:dateValue "1436-09-27"^^xsd:date ;
+    rgo:fundReferencePart1 "L" ;
+    rgo:fundReferencePart2 "336" ;
+    rgo:fundReferencePart3 "147v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "lic. recip. consecr. a quocumque ep. 27. sept. 1436 L 336 147v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-7> a ex:SubEntry ;
-    ex:dateValue "1436-10-03"^^xsd:date ;
-    ex:fundReferencePart1 "IE" ;
-    ex:fundReferencePart2 "399",
+<https://example.org/rg/sublemma/10502695-7> a rgo:SubEntry ;
+    rgo:dateValue "1436-10-03"^^xsd:date ;
+    rgo:fundReferencePart1 "IE" ;
+    rgo:fundReferencePart2 "399",
         "400" ;
-    ex:fundReferencePart3 "29v",
+    rgo:fundReferencePart3 "29v",
         "30v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "solv. 400 fl. pro ann. prepos. eccl. Constant. ei commendate p.m. Cosme et Laurentii de Medicis 3. oct. 1436 IE 399 29v, IE 400 30v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "solv. 400 fl. pro ann. prepos. eccl. Constant. ei commendate p.m. Cosme et Laurentii de Medicis 3. oct. 1436 IE 399 29v, IE 400 30v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-8> a ex:SubEntry ;
-    ex:dateValue "1436-10-04"^^xsd:date ;
-    ex:fundReferencePart1 "A" ;
-    ex:fundReferencePart2 "7" ;
-    ex:fundReferencePart3 "21v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "o.s.a. prepos. eccl. Constant. p. Nicolaum Gundelfinger prep. eccl. Beronen. Constant. dioc. 4. oct. 1436 A 7 21v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-8> a rgo:SubEntry ;
+    rgo:dateValue "1436-10-04"^^xsd:date ;
+    rgo:fundReferencePart1 "A" ;
+    rgo:fundReferencePart2 "7" ;
+    rgo:fundReferencePart3 "21v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "o.s.a. prepos. eccl. Constant. p. Nicolaum Gundelfinger prep. eccl. Beronen. Constant. dioc. 4. oct. 1436 A 7 21v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502695-9> a ex:SubEntry ;
-    ex:dateValue "1436-10"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "T" ;
-    ex:fundReferencePart2 "5" ;
-    ex:fundReferencePart3 "24v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502695> ;
-    ex:text "l.b. oct. 1436 T 5 24v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502695-9> a rgo:SubEntry ;
+    rgo:dateValue "1436-10"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "5" ;
+    rgo:fundReferencePart3 "24v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502695> ;
+    rgo:text "l.b. oct. 1436 T 5 24v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-1> a ex:SubEntry ;
-    ex:dateValue "1431-03-20"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "267" ;
-    ex:fundReferencePart3 "104rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de can. et preb. eccl. Constant. 16 m. arg. et de prepos. eccl. s. Stephani Constant. 7 m. arg., p. can. eccl. Constant. regi consueta vac. p.o. Diethelmi Leman litt. ap. script. vel p. resign. Henrici Randeck et Alberti Blarer I; n.o. can. et preb. eccl. s. Germani e.m. Spiren. 9 m. arg., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Emghenheim, Emgenhem, Engenhem, Engenheym, Genheim, Ingenhem Spiren. dioc., disp. ad incompat. et disp. sup. def. nat. p., s. 20. mart. 1431 S 267 104rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-1> a rgo:SubEntry ;
+    rgo:dateValue "1431-03-20"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "267" ;
+    rgo:fundReferencePart3 "104rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de can. et preb. eccl. Constant. 16 m. arg. et de prepos. eccl. s. Stephani Constant. 7 m. arg., p. can. eccl. Constant. regi consueta vac. p.o. Diethelmi Leman litt. ap. script. vel p. resign. Henrici Randeck et Alberti Blarer I; n.o. can. et preb. eccl. s. Germani e.m. Spiren. 9 m. arg., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Emghenheim, Emgenhem, Engenhem, Engenheym, Genheim, Ingenhem Spiren. dioc., disp. ad incompat. et disp. sup. def. nat. p., s. 20. mart. 1431 S 267 104rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-10> a ex:SubEntry ;
-    ex:dateValue "1433-07-02"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "290" ;
-    ex:fundReferencePart3 "26r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de disp. ut par. eccl. in Sant Argent. dioc. unac. archidiac. Brisgaudie in eccl. Constant. retin. val. ad vitam conc. ad 5 an. 2. iul. 1433 S 290 26r." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-10> a rgo:SubEntry ;
+    rgo:dateValue "1433-07-02"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "290" ;
+    rgo:fundReferencePart3 "26r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de disp. ut par. eccl. in Sant Argent. dioc. unac. archidiac. Brisgaudie in eccl. Constant. retin. val. ad vitam conc. ad 5 an. 2. iul. 1433 S 290 26r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-11> a ex:SubEntry ;
-    ex:dateValue "1434-10-13"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "299" ;
-    ex:fundReferencePart3 "203rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de prov. si neutri de archidiac. Brisgaudie in eccl. Constant. 14 m. arg. sup. quo vac. p.o. Petri Liebinger abbrev. litig. in R. cur. contra Fredericum de Reno can. eccl. Constant.; n.o. suprad. statut. eccl. Constant., can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., prepos. eccl. s. Stephani Constant. 7 m. arg., dim., can. sub expect. preb. eccl. Constant., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., prov. de par. eccl. in Sant Argent. dioc. 10 m. arg. ac de par. eccl. in Weschafen Wormat. dioc. 8 m. arg. et disp. ad incompat. 13. oct. 1434 S 299 203rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-11> a rgo:SubEntry ;
+    rgo:dateValue "1434-10-13"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "299" ;
+    rgo:fundReferencePart3 "203rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de prov. si neutri de archidiac. Brisgaudie in eccl. Constant. 14 m. arg. sup. quo vac. p.o. Petri Liebinger abbrev. litig. in R. cur. contra Fredericum de Reno can. eccl. Constant.; n.o. suprad. statut. eccl. Constant., can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., prepos. eccl. s. Stephani Constant. 7 m. arg., dim., can. sub expect. preb. eccl. Constant., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., prov. de par. eccl. in Sant Argent. dioc. 10 m. arg. ac de par. eccl. in Weschafen Wormat. dioc. 8 m. arg. et disp. ad incompat. 13. oct. 1434 S 299 203rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-12> a ex:SubEntry ;
-    ex:dateValue "1435-11-17"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "309",
+<https://example.org/rg/sublemma/10503497-12> a rgo:SubEntry ;
+    rgo:dateValue "1435-11-17"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "309",
         "318" ;
-    ex:fundReferencePart3 "135rs",
+    rgo:fundReferencePart3 "135rs",
         "182r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de par. eccl. in Onheym Argent. dioc. 12 m. arg. vac. p. resign. Frederici de Reno can. eccl. Basil.; n.o. lite sup. archidiac. Brisgaudie in eccl. Constant. 14 m. arg., quem n. possidet, can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., lite sup. vicar. in eccl. Wormat. 5 m. arg., quam n. possidet, pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., lite sup. quodam benef. 8 m. arg., quod n. possidet et disp. ad incompat. 12. mai. 35 S 309 135rs, 17. nov. 1435 S 318 182r." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de par. eccl. in Onheym Argent. dioc. 12 m. arg. vac. p. resign. Frederici de Reno can. eccl. Basil.; n.o. lite sup. archidiac. Brisgaudie in eccl. Constant. 14 m. arg., quem n. possidet, can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., lite sup. vicar. in eccl. Wormat. 5 m. arg., quam n. possidet, pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., lite sup. quodam benef. 8 m. arg., quod n. possidet et disp. ad incompat. 12. mai. 35 S 309 135rs, 17. nov. 1435 S 318 182r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-13> a ex:SubEntry ;
-    ex:dateValue "1438-01-13"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "343" ;
-    ex:fundReferencePart3 "223vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "ambassiator aep. Trever.: de perinde valere gr. expect. s.d. 24. apr. 31 motu pr. c. express. quod vicar. ad alt. b. Marie in ambitu eccl. Wormat. quam vig. gr. expect. s.d. 25. apr. 31 acc. et in lite evicit dim. 13. ian. 1438 S 343 223vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-13> a rgo:SubEntry ;
+    rgo:dateValue "1438-01-13"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "343" ;
+    rgo:fundReferencePart3 "223vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "ambassiator aep. Trever.: de perinde valere gr. expect. s.d. 24. apr. 31 motu pr. c. express. quod vicar. ad alt. b. Marie in ambitu eccl. Wormat. quam vig. gr. expect. s.d. 25. apr. 31 acc. et in lite evicit dim. 13. ian. 1438 S 343 223vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-14> a ex:SubEntry ;
-    ex:dateValue "1438-01-20"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "344" ;
-    ex:fundReferencePart3 "248v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "consiliarius Rabani [de Helmstadt] aep. Trever. electoris S.R.I. supplic.: de prerog. fam. pape in canc. descriptorum ratione suprad. gr. expect. s.d. 24. apr. 31 motu pr. 20. ian. 1438 S 344 248v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-14> a rgo:SubEntry ;
+    rgo:dateValue "1438-01-20"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "344" ;
+    rgo:fundReferencePart3 "248v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "consiliarius Rabani [de Helmstadt] aep. Trever. electoris S.R.I. supplic.: de prerog. fam. pape in canc. descriptorum ratione suprad. gr. expect. s.d. 24. apr. 31 motu pr. 20. ian. 1438 S 344 248v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-15> a ex:SubEntry ;
-    ex:dateValue "1438-06-18"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "349" ;
-    ex:fundReferencePart3 "5vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "c. quo disp. est sup. def. nat. p., s. aut s., s.: de perinde valere decl. n.o. can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., capn. ad alt. s. Stephani in eccl. Argent. 5 m. arg., vicar. in eccl. s. Petri iunioris Argent. 4 m. arg., prov. de par. eccl. in Kermossel Trever. dioc. 16 m. arg. et pens. 36 fl. Ren. ex par. eccl. de Ingenheym Spiren. dioc. 18. iun. 1438 S 349 5vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-15> a rgo:SubEntry ;
+    rgo:dateValue "1438-06-18"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "349" ;
+    rgo:fundReferencePart3 "5vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "c. quo disp. est sup. def. nat. p., s. aut s., s.: de perinde valere decl. n.o. can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., capn. ad alt. s. Stephani in eccl. Argent. 5 m. arg., vicar. in eccl. s. Petri iunioris Argent. 4 m. arg., prov. de par. eccl. in Kermossel Trever. dioc. 16 m. arg. et pens. 36 fl. Ren. ex par. eccl. de Ingenheym Spiren. dioc. 18. iun. 1438 S 349 5vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-16> a ex:SubEntry ;
-    ex:dateValue "1438-07-02"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "334" ;
-    ex:fundReferencePart3 "179vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de exten. gr. expect. motu pr. 2. iul. 1438 S 334 179vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-16> a rgo:SubEntry ;
+    rgo:dateValue "1438-07-02"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "334" ;
+    rgo:fundReferencePart3 "179vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de exten. gr. expect. motu pr. 2. iul. 1438 S 334 179vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-17> a ex:SubEntry ;
-    ex:dateValue "1438-07-11"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "346" ;
-    ex:fundReferencePart3 "64rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "can. eccl. s. Germani e.m. Spiren., qui vig. gr. expect. s.d. 25. apr. 31 diversa beneff. et ultimo vicar. in eccl. Wormat. dim. acc.: de reval. gr. expect. motu pr. s.d. 24. apr. 31 11. iul. 1438 S 346 64rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-17> a rgo:SubEntry ;
+    rgo:dateValue "1438-07-11"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "346" ;
+    rgo:fundReferencePart3 "64rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "can. eccl. s. Germani e.m. Spiren., qui vig. gr. expect. s.d. 25. apr. 31 diversa beneff. et ultimo vicar. in eccl. Wormat. dim. acc.: de reval. gr. expect. motu pr. s.d. 24. apr. 31 11. iul. 1438 S 346 64rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-18> a ex:SubEntry ;
-    ex:dateValue "1438-07-16"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "334" ;
-    ex:fundReferencePart3 "204r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de ref. gr. expect. s.d. 24. apr. 31 motu pr. sine express. quod offic. Argent. sit 16. iul. 1438 S 334 204r." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-18> a rgo:SubEntry ;
+    rgo:dateValue "1438-07-16"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "334" ;
+    rgo:fundReferencePart3 "204r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de ref. gr. expect. s.d. 24. apr. 31 motu pr. sine express. quod offic. Argent. sit 16. iul. 1438 S 334 204r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-19> a ex:SubEntry ;
-    ex:dateValue "1438-07-21"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "346" ;
-    ex:fundReferencePart3 "66v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de perinde valere suprad. gr. expect. s.d. 24. apr. 31 ac si express. fuisset n.o. can. et preb. eccl. s. Germani e.m. Spiren., capn. ad alt. s. Stephani in eccl. Argent., vicar. ad alt. s. Petri in eccl. s. Petri iunioris Argent. insimul 19 m. arg., quos obtin., prov. de par. eccl. in Berncastel Berencassel Trever. dioc. 16 m. arg. et pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc. 21. iul. 1438 S 346 66v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-19> a rgo:SubEntry ;
+    rgo:dateValue "1438-07-21"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "346" ;
+    rgo:fundReferencePart3 "66v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de perinde valere suprad. gr. expect. s.d. 24. apr. 31 ac si express. fuisset n.o. can. et preb. eccl. s. Germani e.m. Spiren., capn. ad alt. s. Stephani in eccl. Argent., vicar. ad alt. s. Petri in eccl. s. Petri iunioris Argent. insimul 19 m. arg., quos obtin., prov. de par. eccl. in Berncastel Berencassel Trever. dioc. 16 m. arg. et pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc. 21. iul. 1438 S 346 66v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-2> a ex:SubEntry ;
-    ex:dateValue "1431-12"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "A",
+<https://example.org/rg/sublemma/10503497-2> a rgo:SubEntry ;
+    rgo:dateValue "1431-12"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "A",
         "L",
         "S",
         "T" ;
-    ex:fundReferencePart2 "2",
+    rgo:fundReferencePart2 "2",
         "267",
         "306",
         "6" ;
-    ex:fundReferencePart3 "119v",
+    rgo:fundReferencePart3 "119v",
         "71v",
         "92v",
         "9v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de ref. suprad. prov. de prepos. eccl. s. Stephani c. express. gr. expect. <ad can. c. reserv. preb. eccl. Constant.; n.o. can. et preb. eccl. s. Germani e.m. Spiren. 9 m. arg., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., disp. ad incompat. et disp. sup. def. nat. p., s.> 23. mart. 31 S 267 119v, exec.: abb. mon. Augie Maioris Constant. dioc. et prepp. eccl. Spiren. ac eccl. s. Dionisii Leod. exped. 20. decb. 31 L 306 9v–11v, o.s.a. 24. decb. 31 A 6 92v, l.b. decb. 1431 T 2 71v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de ref. suprad. prov. de prepos. eccl. s. Stephani c. express. gr. expect. <ad can. c. reserv. preb. eccl. Constant.; n.o. can. et preb. eccl. s. Germani e.m. Spiren. 9 m. arg., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., disp. ad incompat. et disp. sup. def. nat. p., s.> 23. mart. 31 S 267 119v, exec.: abb. mon. Augie Maioris Constant. dioc. et prepp. eccl. Spiren. ac eccl. s. Dionisii Leod. exped. 20. decb. 31 L 306 9v–11v, o.s.a. 24. decb. 31 A 6 92v, l.b. decb. 1431 T 2 71v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-20> a ex:SubEntry ;
-    ex:dateValue "1438-07"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "T" ;
-    ex:fundReferencePart2 "5" ;
-    ex:fundReferencePart3 "156r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "l.b. iul. 1438 T 5 156r." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-20> a rgo:SubEntry ;
+    rgo:dateValue "1438-07"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "5" ;
+    rgo:fundReferencePart3 "156r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "l.b. iul. 1438 T 5 156r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-21> a ex:SubEntry ;
-    ex:dateValue "1438-08-08"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "346" ;
-    ex:fundReferencePart3 "87vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de ref. suprad. conc., quod n.o. acceptatione vicar. in eccl. Wormat. dim. gr. expect. s.d. 24. apr. 31 motu pr. uti val. c. express. n.o. can. et preb. eccl. s. Germani e.m. Spiren., capn. ad alt. s. Stephani in eccl. Argent., vicar. ad alt. s. Petri in eccl. s. Petri iunioris Argent. insimul 19 m. arg., quos obtin., prov. de par. eccl. in Berncastel Trever. dioc. 16 m. arg. et pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc. et c. express. quod n. de Spira sed de Landow Spiren. dioc. oriundus existat 8. aug. 1438 S 346 87vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-21> a rgo:SubEntry ;
+    rgo:dateValue "1438-08-08"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "346" ;
+    rgo:fundReferencePart3 "87vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de ref. suprad. conc., quod n.o. acceptatione vicar. in eccl. Wormat. dim. gr. expect. s.d. 24. apr. 31 motu pr. uti val. c. express. n.o. can. et preb. eccl. s. Germani e.m. Spiren., capn. ad alt. s. Stephani in eccl. Argent., vicar. ad alt. s. Petri in eccl. s. Petri iunioris Argent. insimul 19 m. arg., quos obtin., prov. de par. eccl. in Berncastel Trever. dioc. 16 m. arg. et pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc. et c. express. quod n. de Spira sed de Landow Spiren. dioc. oriundus existat 8. aug. 1438 S 346 87vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-22> a ex:SubEntry ;
-    ex:dateValue "1438-12-19"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "351",
+<https://example.org/rg/sublemma/10503497-22> a rgo:SubEntry ;
+    rgo:dateValue "1438-12-19"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "351",
         "352",
         "353" ;
-    ex:fundReferencePart3 "16rs",
+    rgo:fundReferencePart3 "16rs",
         "16v",
         "293v",
         "3r",
         "50v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de prorog. exped. litt. prov. de par. eccl. in Berncastel Trever. dioc. 17. oct. 38 S 353 3r, 21. oct. 38 S 351 50v, 7. nov. 38 S 352 16rs, 24. nov. 38 S 352 16v, 19. decb. 1438 S 353 293v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de prorog. exped. litt. prov. de par. eccl. in Berncastel Trever. dioc. 17. oct. 38 S 353 3r, 21. oct. 38 S 351 50v, 7. nov. 38 S 352 16rs, 24. nov. 38 S 352 16v, 19. decb. 1438 S 353 293v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-23> a ex:SubEntry ;
-    ex:dateValue "1439-07-31"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "351",
+<https://example.org/rg/sublemma/10503497-23> a rgo:SubEntry ;
+    rgo:dateValue "1439-07-31"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "351",
         "356",
         "357",
         "359",
         "360" ;
-    ex:fundReferencePart3 "202r",
+    rgo:fundReferencePart3 "202r",
         "299v",
         "7v",
         "89v",
         "93r",
         "93vs",
         "9r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "motu pr. de can. et preb. eccl. Wormat. 12 m. arg. p. vac. p.o. Bartholomei Schuoler litt. ap. script. et abbrev.; n.o. statut. 18. oct. 38 S 351 7v, de prorog. exped. litt. 11. mart. 39 S 356 89v, 21. mart. 39 S 356 93vs, 15. apr. 39 S 357 93r, 19. mai. 39 S 357 299v, 10. iun. 39 S 359 9r, 31. iul. 1439 S 360 202r." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "motu pr. de can. et preb. eccl. Wormat. 12 m. arg. p. vac. p.o. Bartholomei Schuoler litt. ap. script. et abbrev.; n.o. statut. 18. oct. 38 S 351 7v, de prorog. exped. litt. 11. mart. 39 S 356 89v, 21. mart. 39 S 356 93vs, 15. apr. 39 S 357 93r, 19. mai. 39 S 357 299v, 10. iun. 39 S 359 9r, 31. iul. 1439 S 360 202r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-24> a ex:SubEntry ;
-    ex:dateValue "1439-03-14"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "356" ;
-    ex:fundReferencePart3 "89rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "cui de par. eccl. in Berncastel Trever. dioc. 18 m. arg., cuius cura p. vic. exerceri consuevit, simul de iure patron. laic. et aep. Trever. vac. p.o. cuiusdam Culmanni p. Rabanum [de Helmstadt] aep. Trever. prov. est, ad quam autem Johannes de Swarczenberg mil. patron. Johannem de Swarczenberg filium suum minorennem presentavit qui eam p. 5 an. detin.: de d. par. eccl.; n.o. can. et preb. eccl. s. Germani e.m. Spiren., capn. in eccl. Argent., vicar. in eccl. s. Petri iunioris Argent. insimul 21 m. arg., pens. 26 fl. Ren. ex par. eccl. de Ingenheym Spiren. dioc. et prov. de can. et preb. eccl. Wormat. 12 m. arg. 14. mart. 1439 S 356 89rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-24> a rgo:SubEntry ;
+    rgo:dateValue "1439-03-14"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "356" ;
+    rgo:fundReferencePart3 "89rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "cui de par. eccl. in Berncastel Trever. dioc. 18 m. arg., cuius cura p. vic. exerceri consuevit, simul de iure patron. laic. et aep. Trever. vac. p.o. cuiusdam Culmanni p. Rabanum [de Helmstadt] aep. Trever. prov. est, ad quam autem Johannes de Swarczenberg mil. patron. Johannem de Swarczenberg filium suum minorennem presentavit qui eam p. 5 an. detin.: de d. par. eccl.; n.o. can. et preb. eccl. s. Germani e.m. Spiren., capn. in eccl. Argent., vicar. in eccl. s. Petri iunioris Argent. insimul 21 m. arg., pens. 26 fl. Ren. ex par. eccl. de Ingenheym Spiren. dioc. et prov. de can. et preb. eccl. Wormat. 12 m. arg. 14. mart. 1439 S 356 89rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-25> a ex:SubEntry ;
-    ex:dateValue "1439-05-16"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "359" ;
-    ex:fundReferencePart3 "195vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "motu pr. de can. et preb. eccl. Wormat. vac. p.o. Bartholomei Schuoler c. derog. motu pr. statut. quib. cavetur quod nullus def. nat. patiens recipi val. 16. mai. 1439 S 359 195vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-25> a rgo:SubEntry ;
+    rgo:dateValue "1439-05-16"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "359" ;
+    rgo:fundReferencePart3 "195vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "motu pr. de can. et preb. eccl. Wormat. vac. p.o. Bartholomei Schuoler c. derog. motu pr. statut. quib. cavetur quod nullus def. nat. patiens recipi val. 16. mai. 1439 S 359 195vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-3> a ex:SubEntry ;
-    ex:dateValue "1431-08"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "T" ;
-    ex:fundReferencePart2 "2" ;
-    ex:fundReferencePart3 "44r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "l.b. aug. 1431 T 2 44r." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-3> a rgo:SubEntry ;
+    rgo:dateValue "1431-08"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "2" ;
+    rgo:fundReferencePart3 "44r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "l.b. aug. 1431 T 2 44r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-4> a ex:SubEntry ;
-    ex:dateValue "1433-06-20"^^xsd:date ;
-    ex:fundReferencePart1 "A",
+<https://example.org/rg/sublemma/10503497-4> a rgo:SubEntry ;
+    rgo:dateValue "1433-06-20"^^xsd:date ;
+    rgo:fundReferencePart1 "A",
         "S" ;
-    ex:fundReferencePart2 "279",
+    rgo:fundReferencePart2 "279",
         "6" ;
-    ex:fundReferencePart3 "236v",
+    rgo:fundReferencePart3 "236v",
         "73vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "orator in R. cur. <Rabani> [de Helmstadt] aep. Trever.: de can. et preb. eccl. Constant. [cass.] et archidiac. <Brisgaudie> Brißgaudie, Briskaw, Briskow in d. eccl. insimul 14 m. arg. vac. p.o. Petri Liebinger Lybinger abbrev.; n.o. prepos. 7 m. arg., quam n. possidet et can. sub expect. preb. eccl. s. Stephani Constant., can. et preb. eccl. s. Germani e.m. Spiren. 9 m. arg., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., disp. sup. def. nat. p., s. et disp. ut d. archidiac. unac. d. prepos. retin. val. ad 1 an. conc. et dim. prepos. eccl. s. Stephani pro Frederico Tifer 7. aug. 32 S 279 73vs, o.s.a. 20. iun. 1433 A 6 236v." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "orator in R. cur. <Rabani> [de Helmstadt] aep. Trever.: de can. et preb. eccl. Constant. [cass.] et archidiac. <Brisgaudie> Brißgaudie, Briskaw, Briskow in d. eccl. insimul 14 m. arg. vac. p.o. Petri Liebinger Lybinger abbrev.; n.o. prepos. 7 m. arg., quam n. possidet et can. sub expect. preb. eccl. s. Stephani Constant., can. et preb. eccl. s. Germani e.m. Spiren. 9 m. arg., pens. 36 fl. Ren. ex par. eccl. in Ingenheym Spiren. dioc., disp. sup. def. nat. p., s. et disp. ut d. archidiac. unac. d. prepos. retin. val. ad 1 an. conc. et dim. prepos. eccl. s. Stephani pro Frederico Tifer 7. aug. 32 S 279 73vs, o.s.a. 20. iun. 1433 A 6 236v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-5> a ex:SubEntry ;
-    ex:dateValue "1432-09-21"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "280" ;
-    ex:fundReferencePart3 "263rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "can. eccl. s. Germani e.m. Spiren.: de disp. ad incompat. ratione prepos. eccl. s. Stephani Constant. c.c., quam n. possidet c. lic. perm. conc. ad 2 an. 21. sept. 1432 S 280 263rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-5> a rgo:SubEntry ;
+    rgo:dateValue "1432-09-21"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "280" ;
+    rgo:fundReferencePart3 "263rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "can. eccl. s. Germani e.m. Spiren.: de disp. ad incompat. ratione prepos. eccl. s. Stephani Constant. c.c., quam n. possidet c. lic. perm. conc. ad 2 an. 21. sept. 1432 S 280 263rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-6> a ex:SubEntry ;
-    ex:dateValue "1433-01-29"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "282" ;
-    ex:fundReferencePart3 "226r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de lic. deinceps disp. sup. def. nat. p., s. tacendi 29. ian. 1433 S 282 226r." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-6> a rgo:SubEntry ;
+    rgo:dateValue "1433-01-29"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "282" ;
+    rgo:fundReferencePart3 "226r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de lic. deinceps disp. sup. def. nat. p., s. tacendi 29. ian. 1433 S 282 226r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-7> a ex:SubEntry ;
-    ex:dateValue "1433-05-03"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "286" ;
-    ex:fundReferencePart3 "34v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de uberiori disp. sup. def. nat. 3. mai. 1433 S 286 34v." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-7> a rgo:SubEntry ;
+    rgo:dateValue "1433-05-03"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "286" ;
+    rgo:fundReferencePart3 "34v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de uberiori disp. sup. def. nat. 3. mai. 1433 S 286 34v." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-8> a ex:SubEntry ;
-    ex:dateValue "1433-05-11"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "286" ;
-    ex:fundReferencePart3 "243rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de prov. si neutri de archidiac. Brisgaudie in eccl. Constant. 14 m. arg. sup. quo vac. p.o. Petri Liebinger abbrev. litig. in R. cur. contra Fredericum de Reno can. eccl. Basil.; n.o. statut. eccl. Constant. quib. cavetur quod solum can. actu prebend. et residens off. in d. eccl. acc. val., can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., prepos. eccl. s. Stephani Constant. 7 m. arg., quam n. possidet, dim., can. sub expect. preb. eccl. Constant., pens. 36 fl. ex par. eccl. in Ingenheym Spiren. dioc., par. eccl. in Sant Stint Argent. dioc. 10 m. arg. et disp. ad incompat. 11. mai. 1433 S 286 243rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-8> a rgo:SubEntry ;
+    rgo:dateValue "1433-05-11"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "286" ;
+    rgo:fundReferencePart3 "243rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de prov. si neutri de archidiac. Brisgaudie in eccl. Constant. 14 m. arg. sup. quo vac. p.o. Petri Liebinger abbrev. litig. in R. cur. contra Fredericum de Reno can. eccl. Basil.; n.o. statut. eccl. Constant. quib. cavetur quod solum can. actu prebend. et residens off. in d. eccl. acc. val., can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., prepos. eccl. s. Stephani Constant. 7 m. arg., quam n. possidet, dim., can. sub expect. preb. eccl. Constant., pens. 36 fl. ex par. eccl. in Ingenheym Spiren. dioc., par. eccl. in Sant Stint Argent. dioc. 10 m. arg. et disp. ad incompat. 11. mai. 1433 S 286 243rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10503497-9> a ex:SubEntry ;
-    ex:dateValue "1433-07-02"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "290" ;
-    ex:fundReferencePart3 "25vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10503497> ;
-    ex:text "de perinde valere gr. expect. ad can. c. reserv. maior. preb. eccl. s. Stephani Constant. et ad alia beneff. ac si express. foret disp. sup. def. nat. p., s.; n.o. pens. 36 fl. ex par. eccl. in Ingenheym Spiren. dioc., can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., quos obtin. et prov. de archidiac. Brisgaudie in eccl. Constant. 14 m. arg., de par. eccl. in Sant Argent. dioc. 10 m. arg. ac de suprad. prepos. 7 m. arg. 2. iul. 1433 S 290 25vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10503497-9> a rgo:SubEntry ;
+    rgo:dateValue "1433-07-02"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "290" ;
+    rgo:fundReferencePart3 "25vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10503497> ;
+    rgo:text "de perinde valere gr. expect. ad can. c. reserv. maior. preb. eccl. s. Stephani Constant. et ad alia beneff. ac si express. foret disp. sup. def. nat. p., s.; n.o. pens. 36 fl. ex par. eccl. in Ingenheym Spiren. dioc., can. et preb. eccl. s. Germani e.m. Spiren. 10 m. arg., quos obtin. et prov. de archidiac. Brisgaudie in eccl. Constant. 14 m. arg., de par. eccl. in Sant Argent. dioc. 10 m. arg. ac de suprad. prepos. 7 m. arg. 2. iul. 1433 S 290 25vs." ;
+    rgo:volume "5" .

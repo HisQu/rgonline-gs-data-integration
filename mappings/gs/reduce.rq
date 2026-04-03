@@ -1,6 +1,7 @@
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX owl:    <http://www.w3.org/2002/07/owl#>
 PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX gnd:    <https://d-nb.info/gnd/>
 
 CONSTRUCT {
   ?person ?pp ?po .
@@ -13,10 +14,10 @@ WHERE {
     <http://d-nb.info/gnd/118525530>
     <http://d-nb.info/gnd/10427526X>
     <http://d-nb.info/gnd/137509782>
-    <https://d-nb.info/gnd/136175414>
-    <https://d-nb.info/gnd/118525530>
-    <https://d-nb.info/gnd/10427526X>
-    <https://d-nb.info/gnd/137509782>
+    gnd:136175414
+    gnd:118525530
+    gnd:10427526X
+    gnd:137509782
   }
 
   ?person owl:sameAs ?gnd .

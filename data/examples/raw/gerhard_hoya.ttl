@@ -124,12 +124,12 @@ _:node1ji78aarmx5084237 a rdf:Seq;
 <https://d-nb.info/gnd/136175414> gndo:dateOfDeath "1463"^^xsd:gYear .
 
 # --- RGO (current source stage) ---
-@prefix ex: <https://example.org/ontology/> .
+@prefix rgo: <https://example.org/ontology/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://example.org/rg/lemma/10502199> a ex:RegestEntry ;
-    ex:hasSubEntry <https://example.org/rg/sublemma/10502199-1>,
+<https://example.org/rg/lemma/10502199> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10502199-1>,
         <https://example.org/rg/sublemma/10502199-2>,
         <https://example.org/rg/sublemma/10502199-3>,
         <https://example.org/rg/sublemma/10502199-4>,
@@ -138,9 +138,9 @@ _:node1ji78aarmx5084237 a rdf:Seq;
         <https://example.org/rg/sublemma/10502199-7>,
         <https://example.org/rg/sublemma/10502199-8>,
         <https://example.org/rg/sublemma/10502199-9> ;
-    ex:headText "Gerardus de Hoya cler. Camerac. dioc., licent. in decr." ;
-    ex:mentionsPerson <https://example.org/rg/person/10504820> ;
-    ex:mentionsPlace <https://example.org/rg/ort/10500782>,
+    rgo:headText "Gerardus de Hoya cler. Camerac. dioc., licent. in decr." ;
+    rgo:mentionsPerson <https://example.org/rg/person/10504820> ;
+    rgo:mentionsPlace <https://example.org/rg/ort/10500782>,
         <https://example.org/rg/ort/10501007>,
         <https://example.org/rg/ort/10503024>,
         <https://example.org/rg/ort/10508980>,
@@ -150,22 +150,22 @@ _:node1ji78aarmx5084237 a rdf:Seq;
         <https://example.org/rg/ort/10519101>,
         <https://example.org/rg/ort/10519114>,
         <https://example.org/rg/ort/10519417> ;
-    ex:sourceId "10502199" ;
-    ex:volume "5" .
+    rgo:sourceId "10502199" ;
+    rgo:volume "5" .
 
 <https://example.org/rg/ort/10500782> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Arrevelde Traiect. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    ex:sourceId "10500782" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10500782" .
 
 <https://example.org/rg/ort/10501007> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Artevelde Artevolde Traiect. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    ex:sourceId "10501007" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10501007" .
 
 <https://example.org/rg/ort/10503024> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Camerac d i o c" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500202>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500202>,
         <https://example.org/rg/lemma/10500249>,
         <https://example.org/rg/lemma/10500377>,
         <https://example.org/rg/lemma/10500499>,
@@ -194,22 +194,22 @@ _:node1ji78aarmx5084237 a rdf:Seq;
         <https://example.org/rg/lemma/10508170>,
         <https://example.org/rg/lemma/10509059>,
         <https://example.org/rg/lemma/10509348> ;
-    ex:sourceId "10503024" .
+    rgo:sourceId "10503024" .
 
 <https://example.org/rg/ort/10508980> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Incicovelde Traiect. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    ex:sourceId "10508980" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10508980" .
 
 <https://example.org/rg/ort/10513499> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Nanneten. dioc." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199>,
         <https://example.org/rg/lemma/10506480> ;
-    ex:sourceId "10513499" .
+    rgo:sourceId "10513499" .
 
 <https://example.org/rg/ort/10514716> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Parisien.: univ. stud." ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500163>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500163>,
         <https://example.org/rg/lemma/10502199>,
         <https://example.org/rg/lemma/10502374>,
         <https://example.org/rg/lemma/10502607>,
@@ -219,11 +219,11 @@ _:node1ji78aarmx5084237 a rdf:Seq;
         <https://example.org/rg/lemma/10503611>,
         <https://example.org/rg/lemma/10503672>,
         <https://example.org/rg/lemma/10507706> ;
-    ex:sourceId "10514716" .
+    rgo:sourceId "10514716" .
 
 <https://example.org/rg/ort/10518892> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Tornac. dioc" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10500045>,
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500045>,
         <https://example.org/rg/lemma/10500391>,
         <https://example.org/rg/lemma/10500528>,
         <https://example.org/rg/lemma/10501367>,
@@ -245,113 +245,113 @@ _:node1ji78aarmx5084237 a rdf:Seq;
         <https://example.org/rg/lemma/10508347>,
         <https://example.org/rg/lemma/10509059>,
         <https://example.org/rg/lemma/10509346> ;
-    ex:sourceId "10518892" .
+    rgo:sourceId "10518892" .
 
 <https://example.org/rg/ort/10519101> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Arrevelde" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    ex:sourceId "10519101" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519101" .
 
 <https://example.org/rg/ort/10519114> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Artevelde Artevolde" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    ex:sourceId "10519114" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519114" .
 
 <https://example.org/rg/ort/10519417> a gndo:PlaceOrGeographicName ;
     gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Incicovelde" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    ex:sourceId "10519417" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519417" .
 
 <https://example.org/rg/person/10504820> a gndo:DifferentiatedPerson ;
     gndo:preferredNameForThePerson "Gerardus" ;
     gndo:variantNameForThePerson "de Hoya" ;
-    ex:appearsInLemma <https://example.org/rg/lemma/10502199> ;
-    ex:sourceId "10504820" .
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10504820" .
 
-<https://example.org/rg/sublemma/10502199-1> a ex:SubEntry ;
-    ex:dateValue "1431-05-20"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "269" ;
-    ex:fundReferencePart3 "245rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Artevelde, Artevolde, Incicovelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 110 l. T. p. 20. mai. 1431 S 269 245rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502199-1> a rgo:SubEntry ;
+    rgo:dateValue "1431-05-20"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "269" ;
+    rgo:fundReferencePart3 "245rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Artevelde, Artevolde, Incicovelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 110 l. T. p. 20. mai. 1431 S 269 245rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-2> a ex:SubEntry ;
-    ex:dateValue "1431-05-25"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "266",
+<https://example.org/rg/sublemma/10502199-2> a rgo:SubEntry ;
+    rgo:dateValue "1431-05-25"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "266",
         "269" ;
-    ex:fundReferencePart3 "241r",
+    rgo:fundReferencePart3 "241r",
         "243rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "licent. in decr. <et mag. in art.>: de benef. Camerac. dioc.; n.o. [capn.] in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 100 <210> l. T. p. 23. mai. 31 S 266 243rs, 25. mai. 1431 S 269 241r." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "licent. in decr. <et mag. in art.>: de benef. Camerac. dioc.; n.o. [capn.] in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 100 <210> l. T. p. 23. mai. 31 S 266 243rs, 25. mai. 1431 S 269 241r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-3> a ex:SubEntry ;
-    ex:dateValue "1431-07"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "T" ;
-    ex:fundReferencePart2 "2",
+<https://example.org/rg/sublemma/10502199-3> a rgo:SubEntry ;
+    rgo:dateValue "1431-07"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "2",
         "3" ;
-    ex:fundReferencePart3 "27r",
+    rgo:fundReferencePart3 "27r",
         "39v" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "l.b. iul. 1431 T 2 39v, T 3 27r." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "l.b. iul. 1431 T 2 39v, T 3 27r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-4> a ex:SubEntry ;
-    ex:dateValue "1431-10-25"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "271" ;
-    ex:fundReferencePart3 "212rs",
+<https://example.org/rg/sublemma/10502199-4> a rgo:SubEntry ;
+    rgo:dateValue "1431-10-25"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "271" ;
+    rgo:fundReferencePart3 "212rs",
         "212vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "qui benef. Camerac. dioc. vig. gr. expect. in rotulo univ. stud. Parisien. s.d. 29. mart. 24 contenta acc.: de nova prov.; n.o. capn. in par. eccl. de Arrevelde de curia nunc. Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 230 l. T. p. 25. oct. 31 S 271 212rs, de ref. 25. oct. 1431 S 271 212vs." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "qui benef. Camerac. dioc. vig. gr. expect. in rotulo univ. stud. Parisien. s.d. 29. mart. 24 contenta acc.: de nova prov.; n.o. capn. in par. eccl. de Arrevelde de curia nunc. Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 230 l. T. p. 25. oct. 31 S 271 212rs, de ref. 25. oct. 1431 S 271 212vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-5> a ex:SubEntry ;
-    ex:dateValue "1432-12-30"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "282" ;
-    ex:fundReferencePart3 "28rs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 330 l. T. p. 30. decb. 1432 S 282 28rs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502199-5> a rgo:SubEntry ;
+    rgo:dateValue "1432-12-30"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "282" ;
+    rgo:fundReferencePart3 "28rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 330 l. T. p. 30. decb. 1432 S 282 28rs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-6> a ex:SubEntry ;
-    ex:dateValue "1433-11-16"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "293",
+<https://example.org/rg/sublemma/10502199-6> a rgo:SubEntry ;
+    rgo:dateValue "1433-11-16"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "293",
         "294" ;
-    ex:fundReferencePart3 "237rss",
+    rgo:fundReferencePart3 "237rss",
         "72vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Nanneten., Tornac. et Camerac. diocc. insimul 140 l. T. p. 14. nov. 33 S 294 237rss, 16. nov. 1433 S 293 72vs." ;
-    ex:volume "5" .
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Nanneten., Tornac. et Camerac. diocc. insimul 140 l. T. p. 14. nov. 33 S 294 237rss, 16. nov. 1433 S 293 72vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-7> a ex:SubEntry ;
-    ex:dateValue "1436-12-10"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "329" ;
-    ex:fundReferencePart3 "272vs" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "litig. in concil. Basil. sup. benef. Nanneten. dioc.: fit mentio 10. decb. 1436 S 329 272vs." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502199-7> a rgo:SubEntry ;
+    rgo:dateValue "1436-12-10"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "329" ;
+    rgo:fundReferencePart3 "272vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "litig. in concil. Basil. sup. benef. Nanneten. dioc.: fit mentio 10. decb. 1436 S 329 272vs." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-8> a ex:SubEntry ;
-    ex:dateValue "1437-11"^^xsd:gYearMonth ;
-    ex:fundReferencePart1 "T" ;
-    ex:fundReferencePart2 "5" ;
-    ex:fundReferencePart3 "114r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "l.b. nov. 1437 T 5 114r." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502199-8> a rgo:SubEntry ;
+    rgo:dateValue "1437-11"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "5" ;
+    rgo:fundReferencePart3 "114r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "l.b. nov. 1437 T 5 114r." ;
+    rgo:volume "5" .
 
-<https://example.org/rg/sublemma/10502199-9> a ex:SubEntry ;
-    ex:dateValue "1440-03-09"^^xsd:date ;
-    ex:fundReferencePart1 "S" ;
-    ex:fundReferencePart2 "364" ;
-    ex:fundReferencePart3 "16r" ;
-    ex:partOfLemma <https://example.org/rg/lemma/10502199> ;
-    ex:text "de prorog. exped. litt. prov. de benef. Nanneten. dioc. 9. mart. 1440 S 364 16r." ;
-    ex:volume "5" .
+<https://example.org/rg/sublemma/10502199-9> a rgo:SubEntry ;
+    rgo:dateValue "1440-03-09"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "364" ;
+    rgo:fundReferencePart3 "16r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de prorog. exped. litt. prov. de benef. Nanneten. dioc. 9. mart. 1440 S 364 16r." ;
+    rgo:volume "5" .

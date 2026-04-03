@@ -91,7 +91,10 @@ examples-export *args:
     for file in data/examples/harmonized/*.ttl; do \
         case "$file" in \
             *.reasoned.ttl) ;; \
-            *) just robot reason --input "$file" --reasoner ELK --output "${file%.ttl}.reasoned.ttl" ;; \
+            *) tmp="${file%.ttl}.with-ontology.ttl"; \
+               just robot merge --input mappings/harmonize.ttl --input "$file" --output "$tmp"; \
+               just robot reason --input "$tmp" --reasoner HermiT --output "${file%.ttl}.reasoned.ttl"; \
+               rm -f "$tmp" ;; \
         esac; \
     done
 

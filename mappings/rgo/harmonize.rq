@@ -1,10 +1,10 @@
 # Harmonize RGO data to GNDO where possible and preserve only residual
 # source-specific semantics in RG ontology terms.
 
-PREFIX ex:     <https://example.org/ontology/>
+PREFIX rgo:    <https://example.org/ontology/>
 PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
 PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rgont:  <https://example.org/ontology/>
+PREFIX rg:     <https://example.org/ontology/>
 
 CONSTRUCT {
   ?s ?p ?o .
@@ -51,17 +51,17 @@ WHERE {
   # GNDO-native mappings for RGO source fields.
   UNION
   {
-    ?s ex:mentionsPerson ?o .
+    ?s rgo:mentionsPerson ?o .
     BIND(gndo:relatedPerson AS ?p)
   }
   UNION
   {
-    ?s ex:mentionsPlace ?o .
+    ?s rgo:mentionsPlace ?o .
     BIND(gndo:relatedPlaceOrGeographicName AS ?p)
   }
   UNION
   {
-    ?s ex:dateValue ?o .
+    ?s rgo:dateValue ?o .
     BIND(gndo:associatedDate AS ?p)
   }
 
@@ -69,9 +69,9 @@ WHERE {
   UNION
   {
     ?person a gndo:DifferentiatedPerson ;
-      ex:appearsInLemma ?lemma .
-    ?lemma ex:hasSubEntry ?sublemma .
-    ?sublemma ex:dateValue ?dateValue .
+      rgo:appearsInLemma ?lemma .
+    ?lemma rgo:hasSubEntry ?sublemma .
+    ?sublemma rgo:dateValue ?dateValue .
     BIND(?person AS ?s)
     BIND(gndo:associatedDate AS ?p)
     BIND(?dateValue AS ?o)
@@ -81,9 +81,9 @@ WHERE {
   UNION
   {
     ?person a gndo:DifferentiatedPerson ;
-      ex:appearsInLemma ?lemma .
+      rgo:appearsInLemma ?lemma .
     ?place a gndo:PlaceOrGeographicName ;
-      ex:appearsInLemma ?lemma .
+      rgo:appearsInLemma ?lemma .
     BIND(?person AS ?s)
     BIND(gndo:placeOfActivity AS ?p)
     BIND(?place AS ?o)
@@ -93,16 +93,16 @@ WHERE {
   UNION
   {
     VALUES (?srcProp ?dstProp) {
-      (ex:headText           rgont:headText)
-      (ex:text               rgont:text)
-      (ex:sourceId           rgont:sourceId)
-      (ex:volume             rgont:volume)
-      (ex:appearsInLemma     rgont:appearsInLemma)
-      (ex:hasSubEntry        rgont:hasSublemma)
-      (ex:partOfLemma        rgont:partOfLemma)
-      (ex:fundReferencePart1 rgont:fundReferencePart1)
-      (ex:fundReferencePart2 rgont:fundReferencePart2)
-      (ex:fundReferencePart3 rgont:fundReferencePart3)
+      (rgo:headText           rg:headText)
+      (rgo:text               rg:text)
+      (rgo:sourceId           rg:sourceId)
+      (rgo:volume             rg:volume)
+      (rgo:appearsInLemma     rg:appearsInLemma)
+      (rgo:hasSubEntry        rg:hasSublemma)
+      (rgo:partOfLemma        rg:partOfLemma)
+      (rgo:fundReferencePart1 rg:fundReferencePart1)
+      (rgo:fundReferencePart2 rg:fundReferencePart2)
+      (rgo:fundReferencePart3 rg:fundReferencePart3)
     }
     ?s ?srcProp ?o .
     BIND(?dstProp AS ?p)
@@ -112,8 +112,8 @@ WHERE {
   UNION
   {
     VALUES (?srcClass ?dstClass) {
-      (ex:RegestEntry rgont:Lemma)
-      (ex:SubEntry    rgont:Sublemma)
+      (rgo:RegestEntry rg:Lemma)
+      (rgo:SubEntry    rg:Sublemma)
     }
     ?s a ?srcClass .
     BIND(rdf:type AS ?p)

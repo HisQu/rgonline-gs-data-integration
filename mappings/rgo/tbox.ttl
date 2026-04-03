@@ -1,42 +1,45 @@
+# this is automatically extracted from data/raw/rgo/rg5_aligned.ttl
+
 @prefix gndo:  <https://d-nb.info/standards/elementset/gnd#> .
-@prefix ex:    <https://example.org/ontology/> .
+@prefix rgo:   <https://example.org/ontology/> .
+@prefix rg:    <https://example.org/ontology/> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:fundReferencePart1
+rgo:fundReferencePart1
         a       owl:DatatypeProperty , rdf:Property .
 
-ex:RegestEntry  a  owl:Class .
+rgo:RegestEntry  a  owl:Class .
 
-ex:partOfLemma  a  owl:ObjectProperty , rdf:Property .
+rgo:partOfLemma  a  owl:ObjectProperty , rdf:Property .
 
-ex:headText  a  owl:DatatypeProperty , rdf:Property .
+rgo:headText  a  owl:DatatypeProperty , rdf:Property .
 
-ex:SubEntry  a  owl:Class .
+rgo:SubEntry  a  owl:Class .
 
-ex:RGOntology  a    owl:Ontology ;
+rgo:RGOntology  a    owl:Ontology ;
         rdfs:label  "RG ontology T-Box (extracted from data/raw/rgo/rg5_aligned.ttl)" .
 
-ex:mentionsPerson  a  owl:ObjectProperty , rdf:Property .
+rgo:mentionsPerson  a  owl:ObjectProperty , rdf:Property .
 
-ex:text  a      owl:DatatypeProperty , rdf:Property .
+rgo:text  a      owl:DatatypeProperty , rdf:Property .
 
-ex:fundReferencePart2
+rgo:fundReferencePart2
         a       owl:DatatypeProperty , rdf:Property .
 
-ex:sourceId  a  owl:DatatypeProperty , rdf:Property .
+rgo:sourceId  a  owl:DatatypeProperty , rdf:Property .
 
-ex:volume  a    owl:DatatypeProperty , rdf:Property .
+rgo:volume  a    owl:DatatypeProperty , rdf:Property .
 
-ex:hasSubEntry  a  owl:ObjectProperty , rdf:Property .
+rgo:hasSubEntry  a  owl:ObjectProperty , rdf:Property .
 
-ex:appearsInLemma  a  owl:ObjectProperty , rdf:Property .
+rgo:appearsInLemma  a  owl:ObjectProperty , rdf:Property .
 
-ex:dateValue  a  owl:DatatypeProperty , rdf:Property .
+rgo:dateValue  a  owl:DatatypeProperty , rdf:Property .
 
-ex:fundReferencePart3
+rgo:fundReferencePart3
         a       owl:DatatypeProperty , rdf:Property .
 
-ex:mentionsPlace  a  owl:ObjectProperty , rdf:Property .
+rgo:mentionsPlace  a  owl:ObjectProperty , rdf:Property .

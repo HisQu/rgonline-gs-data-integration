@@ -1,4 +1,4 @@
-PREFIX ex:   <https://example.org/ontology/>
+PREFIX rgo:  <https://example.org/ontology/>
 PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
 
 CONSTRUCT {
@@ -20,20 +20,20 @@ WHERE {
   }
   UNION
   {
-    ?person ex:appearsInLemma ?lemma .
+    ?person rgo:appearsInLemma ?lemma .
     ?lemma ?lp ?lo .
   }
   UNION
   {
-    ?person ex:appearsInLemma ?lemma .
-    ?lemma ex:hasSubEntry ?sublemma .
+    ?person rgo:appearsInLemma ?lemma .
+    ?lemma rgo:hasSubEntry ?sublemma .
     ?sublemma ?sp ?so .
   }
   UNION
   {
-    ?person ex:appearsInLemma ?lemma .
+    ?person rgo:appearsInLemma ?lemma .
     ?place a gndo:PlaceOrGeographicName ;
-      ex:appearsInLemma ?lemma .
+      rgo:appearsInLemma ?lemma .
     ?place ?plp ?plo .
   }
 }
