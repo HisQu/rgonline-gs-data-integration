@@ -67,7 +67,7 @@ use-example:
     cp data/raw/rgo/example.ttl data/raw/rgo/statements.ttl
 
 # Harmonize GS and RGO source graphs to GNDO-oriented projections using ROBOT.
-# Writes outputs to data/harmonized/.
+# Writes merged statements and reasoned output to data/harmonized/.
 harmonize:
     @mkdir -p data/harmonized
     just robot query \
@@ -82,6 +82,15 @@ harmonize:
         --input data/harmonized/gs.ttl \
         --input data/harmonized/rgo.ttl \
         --output data/harmonized/statements.ttl
+    just robot merge \
+        --input mappings/harmonize.ttl \
+        --input data/harmonized/statements.ttl \
+        --output data/harmonized/with-ontology.ttl
+    just robot reason \
+        --input data/harmonized/with-ontology.ttl \
+        --reasoner HermiT \
+        --output data/harmonized/statements.ttl
+    rm -f data/harmonized/with-ontology.ttl
 
 # Export per-person harmonized examples from data/harmonized/statements.ttl.
 # Default mode is focused (one person per file). To reproduce the previous
@@ -137,6 +146,19 @@ dnb-fetch:
 qlever-restart: qlever-stop qlever-start
 
 qlever: qlever-stop qlever-index qlever-up
+
+# Run all competency-question SPARQL queries with ROBOT and save CSV outputs.
+# Output files are written to queries/cq/results/.
+cq:
+    @mkdir -p queries/cq/results
+    @set -e; \
+    for query in queries/cq/*.rq; do \
+        out="queries/cq/results/$(basename "${query%.rq}").csv"; \
+        just robot query \
+            --input data/harmonized/statements.ttl \
+            --tdb true \
+            --query "$query" "$out"; \
+    done
 
 # Build the QLever index from all available source files
 qlever-index:

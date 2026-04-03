@@ -4,11 +4,11 @@ DESCRIPTION      = Harmonized ecclesiastical-person data (GNDO-centered integrat
 
 [index]
 # INPUT_FILES is required by the CLI.
-INPUT_FILES      = data/harmonized/full.ttl
+INPUT_FILES      = data/harmonized/statements.ttl
 
 # Load only the harmonized output graph (no raw source graphs).
 MULTI_INPUT_JSON = [
-    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/harmonized", "for-each": "data/harmonized/full.ttl"}
+    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/harmonized", "for-each": "data/harmonized/statements.ttl"}
   ]
 
 STXXL_MEMORY     = 4G
