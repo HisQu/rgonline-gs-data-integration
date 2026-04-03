@@ -1,0 +1,61 @@
+# Name: CQ 03: Name variants and titles
+# SortKey: 103
+# CQ3
+# Which names, name variants, and titles are used for the same person,
+# and what might these variations suggest about status, role, or regional usage?
+
+PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+
+SELECT DISTINCT
+  ?person
+  ?sourceEntity
+  ?nameType
+  ?nameValue
+WHERE {
+  GRAPH <https://data.rgonline-integration.de/graph/harmonized> {
+    # Replace with another person IRI as needed.
+    VALUES ?person { <https://d-nb.info/gnd/136175414> }
+
+    ?sourceEntity (owl:sameAs|^owl:sameAs)* ?person .
+
+    {
+      ?sourceEntity gndo:preferredNameForThePerson ?lit .
+      BIND("preferred_name" AS ?nameType)
+      BIND(STR(?lit) AS ?nameValue)
+    }
+    UNION
+    {
+      ?sourceEntity gndo:variantNameForThePerson ?lit .
+      BIND("variant_name" AS ?nameType)
+      BIND(STR(?lit) AS ?nameValue)
+    }
+    UNION
+    {
+      ?sourceEntity gndo:preferredNameEntityForThePerson ?nameEntity .
+      ?nameEntity gndo:forename ?lit .
+      BIND("forename" AS ?nameType)
+      BIND(STR(?lit) AS ?nameValue)
+    }
+    UNION
+    {
+      ?sourceEntity gndo:preferredNameEntityForThePerson ?nameEntity .
+      ?nameEntity gndo:surname ?lit .
+      BIND("surname" AS ?nameType)
+      BIND(STR(?lit) AS ?nameValue)
+    }
+    UNION
+    {
+      ?sourceEntity gndo:professionOrOccupationAsLiteral ?lit .
+      BIND("occupation_or_title_literal" AS ?nameType)
+      BIND(STR(?lit) AS ?nameValue)
+    }
+    UNION
+    {
+      ?sourceEntity gndo:affiliationAsLiteral ?lit .
+      BIND("affiliation_literal" AS ?nameType)
+      BIND(STR(?lit) AS ?nameValue)
+    }
+  }
+}
+ORDER BY ?nameType ?nameValue ?sourceEntity

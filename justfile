@@ -136,7 +136,7 @@ dnb-fetch:
 
 qlever-restart: qlever-stop qlever-start
 
-qlever: qlever-index qlever-up
+qlever: qlever-stop qlever-index qlever-up
 
 # Build the QLever index from all available source files
 qlever-index:
@@ -167,6 +167,7 @@ ui-setup:
         -v "$(pwd)/qlever-ui/db:/app/db" \
         -v "$(pwd)/scripts/setup_qlever_ui.py:/setup.py:ro" \
         -v "$(pwd)/queries/examples:/queries/examples:ro" \
+        -v "$(pwd)/queries/cq:/queries/cq:ro" \
         qleverui python /setup.py
 
 # Start the QLever UI container on port 7000

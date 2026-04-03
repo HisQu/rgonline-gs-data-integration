@@ -1,0 +1,50 @@
+# Name: CQ 02: Person activity over time and space
+# SortKey: 102
+# CQ2
+# For a selected person, how does their activity develop over time and space
+# (dates, places, and documented contexts)?
+
+PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rgo:  <https://example.org/ontology/>
+
+SELECT DISTINCT
+  ?person
+  ?personLabel
+  ?activityDate
+  ?place
+  ?placeLabel
+  ?lemma
+  ?sublemma
+  ?evidence
+WHERE {
+  GRAPH <https://data.rgonline-integration.de/graph/harmonized> {
+    # Replace with another person IRI as needed.
+    VALUES ?person { <https://d-nb.info/gnd/136175414> }
+
+    ?entity (owl:sameAs|^owl:sameAs)* ?person .
+
+    OPTIONAL { ?person gndo:preferredNameForThePerson ?personLabel }
+    OPTIONAL {
+      ?entity gndo:placeOfActivity ?place .
+      OPTIONAL { ?place gndo:preferredNameForThePlaceOrGeographicName ?placeLabel }
+    }
+
+    OPTIONAL { ?entity gndo:associatedDate ?dateDirect }
+
+    OPTIONAL {
+      ?entity rgo:appearsInLemma ?lemma .
+      OPTIONAL { ?lemma rgo:headText ?lemmaHeadText }
+
+      OPTIONAL {
+        ?lemma (rgo:hasSublemma|rgo:hasSubEntry) ?sublemma .
+        OPTIONAL { ?sublemma gndo:associatedDate ?dateFromSublemma }
+        OPTIONAL { ?sublemma rgo:text ?sublemmaText }
+      }
+    }
+
+    BIND(COALESCE(?dateDirect, ?dateFromSublemma) AS ?activityDate)
+    BIND(COALESCE(?sublemmaText, ?lemmaHeadText) AS ?evidence)
+  }
+}
+ORDER BY ?activityDate ?place ?lemma ?sublemma
