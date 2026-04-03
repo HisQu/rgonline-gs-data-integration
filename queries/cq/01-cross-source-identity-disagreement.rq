@@ -17,27 +17,34 @@ SELECT
   (COUNT(DISTINCT ?nameForm) AS ?distinct_name_forms)
   (GROUP_CONCAT(DISTINCT ?nameForm; separator=" || ") AS ?name_forms)
 WHERE {
-  GRAPH <https://data.rgonline-integration.de/graph/harmonized> {
-    ?gndPerson a gndo:DifferentiatedPerson .
-    FILTER(STRSTARTS(STR(?gndPerson), "https://d-nb.info/gnd/"))
+  ?gndPerson a gndo:DifferentiatedPerson .
+  FILTER(STRSTARTS(STR(?gndPerson), "https://d-nb.info/gnd/"))
 
-    ?entity (owl:sameAs|^owl:sameAs)* ?gndPerson .
-    FILTER(isIRI(?entity))
+  ?entity (owl:sameAs|^owl:sameAs)* ?gndPerson .
+  FILTER(isIRI(?entity))
 
-    BIND(IF(STRSTARTS(STR(?entity), "https://d-nb.info/gnd/"), ?entity, UNDEF) AS ?dnbUri)
-    BIND(IF(STRSTARTS(STR(?entity), "https://personendatenbank.germania-sacra.de/index/gsn/"), ?entity, UNDEF) AS ?gsUri)
-    BIND(IF(STRSTARTS(STR(?entity), "https://example.org/rg/person/"), ?entity, UNDEF) AS ?rgoUri)
+  OPTIONAL {
+    FILTER(STRSTARTS(STR(?entity), "https://d-nb.info/gnd/"))
+    BIND(?entity AS ?dnbUri)
+  }
+  OPTIONAL {
+    FILTER(STRSTARTS(STR(?entity), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    BIND(?entity AS ?gsUri)
+  }
+  OPTIONAL {
+    FILTER(STRSTARTS(STR(?entity), "https://example.org/rg/person/"))
+    BIND(?entity AS ?rgoUri)
+  }
 
-    OPTIONAL {
-      {
-        ?entity gndo:preferredNameForThePerson ?nameLit .
-      }
-      UNION
-      {
-        ?entity gndo:variantNameForThePerson ?nameLit .
-      }
-      BIND(STR(?nameLit) AS ?nameForm)
+  OPTIONAL {
+    {
+      ?entity gndo:preferredNameForThePerson ?nameLit .
     }
+    UNION
+    {
+      ?entity gndo:variantNameForThePerson ?nameLit .
+    }
+    BIND(STR(?nameLit) AS ?nameForm)
   }
 }
 GROUP BY ?gndPerson

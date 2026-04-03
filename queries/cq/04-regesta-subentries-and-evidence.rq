@@ -21,26 +21,24 @@ SELECT DISTINCT
   ?fundReferencePart2
   ?fundReferencePart3
 WHERE {
-  GRAPH <https://data.rgonline-integration.de/graph/harmonized> {
-    # Replace with another person IRI as needed.
-    VALUES ?person { <https://d-nb.info/gnd/136175414> }
+  # Replace with another person IRI as needed.
+  VALUES ?person { <https://d-nb.info/gnd/136175414> }
 
-    ?rgoPerson (owl:sameAs|^owl:sameAs)* ?person .
-    FILTER(STRSTARTS(STR(?rgoPerson), "https://example.org/rg/person/"))
+  ?rgoPerson (owl:sameAs|^owl:sameAs)* ?person .
+  FILTER(STRSTARTS(STR(?rgoPerson), "https://example.org/rg/person/"))
 
-    ?rgoPerson rgo:appearsInLemma ?lemma .
+  ?rgoPerson rgo:appearsInLemma ?lemma .
 
-    OPTIONAL { ?lemma rgo:sourceId ?lemmaSourceId }
-    OPTIONAL { ?lemma rgo:headText ?lemmaHead }
+  OPTIONAL { ?lemma rgo:sourceId ?lemmaSourceId }
+  OPTIONAL { ?lemma rgo:headText ?lemmaHead }
 
-    OPTIONAL {
-      ?lemma (rgo:hasSublemma|rgo:hasSubEntry) ?sublemma .
-      OPTIONAL { ?sublemma gndo:associatedDate ?sublemmaDate }
-      OPTIONAL { ?sublemma rgo:text ?sublemmaText }
-      OPTIONAL { ?sublemma rgo:fundReferencePart1 ?fundReferencePart1 }
-      OPTIONAL { ?sublemma rgo:fundReferencePart2 ?fundReferencePart2 }
-      OPTIONAL { ?sublemma rgo:fundReferencePart3 ?fundReferencePart3 }
-    }
+  OPTIONAL {
+    ?lemma (rgo:hasSublemma|rgo:hasSubEntry) ?sublemma .
+    OPTIONAL { ?sublemma gndo:associatedDate ?sublemmaDate }
+    OPTIONAL { ?sublemma rgo:text ?sublemmaText }
+    OPTIONAL { ?sublemma rgo:fundReferencePart1 ?fundReferencePart1 }
+    OPTIONAL { ?sublemma rgo:fundReferencePart2 ?fundReferencePart2 }
+    OPTIONAL { ?sublemma rgo:fundReferencePart3 ?fundReferencePart3 }
   }
 }
 ORDER BY ?lemma ?sublemma ?sublemmaDate

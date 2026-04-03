@@ -154,9 +154,8 @@ cq:
     @set -e; \
     for query in queries/cq/*.rq; do \
         out="queries/cq/results/$(basename "${query%.rq}").csv"; \
-        just robot query \
+        just robot -vvv query \
             --input data/harmonized/statements.ttl \
-            --tdb true \
             --query "$query" "$out"; \
     done
 

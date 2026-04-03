@@ -16,33 +16,31 @@ SELECT
   (GROUP_CONCAT(DISTINCT STR(?place); separator=" | ") AS ?places)
   (GROUP_CONCAT(DISTINCT STR(?institution); separator=" | ") AS ?institutions)
 WHERE {
-  GRAPH <https://data.rgonline-integration.de/graph/harmonized> {
-    # Focus on canonical DNB persons as anchors.
-    ?person a gndo:DifferentiatedPerson .
-    FILTER(STRSTARTS(STR(?person), "https://d-nb.info/gnd/"))
+  # Focus on canonical DNB persons as anchors.
+  ?person a gndo:DifferentiatedPerson .
+  FILTER(STRSTARTS(STR(?person), "https://d-nb.info/gnd/"))
 
-    ?rgoPerson (owl:sameAs|^owl:sameAs)* ?person .
-    FILTER(STRSTARTS(STR(?rgoPerson), "https://example.org/rg/person/"))
+  ?rgoPerson (owl:sameAs|^owl:sameAs)* ?person .
+  FILTER(STRSTARTS(STR(?rgoPerson), "https://example.org/rg/person/"))
 
-    ?rgoPerson rgo:appearsInLemma ?lemma .
+  ?rgoPerson rgo:appearsInLemma ?lemma .
 
+  OPTIONAL {
+    ?rgoPerson gndo:associatedDate ?date .
+    BIND(SUBSTR(STR(?date), 1, 4) AS ?year)
+  }
+
+  OPTIONAL { ?rgoPerson gndo:placeOfActivity ?place }
+  OPTIONAL { ?rgoPerson gndo:affiliation ?institution }
+
+  OPTIONAL {
+    ?lemma gndo:relatedPerson ?coRgoPerson .
+    FILTER(?coRgoPerson != ?rgoPerson)
     OPTIONAL {
-      ?rgoPerson gndo:associatedDate ?date .
-      BIND(SUBSTR(STR(?date), 1, 4) AS ?year)
+      ?coRgoPerson (owl:sameAs|^owl:sameAs)* ?coGndPerson .
+      FILTER(STRSTARTS(STR(?coGndPerson), "https://d-nb.info/gnd/"))
     }
-
-    OPTIONAL { ?rgoPerson gndo:placeOfActivity ?place }
-    OPTIONAL { ?rgoPerson gndo:affiliation ?institution }
-
-    OPTIONAL {
-      ?lemma gndo:relatedPerson ?coRgoPerson .
-      FILTER(?coRgoPerson != ?rgoPerson)
-      OPTIONAL {
-        ?coRgoPerson (owl:sameAs|^owl:sameAs)* ?coGndPerson .
-        FILTER(STRSTARTS(STR(?coGndPerson), "https://d-nb.info/gnd/"))
-      }
-      BIND(COALESCE(?coGndPerson, ?coRgoPerson) AS ?coPerson)
-    }
+    BIND(COALESCE(?coGndPerson, ?coRgoPerson) AS ?coPerson)
   }
 }
 GROUP BY ?year ?person ?coPerson

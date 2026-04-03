@@ -18,33 +18,31 @@ SELECT DISTINCT
   ?sublemma
   ?evidence
 WHERE {
-  GRAPH <https://data.rgonline-integration.de/graph/harmonized> {
-    # Replace with another person IRI as needed.
-    VALUES ?person { <https://d-nb.info/gnd/136175414> }
+  # Replace with another person IRI as needed.
+  VALUES ?person { <https://d-nb.info/gnd/136175414> }
 
-    ?entity (owl:sameAs|^owl:sameAs)* ?person .
+  ?entity (owl:sameAs|^owl:sameAs)* ?person .
 
-    OPTIONAL { ?person gndo:preferredNameForThePerson ?personLabel }
-    OPTIONAL {
-      ?entity gndo:placeOfActivity ?place .
-      OPTIONAL { ?place gndo:preferredNameForThePlaceOrGeographicName ?placeLabel }
-    }
-
-    OPTIONAL { ?entity gndo:associatedDate ?dateDirect }
-
-    OPTIONAL {
-      ?entity rgo:appearsInLemma ?lemma .
-      OPTIONAL { ?lemma rgo:headText ?lemmaHeadText }
-
-      OPTIONAL {
-        ?lemma (rgo:hasSublemma|rgo:hasSubEntry) ?sublemma .
-        OPTIONAL { ?sublemma gndo:associatedDate ?dateFromSublemma }
-        OPTIONAL { ?sublemma rgo:text ?sublemmaText }
-      }
-    }
-
-    BIND(COALESCE(?dateDirect, ?dateFromSublemma) AS ?activityDate)
-    BIND(COALESCE(?sublemmaText, ?lemmaHeadText) AS ?evidence)
+  OPTIONAL { ?person gndo:preferredNameForThePerson ?personLabel }
+  OPTIONAL {
+    ?entity gndo:placeOfActivity ?place .
+    OPTIONAL { ?place gndo:preferredNameForThePlaceOrGeographicName ?placeLabel }
   }
+
+  OPTIONAL { ?entity gndo:associatedDate ?dateDirect }
+
+  OPTIONAL {
+    ?entity rgo:appearsInLemma ?lemma .
+    OPTIONAL { ?lemma rgo:headText ?lemmaHeadText }
+
+    OPTIONAL {
+      ?lemma (rgo:hasSublemma|rgo:hasSubEntry) ?sublemma .
+      OPTIONAL { ?sublemma gndo:associatedDate ?dateFromSublemma }
+      OPTIONAL { ?sublemma rgo:text ?sublemmaText }
+    }
+  }
+
+  BIND(COALESCE(?dateDirect, ?dateFromSublemma) AS ?activityDate)
+  BIND(COALESCE(?sublemmaText, ?lemmaHeadText) AS ?evidence)
 }
 ORDER BY ?activityDate ?place ?lemma ?sublemma
