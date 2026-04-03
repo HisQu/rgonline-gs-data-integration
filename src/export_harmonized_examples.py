@@ -146,7 +146,7 @@ def add_cross_source_same_as(graph: Graph, meta: dict[str, str]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--harmonized", default="data/harmonized/full.ttl")
+    parser.add_argument("--harmonized", default="data/harmonized/statements.ttl")
     parser.add_argument("--gs", default="data/harmonized/gs.ttl")
     parser.add_argument("--dnb", default="data/raw/dnb/statements.ttl")
     parser.add_argument("--output-dir", default="data/examples/harmonized")
