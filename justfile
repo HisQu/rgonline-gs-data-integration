@@ -3,7 +3,8 @@ default:
     @just --list
 
 # Set up the entire project environment and starts all services
-go: sync test gs-fetch gs-clean dnb-fetch qlever ui
+go: sync test gndo-doc-fetch gs-fetch gs-clean dnb-fetch qlever ui
+setup: go
 
 # Install project and dev dependencies
 sync:
@@ -17,7 +18,11 @@ test *args:
 test-file file *args:
     uv run pytest {{ file }} {{ args }}
 
-fetch: gs-fetch dnb-fetch
+# Fetch latest GND ontology HTML documentation to docs/gndo.html
+gndo-doc-fetch:
+    ./scripts/fetch_gndo_html.sh
+
+fetch: gndo-doc-fetch gs-fetch dnb-fetch
 
 clean: gs-clean
 

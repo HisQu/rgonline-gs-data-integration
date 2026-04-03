@@ -24,3 +24,4 @@ rdf4j/logs/*
 
 # Environment variables
 .env
+docs/gndo.html
