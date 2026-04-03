@@ -28,7 +28,7 @@ clean: gs-clean
 
 # Normalize fuzzy GS date literals in data/raw/gs/clean.ttl to xsd:gYear.
 gs-fix-dates *args:
-    UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/fix_gs_clean_dates.py {{ args }}
+    UV_CACHE_DIR=/tmp/uv-cache uv run python src/gs/fix_gs_clean_dates.py {{ args }}
 
 # Harmonize GS and RGO source graphs to GNDO-oriented projections using ROBOT.
 # Writes outputs to data/harmonized/.
