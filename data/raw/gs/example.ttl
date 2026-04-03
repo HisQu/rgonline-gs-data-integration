@@ -29,16 +29,6 @@
         ns1:startDate  "1414" ;
         foaf:name      "Erzbischof"@de .
 
-[ a               "foaf:Person" ;
-  ns1:holder_of   <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390724> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390722> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390723> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390721> ;
-  ns2:birthDate   "um 1385" ;
-  ns2:deathDate   "1463" ;
-  ns2:familyName  "Moers" ;
-  ns2:givenName   "Dietrich II." ;
-  owl:sameAs      <http://d-nb.info/gnd/118525530> , <https://personendatenbank.germania-sacra.de/index/gsn/085-00040-001> , <https://personendatenbank.germania-sacra.de/index/gsn/075-00812-001> , <https://personendatenbank.germania-sacra.de/index/gsn/020-00531-001> , <https://personendatenbank.germania-sacra.de/index/gsn/022-01040-001> , <https://personendatenbank.germania-sacra.de/index/gsn/070-00573-001> , <https://personendatenbank.germania-sacra.de/index/gsn/039-01053-001> , <https://personendatenbank.germania-sacra.de/index/gsn/078-00397-001> , <https://personendatenbank.germania-sacra.de/index/gsn/021-00280-001> , <https://personendatenbank.germania-sacra.de/index/gsn/012-00347-001> , <https://personendatenbank.germania-sacra.de/index/gsn/048-01241-001> , <https://personendatenbank.germania-sacra.de/index/gsn/091-00055-001> , <https://personendatenbank.germania-sacra.de/index/gsn/050-01415-001> , <https://personendatenbank.germania-sacra.de/index/gsn/051-00477-001> , <https://personendatenbank.germania-sacra.de/index/gsn/306-00038-001> , <https://personendatenbank.germania-sacra.de/index/gsn/044-00865-001> , <https://personendatenbank.germania-sacra.de/index/gsn/712-00226-001> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001> ;
-  org:memberOf    <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#organisation-390723> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#organisation-390724>
-] .
-
 <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350100>
         a           "prov:Agent" , "foaf:Organization" ;
         ns1:role    "person:016-00289-001#amt-350100" ;
@@ -57,29 +47,30 @@
         owl:sameAs  <https://klosterdatenbank.germania-sacra.de/gsn/343> ;
         foaf:name   "Domstift Bremen" .
 
-[ a               "foaf:Person" ;
-  ns1:holder_of   <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357749> , <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357750> ;
-  ns2:deathDate   "1463" ;
-  ns2:familyName  "Hoya" ;
-  ns2:givenName   "Gerhard" ;
-  owl:sameAs      <http://d-nb.info/gnd/136175414> , <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001> , <https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001> ;
-  org:memberOf    <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#organisation-357750>
-] .
-
-[ a               "foaf:Person" ;
-  ns1:holder_of   <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350100> , <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350101> ;
-  ns2:deathDate   "1553" ;
-  ns2:familyName  "Bodo" ;
-  ns2:givenName   "Heinrich" ;
-  owl:sameAs      <https://personendatenbank.germania-sacra.de/index/gsn/030-02222-001> , <http://d-nb.info/gnd/10427526X> , <https://personendatenbank.germania-sacra.de/index/gsn/015-00498-001> , <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001> ;
-  org:memberOf    <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350100> , <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350101>
-] .
-
 <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357750>
         ns1:endDate    "1442" ;
         ns1:role_at    "person:048-02342-001#organisation-357750" ;
         ns1:startDate  "1438" ;
         foaf:name      "Dompropst"@de .
+
+[ a               "foaf:Person" ;
+  ns1:holder_of   <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390724> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390722> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390723> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#amt-390721> ;
+  ns2:birthDate   "um 1385" ;
+  ns2:deathDate   "1463" ;
+  ns2:familyName  "Moers" ;
+  ns2:givenName   "Dietrich II." ;
+  owl:sameAs      <https://personendatenbank.germania-sacra.de/index/gsn/012-00347-001> , <https://personendatenbank.germania-sacra.de/index/gsn/021-00280-001> , <https://personendatenbank.germania-sacra.de/index/gsn/306-00038-001> , <https://personendatenbank.germania-sacra.de/index/gsn/070-00573-001> , <http://d-nb.info/gnd/118525530> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001> , <https://personendatenbank.germania-sacra.de/index/gsn/091-00055-001> , <https://personendatenbank.germania-sacra.de/index/gsn/712-00226-001> , <https://personendatenbank.germania-sacra.de/index/gsn/078-00397-001> , <https://personendatenbank.germania-sacra.de/index/gsn/048-01241-001> , <https://personendatenbank.germania-sacra.de/index/gsn/022-01040-001> , <https://personendatenbank.germania-sacra.de/index/gsn/050-01415-001> , <https://personendatenbank.germania-sacra.de/index/gsn/039-01053-001> , <https://personendatenbank.germania-sacra.de/index/gsn/020-00531-001> , <https://personendatenbank.germania-sacra.de/index/gsn/051-00477-001> , <https://personendatenbank.germania-sacra.de/index/gsn/085-00040-001> , <https://personendatenbank.germania-sacra.de/index/gsn/075-00812-001> , <https://personendatenbank.germania-sacra.de/index/gsn/044-00865-001> ;
+  org:memberOf    <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#organisation-390724> , <https://personendatenbank.germania-sacra.de/index/gsn/055-00556-001#organisation-390723>
+] .
+
+[ a               "foaf:Person" ;
+  ns1:holder_of   <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350101> , <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#amt-350100> ;
+  ns2:deathDate   "1553" ;
+  ns2:familyName  "Bodo" ;
+  ns2:givenName   "Heinrich" ;
+  owl:sameAs      <http://d-nb.info/gnd/10427526X> , <https://personendatenbank.germania-sacra.de/index/gsn/015-00498-001> , <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001> , <https://personendatenbank.germania-sacra.de/index/gsn/030-02222-001> ;
+  org:memberOf    <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350101> , <https://personendatenbank.germania-sacra.de/index/gsn/016-00289-001#organisation-350100>
+] .
 
 <https://personendatenbank.germania-sacra.de/index/gsn/049-02838-001#amt-363596>
         ns1:endDate    "1124" ;
@@ -122,3 +113,12 @@
         ns1:endDate    "1463" ;
         ns1:startDate  "1414" ;
         foaf:name      "Administrator"@de .
+
+[ a               "foaf:Person" ;
+  ns1:holder_of   <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357750> , <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357749> ;
+  ns2:deathDate   "1463" ;
+  ns2:familyName  "Hoya" ;
+  ns2:givenName   "Gerhard" ;
+  owl:sameAs      <https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001> , <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001> , <http://d-nb.info/gnd/136175414> ;
+  org:memberOf    <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#organisation-357750>
+] .

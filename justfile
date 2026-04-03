@@ -28,7 +28,7 @@ clean: gs-clean
 
 # Normalize fuzzy GS date literals in data/raw/gs/clean.ttl to xsd:gYear.
 gs-fix-dates *args:
-    UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/fix_gs_clean_dates.py {{ args }}
+    UV_CACHE_DIR=/tmp/uv-cache uv run python src/gs/fix_gs_clean_dates.py {{ args }}
 
 # Reduce all raw sources to example subsets.
 reduce: gs-reduce dnb-reduce rgo-reduce
@@ -74,7 +74,7 @@ harmonize: gs-fix-dates
         --tdb true \
         --query mappings/gs/harmonize.rq data/harmonized/gs.ttl
     just robot query \
-        --input data/raw/rgo/rg5_aligned.ttl \
+        --input data/raw/rgo/statements.ttl \
         --tdb true \
         --query mappings/rgo/harmonize.rq data/harmonized/rgo.ttl
     just robot merge \
