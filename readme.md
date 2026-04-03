@@ -104,7 +104,7 @@ Project mappings use the following preferred prefixes:
 
 - `gsn: <https://personendatenbank.germania-sacra.de/index/gsn/>`
 - `rgo: <https://example.org/ontology/>`
-- `rg: <https://example.org/ontology/>`
+- `rg: <https://example.org/rg/>`
 - `gndo: <https://d-nb.info/standards/elementset/gnd#>`
 - `gnd: <https://d-nb.info/gnd/>`
 
