@@ -1,15 +1,15 @@
 import re
+from pathlib import Path
 from typing import Any, Iterable, Optional, Sequence, Set
 
 import pandas as pd
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import FOAF, OWL, RDF, RDFS
-from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DNB_FILE = ROOT / "data/raw/dnb/example.ttl"
-GS_FILE = ROOT / "data/raw/gs/example.ttl"
-RGO_FILE = ROOT / "data/raw/rgo/example.ttl"
+DNB_FILE = ROOT / "data" / "raw" / "dnb" / "example.ttl"
+GS_FILE = ROOT / "data" / "raw" / "gs" / "example.ttl"
+RGO_FILE = ROOT / "data" / "raw" / "rgo" / "example.ttl"
 
 GNDO = Namespace("https://d-nb.info/standards/elementset/gnd#")
 SCHEMA = Namespace("http://schema.org/")
@@ -567,4 +567,5 @@ if __name__ == "__main__":
 
     print(common_profiles_df.head())
 
-    common_profiles_df.to_csv("common_profiles.csv", index=False)
+    common_profiles_df.to_csv("data/tabular/common_profiles.csv", index=False)
+    common_profiles_df.to_pickle("data/tabular/common_profiles.pkl")

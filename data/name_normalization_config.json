@@ -1,0 +1,35 @@
+{
+  "remove_particles": [
+    "von",
+    "van",
+    "de",
+    "den",
+    "der",
+    "des",
+    "zu",
+    "zum",
+    "zur",
+    "di",
+    "da"
+  ],
+  "first_name_equivalents": {
+    "henricus": "heinrich",
+    "henric": "heinrich",
+    "heinricus": "heinrich",
+    "heinric": "heinrich",
+    "henri": "heinrich",
+
+    "theodericus": "dietrich",
+    "theoderic": "dietrich",
+    "theoderich": "dietrich",
+    "dietricus": "dietrich",
+
+    "gerardus": "gerhard",
+    "gerard": "gerhard",
+
+    "fridericus": "friedrich",
+    "frideric": "friedrich",
+    "fredericus": "friedrich",
+    "frederic": "friedrich"
+  }
+}
