@@ -207,4 +207,74 @@ def prepare_name_columns_for_matching(
         )
     )
 
+    out["all_name_tokens"] = out.apply(
+        lambda row: combine_all_name_tokens(
+            preferred_tokens=row["preferred_name_tokens"],
+            variant_tokens=row["variant_name_tokens"],
+        ),
+        axis=1,
+    )
+
     return out
+
+def preferred_variant_best_jw_sql() -> str:
+    """
+    Symmetric best Jaro-Winkler similarity between preferred_name_norm on one side
+    and variant_names_norm on the other side.
+
+    Score = max(
+        best_jw(preferred_l, each variant_r),
+        best_jw(preferred_r, each variant_l)
+    )
+
+    Empty strings are treated like missing values via NULLIF(..., '').
+    Empty variant lists naturally collapse to NULL inside list_max(...),
+    which we then coalesce to 0.0.
+    """
+
+    left_pref_vs_right_vars = """
+    coalesce(
+        list_max(
+            list_transform(
+                list_filter(
+                    "variant_names_norm_r",
+                    lambda x: x IS NOT NULL AND x <> ''
+                ),
+                lambda x: jaro_winkler_similarity(
+                    NULLIF("preferred_name_norm_l", ''),
+                    x
+                )
+            )
+        ),
+        0.0
+    )
+    """
+
+    right_pref_vs_left_vars = """
+    coalesce(
+        list_max(
+            list_transform(
+                list_filter(
+                    "variant_names_norm_l",
+                    lambda x: x IS NOT NULL AND x <> ''
+                ),
+                lambda x: jaro_winkler_similarity(
+                    NULLIF("preferred_name_norm_r", ''),
+                    x
+                )
+            )
+        ),
+        0.0
+    )
+    """
+    return f"greatest(({left_pref_vs_right_vars}), ({right_pref_vs_left_vars}))"
+    
+
+def combine_all_name_tokens(
+        preferred_tokens: List[str],
+        variant_tokens: List[str],
+    ) -> List[str]:
+        """Combine preferred + variant tokens into one deduplicated token list."""
+        return unique_preserve_order(
+            list(preferred_tokens or []) + list(variant_tokens or [])
+        )

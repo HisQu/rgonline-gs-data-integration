@@ -4,7 +4,14 @@ from typing import Tuple
 import pandas as pd
 from splink import DuckDBAPI, Linker, SettingsCreator, block_on
 
-from .comparisons import build_name_comparisons_pref_pref
+from .comparisons import (
+    build_name_comparisons_pref_pref,
+    build_name_comparison_pref_var_best,
+    build_name_comparison_var_var_best,
+    build_name_comparison_all_name_token_overlap,
+    build_date_comparison_death_compatibility,
+    build_date_comparison_birth_compatibility,
+)
 from .utils import prepare_name_columns_for_matching
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -39,6 +46,7 @@ def split_for_link_only(prepared_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Dat
         "preferred_last_token",
         "variant_names_norm",
         "variant_name_tokens",
+        "all_name_tokens",
     ]
 
     dnb_df = prepared_df.loc[prepared_df["source"] == "dnb", keep_cols].copy()
@@ -80,7 +88,14 @@ def build_linker(
         unique_id_column_name="entity_id",
         probability_two_random_records_match=0.05,
         blocking_rules_to_generate_predictions=build_blocking_rules_pref_pref(),
-        comparisons=build_name_comparisons_pref_pref(),
+        comparisons=[
+            *build_name_comparisons_pref_pref(),
+            build_name_comparison_pref_var_best(),
+            build_name_comparison_var_var_best(),
+            build_name_comparison_all_name_token_overlap(),
+            build_date_comparison_death_compatibility(allowance=5),
+            build_date_comparison_birth_compatibility(allowance=5),
+        ],
         retain_matching_columns=True,
         retain_intermediate_calculation_columns=True,
         additional_columns_to_retain=[
@@ -201,9 +216,14 @@ def run_matching(
 
 
 if __name__ == "__main__":
-    # Example:
-    combined_df = pd.read_pickle(ROOT_DIR / "common_profiles.pkl")
+    combined_df = pd.read_pickle(ROOT_DIR / "data" / "tabular" / "common_profiles.pkl")
     prepared_df, pred_df, linker = run_matching(combined_df)
+
+    pred_splink_df = linker.inference.predict(threshold_match_probability=0.0)
+    records = pred_splink_df.as_record_dict(limit=50)
+    chart = linker.visualisations.waterfall_chart(records)
+    chart.save("waterfall.html")
+
     print(prepared_df.head())
     print(pred_df.head(20))
     pass

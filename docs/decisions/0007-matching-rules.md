@@ -102,7 +102,7 @@ RGO vs. GS/DNB:
 - Level 3: mention_min ≤ death_year + allowance < mention_max  
 - Level 4: mention_min > death_year + allowance
 - Level 5: missing value on one or both sides  
-
+  
 
 ### ``birth_compatibility``
 Analogue to the death_compatibility: 
