@@ -11,6 +11,10 @@ from .date_utils import (
     sql_other_value,
     sql_rgo_value,
     sql_sum,
+    sql_effective_interval_end,
+    sql_effective_interval_start,
+    sql_interval_overlap_years,
+    sql_interval_distance_years,
 )
 
 __all__ = ["prepare_name_columns_for_matching",
@@ -22,4 +26,8 @@ __all__ = ["prepare_name_columns_for_matching",
             "sql_is_rgo_other_pair",
             "sql_other_value",
             "sql_rgo_value",
-            "sql_sum",]
+            "sql_sum",
+            "sql_effective_interval_end",
+            "sql_effective_interval_start",
+            "sql_interval_overlap_years",
+            "sql_interval_distance_years",]

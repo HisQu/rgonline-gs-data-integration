@@ -89,3 +89,112 @@ def sql_between_crossing(start_expr: str, pivot_expr: str, end_expr: str) -> str
         start <= pivot < end
     """
     return f'(({start_expr}) <= ({pivot_expr}) AND ({pivot_expr}) < ({end_expr}))'
+
+
+def sql_effective_interval_raw_start(side: str) -> str:
+    """
+    Raw interval start for one side of the pair.
+
+    Rules:
+    - RGO: use mention_start, fallback to mention_end
+    - non-RGO: prefer activity_start, then birth_year, then death_year, then activity_end
+
+    side must be "l" or "r".
+    """
+    if side not in {"l", "r"}:
+        raise ValueError("side must be 'l' or 'r'")
+
+    return (
+        f'(CASE '
+        f'WHEN "source_{side}" = \'rgo\' '
+        f'THEN coalesce("mention_start_{side}", "mention_end_{side}") '
+        f'ELSE coalesce("activity_start_{side}", "birth_year_{side}", "death_year_{side}", "activity_end_{side}") '
+        f'END)'
+    )
+
+
+def sql_effective_interval_raw_end(side: str) -> str:
+    """
+    Raw interval end for one side of the pair.
+
+    Rules:
+    - RGO: use mention_end, fallback to mention_start
+    - non-RGO: prefer activity_end, then death_year, then birth_year, then activity_start
+
+    side must be "l" or "r".
+    """
+    if side not in {"l", "r"}:
+        raise ValueError("side must be 'l' or 'r'")
+
+    return (
+        f'(CASE '
+        f'WHEN "source_{side}" = \'rgo\' '
+        f'THEN coalesce("mention_end_{side}", "mention_start_{side}") '
+        f'ELSE coalesce("activity_end_{side}", "death_year_{side}", "birth_year_{side}", "activity_start_{side}") '
+        f'END)'
+    )
+
+
+def sql_effective_interval_start(side: str) -> str:
+    """
+    Canonical interval start for one side of the pair.
+    Uses LEAST(raw_start, raw_end) so the interval remains well-ordered
+    even if only partial fallback values are available.
+    """
+    raw_start = sql_effective_interval_raw_start(side)
+    raw_end = sql_effective_interval_raw_end(side)
+    return f"least(({raw_start}), ({raw_end}))"
+
+
+def sql_effective_interval_end(side: str) -> str:
+    """
+    Canonical interval end for one side of the pair.
+    Uses GREATEST(raw_start, raw_end) so the interval remains well-ordered
+    even if only partial fallback values are available.
+    """
+    raw_start = sql_effective_interval_raw_start(side)
+    raw_end = sql_effective_interval_raw_end(side)
+    return f"greatest(({raw_start}), ({raw_end}))"
+
+
+def sql_interval_overlap_years(
+    start_left: str,
+    end_left: str,
+    start_right: str,
+    end_right: str,
+) -> str:
+    """
+    Inclusive overlap size in years between two intervals.
+
+    Examples:
+    - [1400, 1410] and [1405, 1415] -> 6
+    - [1400, 1410] and [1411, 1420] -> 0
+    - [1400, 1400] and [1400, 1400] -> 1
+    """
+    return (
+        f"greatest(0, "
+        f"least(({end_left}), ({end_right})) - "
+        f"greatest(({start_left}), ({start_right})) + 1)"
+    )
+
+
+def sql_interval_distance_years(
+    start_left: str,
+    end_left: str,
+    start_right: str,
+    end_right: str,
+) -> str:
+    """
+    Distance in years between two non-overlapping intervals.
+
+    If intervals overlap, the distance is 0.
+    If intervals are directly adjacent, the distance is 1.
+
+    Example:
+    - [1400, 1410] vs [1411, 1420] -> 1
+    """
+    return (
+        f"greatest(0, "
+        f"greatest(({start_left}), ({start_right})) - "
+        f"least(({end_left}), ({end_right})))"
+    )

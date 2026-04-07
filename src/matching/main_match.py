@@ -11,6 +11,7 @@ from .comparisons import (
     build_name_comparison_all_name_token_overlap,
     build_date_comparison_death_compatibility,
     build_date_comparison_birth_compatibility,
+    build_date_comparison_activity_overlap,
 )
 from .utils import prepare_name_columns_for_matching
 
@@ -95,6 +96,7 @@ def build_linker(
             build_name_comparison_all_name_token_overlap(),
             build_date_comparison_death_compatibility(allowance=5),
             build_date_comparison_birth_compatibility(allowance=5),
+            build_date_comparison_activity_overlap(strong_overlap_years=5, weak_overlap_years=1, close_distance_years=5),
         ],
         retain_matching_columns=True,
         retain_intermediate_calculation_columns=True,

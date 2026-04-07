@@ -10,6 +10,10 @@ from ..utils import (
     sql_other_value,
     sql_rgo_value,
     sql_sum,
+    sql_effective_interval_end,
+    sql_effective_interval_start,
+    sql_interval_overlap_years,
+    sql_interval_distance_years,
 )
 
 
@@ -227,6 +231,81 @@ def build_date_comparison_birth_compatibility(allowance: int = 5) -> cl.CustomCo
                 label_for_charts=f"mention end < birth year - {allowance}",
             ),
 
+            cll.ElseLevel(),
+        ],
+    )
+
+def build_date_comparison_activity_overlap(
+    strong_overlap_years: int = 5,
+    weak_overlap_years: int = 1,
+    close_distance_years: int = 10,
+) -> cl.CustomComparison:
+    """
+    activity_overlap
+
+    Compare effective temporal intervals rather than raw date strings.
+
+    Effective interval per side:
+    - RGO: mention_start / mention_end
+    - GS: prefer activity_start / activity_end, fallback to birth/death
+    - DNB: birth/death
+
+    Levels:
+    1. strong overlap
+    2. weak overlap
+    3. no overlap, distance <= close_distance_years
+    4. no overlap, distance > close_distance_years
+    5. missing on one or both sides
+    """
+    start_l = sql_effective_interval_start("l")
+    end_l = sql_effective_interval_end("l")
+    start_r = sql_effective_interval_start("r")
+    end_r = sql_effective_interval_end("r")
+
+    overlap_years = sql_interval_overlap_years(start_l, end_l, start_r, end_r)
+    distance_years = sql_interval_distance_years(start_l, end_l, start_r, end_r)
+
+    missing_condition = sql_any_null(start_l, end_l, start_r, end_r)
+
+    return cl.CustomComparison(
+        output_column_name="activity_overlap",
+        comparison_description=(
+            "Compatibility of effective temporal intervals: "
+            "RGO uses mention range, GS prefers activity with life-date fallback, "
+            "DNB uses life dates"
+        ),
+        comparison_levels=[
+            # Missing evidence
+            cll.CustomLevel(
+                sql_condition=missing_condition,
+                label_for_charts="missing interval evidence",
+            ),
+
+            # Overlap levels
+            cll.CustomLevel(
+                sql_condition=f"({overlap_years} >= {int(strong_overlap_years)})",
+                label_for_charts=f"strong interval overlap >= {int(strong_overlap_years)} years",
+            ),
+            cll.CustomLevel(
+                sql_condition=f"({overlap_years} >= {int(weak_overlap_years)})",
+                label_for_charts=f"weak interval overlap >= {int(weak_overlap_years)} year(s)",
+            ),
+
+            # No-overlap but close / far
+            cll.CustomLevel(
+                sql_condition=(
+                    f"({overlap_years} = 0) AND ({distance_years} <= {int(close_distance_years)})"
+                ),
+                label_for_charts=f"no overlap, distance <= {int(close_distance_years)} years",
+            ),
+            cll.CustomLevel(
+                sql_condition=(
+                    f"({overlap_years} = 0) AND ({distance_years} > {int(close_distance_years)})"
+                ),
+                label_for_charts=f"no overlap, distance > {int(close_distance_years)} years",
+            ),
+
+            # Safety fallback
             cll.ElseLevel(),
         ],
     )

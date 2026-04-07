@@ -7,6 +7,7 @@ from .name_comparisons import(
 from .date_comparisons import (
     build_date_comparison_death_compatibility,
     build_date_comparison_birth_compatibility,
+    build_date_comparison_activity_overlap,
 )
 
 __all__ = ["build_name_comparisons_pref_pref", 
@@ -14,4 +15,5 @@ __all__ = ["build_name_comparisons_pref_pref",
            "build_name_comparison_all_name_token_overlap", 
            "build_name_comparison_var_var_best",
            "build_date_comparison_death_compatibility",
-           "build_date_comparison_birth_compatibility",]
+           "build_date_comparison_birth_compatibility",
+           "build_date_comparison_activity_overlap",]
