@@ -12,8 +12,11 @@ from .comparisons import (
     build_date_comparison_death_compatibility,
     build_date_comparison_birth_compatibility,
     build_date_comparison_activity_overlap,
+    build_place_comparison_best_similarity,
+    build_place_comparison_token_overlap,
+    build_place_comparison_containment_match,
 )
-from .utils import prepare_name_columns_for_matching
+from .utils import prepare_name_columns_for_matching, prepare_place_columns_for_matching
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = ROOT_DIR / "data" / "name_normalization_config.json"
@@ -48,6 +51,9 @@ def split_for_link_only(prepared_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Dat
         "variant_names_norm",
         "variant_name_tokens",
         "all_name_tokens",
+        # helper columns from place_utils
+        "places_norm",
+        "place_tokens",
     ]
 
     dnb_df = prepared_df.loc[prepared_df["source"] == "dnb", keep_cols].copy()
@@ -66,8 +72,8 @@ def build_blocking_rules_pref_pref() -> list:
     we block on either the first or last normalized preferred-name token.
     """
     return [
-        block_on("preferred_first_token"),
-        block_on("preferred_last_token"),
+        #block_on("preferred_first_token"),
+        #block_on("preferred_last_token"),
     ]
 
 
@@ -97,6 +103,9 @@ def build_linker(
             build_date_comparison_death_compatibility(allowance=5),
             build_date_comparison_birth_compatibility(allowance=5),
             build_date_comparison_activity_overlap(strong_overlap_years=5, weak_overlap_years=1, close_distance_years=5),
+            build_place_comparison_best_similarity(),
+            build_place_comparison_token_overlap(),
+            build_place_comparison_containment_match(),
         ],
         retain_matching_columns=True,
         retain_intermediate_calculation_columns=True,
@@ -199,6 +208,11 @@ def run_matching(
         config_path=config_path,
     )
 
+    prepared_df = prepare_place_columns_for_matching(
+        df=prepared_df,
+        config_path=config_path,
+    )
+
     dnb_df, gs_df, rgo_df = split_for_link_only(prepared_df)
 
     linker = build_linker(
@@ -227,5 +241,5 @@ if __name__ == "__main__":
     chart.save("waterfall.html")
 
     print(prepared_df.head())
-    print(pred_df.head(20))
+    print(pred_df.head(50))
     pass

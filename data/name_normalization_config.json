@@ -31,5 +31,15 @@
     "frideric": "friedrich",
     "fredericus": "friedrich",
     "frederic": "friedrich"
-  }
+  },
+
+  "place_equivalents": {
+    "coeln": "koln",
+    "koeln": "koln"
+  },
+  "place_remove_particles": ["de", "von", "der", "van", "zu"],
+  "place_remove_context_tokens": [
+    "dioc", "eccl", "stift", "kloster", "domstift",
+    "colleg", "mon", "ep", "aep", "collegii"
+  ]
 }
