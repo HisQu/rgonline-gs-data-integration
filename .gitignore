@@ -27,3 +27,14 @@ rdf4j/logs/*
 # Environment variables
 .env
 docs/gndo.html
+
+# Samples generated via scripts
+example.ttl
+example_min.ttl
+
+# Output files from matching process
+data/matching_outputs/*
+waterfall.html
+
+# splink temporary files
+.tmp

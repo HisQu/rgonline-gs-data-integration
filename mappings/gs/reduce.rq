@@ -1,7 +1,9 @@
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX owl:    <http://www.w3.org/2002/07/owl#>
 PREFIX part:   <http://purl.org/vocab/participation/schema#>
-PREFIX gnd:    <https://d-nb.info/gnd/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
 
 CONSTRUCT {
   ?person ?pp ?po .
@@ -9,18 +11,29 @@ CONSTRUCT {
   ?orgNode ?op ?oo .
 }
 WHERE {
-  VALUES ?gnd {
-    <http://d-nb.info/gnd/136175414>
-    <http://d-nb.info/gnd/118525530>
-    <http://d-nb.info/gnd/10427526X>
-    <http://d-nb.info/gnd/137509782>
-    gnd:136175414
-    gnd:118525530
-    gnd:10427526X
-    gnd:137509782
+  # Cohort selector:
+  # 1) birth year in [1361, 1447]
+  # 2) if birth is missing: death year in [1361, 1497]
+  # For fuzzy strings (e.g. "um 1385"), use the first 4-digit year.
+  ?person owl:sameAs ?gsPersonURI .
+  FILTER(STRSTARTS(STR(?gsPersonURI), STR(gsn:)))
+  FILTER(!CONTAINS(STR(?gsPersonURI), "#"))
+
+  OPTIONAL {
+    ?person schema:birthDate ?birthDateRaw .
+    FILTER(REGEX(STR(?birthDateRaw), "[0-9]{4}"))
+    BIND(xsd:integer(REPLACE(STR(?birthDateRaw), "^.*?([0-9]{4}).*$", "$1")) AS ?birthYear)
   }
 
-  ?person owl:sameAs ?gnd .
+  OPTIONAL {
+    ?person schema:deathDate ?deathDateRaw .
+    FILTER(REGEX(STR(?deathDateRaw), "[0-9]{4}"))
+    BIND(xsd:integer(REPLACE(STR(?deathDateRaw), "^.*?([0-9]{4}).*$", "$1")) AS ?deathYear)
+  }
+
+  BIND(BOUND(?birthYear) && ?birthYear >= 1361 && ?birthYear <= 1447 AS ?birthMatch)
+  BIND(!BOUND(?birthYear) && BOUND(?deathYear) && ?deathYear >= 1361 && ?deathYear <= 1497 AS ?deathFallbackMatch)
+  FILTER(?birthMatch || ?deathFallbackMatch)
 
   {
     ?person ?pp ?po .

@@ -23,7 +23,7 @@ test-file file *args:
 gndo-doc-fetch:
     ./scripts/fetch_gndo_html.sh
 
-fetch: gndo-doc-fetch gs-fetch dnb-fetch
+fetch: gndo-doc-fetch gs-fetch rgo-fetch dnb-fetch
 
 clean: gs-clean
 
@@ -31,10 +31,14 @@ clean: gs-clean
 gs-fix-dates *args:
     UV_CACHE_DIR=/tmp/uv-cache uv run python src/gs/fix_gs_clean_dates.py {{ args }}
 
-# Reduce all raw sources to example subsets.
+# Reduce all raw sources to cohort subsets (birth year 1361-1447,
+# fallback death year 1361-1497 if birth is missing).
 reduce: gs-reduce dnb-reduce rgo-reduce
 
-# Reduce GS raw data to four example persons.
+# Legacy 4-person mini examples for quick demos.
+reduce-min: gs-reduce-min dnb-reduce-min rgo-reduce-min
+
+# Reduce GS raw data to the cohort time window.
 gs-reduce:
     @mkdir -p data/raw/gs
     just robot query \
@@ -42,17 +46,34 @@ gs-reduce:
         --tdb true \
         --query mappings/gs/reduce.rq data/raw/gs/example.ttl
 
-# Reduce DNB raw data to four example persons.
+# Reduce GS raw data to four legacy mini examples.
+gs-reduce-min:
+    @mkdir -p data/raw/gs
+    just robot query \
+        --input data/raw/gs/full.ttl \
+        --tdb true \
+        --query mappings/gs/create_min_examples.rq data/raw/gs/example_min.ttl
+
+# Reduce DNB raw data to the cohort time window.
 dnb-reduce:
     UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce.py
 
-# Reduce RGO source data to four example persons.
+# Reduce DNB raw data to four legacy mini examples.
+dnb-reduce-min:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/create_min_examples.py
+
+# Reduce RGO source data to cohort scope (RG5 is already in range).
 rgo-reduce:
+    @mkdir -p data/raw/rgo
+    cp data/raw/rgo/full.ttl data/raw/rgo/example.ttl
+
+# Reduce RGO source data to four legacy mini examples.
+rgo-reduce-min:
     @mkdir -p data/raw/rgo
     just robot query \
         --input data/raw/rgo/full.ttl \
         --tdb true \
-        --query mappings/rgo/reduce.rq data/raw/rgo/example.ttl
+        --query mappings/rgo/create_min_examples.rq data/raw/rgo/example_min.ttl
 
 # Activate full variants as pipeline inputs.
 use-full:
@@ -115,6 +136,13 @@ gs-fetch *args:
     uv run python src/gs/fetch.py {{ args }}
     cp data/raw/gs/full.ttl data/raw/gs/statements.ttl
 
+# Fetch RG5 XML from the configured GitHub repository ref.
+# Requires GITHUB_TOKEN in the environment.
+rgo-fetch *args:
+    uv run python src/rgo/fetch.py {{ args }}
+    uv run python src/rgo/materialize.py {{ args }}
+    uv run python src/rgo/allign.py {{ args }}
+
 # Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
 # then normalize fuzzy date literals in the cleaned output.
 # --tdb true bypasses the OWL API so that blank-node persons and their
@@ -173,6 +201,19 @@ qlever-stop:
 
 # Build index and start server in one step
 qlever-up: qlever-index qlever-start
+
+# Build the common matching input table from source RDF snapshots.
+# Writes data/tabular/common_profiles.csv and data/tabular/common_profiles.pkl.
+match-context:
+    uv run python src/matching/fetch_context.py
+
+# Run Splink-based matching using the prepared common profile table.
+# Writes pairwise predictions to data/matching_outputs/predictions_pairs.csv.
+match-run:
+    uv run python src/matching/main_match.py
+
+# Full matching workflow: first build context table, then run matching.
+match: match-context match-run
 
 ui: ui-stop ui-build ui-setup ui-start
 

@@ -29,6 +29,11 @@ from .place_utils import (
     sql_any_place_pair,
     sql_missing_places
 )
+from .output_utils import (
+    DEFAULT_PROFILE_DISPLAY_COLUMNS,
+    build_pair_display_columns,
+    export_dataframe_to_csv,
+)
 
 __all__ = ["prepare_name_columns_for_matching",
             "preferred_variant_best_jw_sql",
@@ -53,4 +58,7 @@ __all__ = ["prepare_name_columns_for_matching",
             "prepare_place_columns_for_matching",
             "sql_nonempty_places",
             "sql_any_place_pair",
-            "sql_missing_places",]
+            "sql_missing_places",
+            "DEFAULT_PROFILE_DISPLAY_COLUMNS",
+            "build_pair_display_columns",
+            "export_dataframe_to_csv",]

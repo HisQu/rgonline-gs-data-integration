@@ -279,7 +279,7 @@ def build_date_comparison_activity_overlap(
             cll.CustomLevel(
                 sql_condition=missing_condition,
                 label_for_charts="missing interval evidence",
-            ),
+            ).configure(is_null_level=True),
 
             # Overlap levels
             cll.CustomLevel(

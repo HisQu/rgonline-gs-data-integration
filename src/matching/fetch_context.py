@@ -9,13 +9,13 @@ from rdflib.namespace import FOAF, OWL, RDF, RDFS
 ROOT = Path(__file__).resolve().parents[2]
 DNB_FILE = ROOT / "data" / "raw" / "dnb" / "example.ttl"
 GS_FILE = ROOT / "data" / "raw" / "gs" / "example.ttl"
-RGO_FILE = ROOT / "data" / "raw" / "rgo" / "example.ttl"
+RGO_FILE = ROOT / "data" / "raw" / "rgo" / "full.ttl"
 
 GNDO = Namespace("https://d-nb.info/standards/elementset/gnd#")
 SCHEMA = Namespace("http://schema.org/")
 PART = Namespace("http://purl.org/vocab/participation/schema#")
 ORG = Namespace("http://www.w3.org/ns/org#")
-RGO = Namespace("https://example.org/ontology/")
+RGO = Namespace("https://rg-online.dhi-roma.it/ontology/")
 
 # Target schema for the first matching profile
 COMMON_COLUMNS = [

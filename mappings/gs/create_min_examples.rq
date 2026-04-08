@@ -1,0 +1,38 @@
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX gnd:    <https://d-nb.info/gnd/>
+
+CONSTRUCT {
+  ?person ?pp ?po .
+  ?amt ?ap ?ao .
+  ?orgNode ?op ?oo .
+}
+WHERE {
+  VALUES ?gnd {
+    <http://d-nb.info/gnd/136175414>
+    <http://d-nb.info/gnd/118525530>
+    <http://d-nb.info/gnd/10427526X>
+    <http://d-nb.info/gnd/137509782>
+    gnd:136175414
+    gnd:118525530
+    gnd:10427526X
+    gnd:137509782
+  }
+
+  ?person owl:sameAs ?gnd .
+
+  {
+    ?person ?pp ?po .
+  }
+  UNION
+  {
+    ?person part:holder_of ?amt .
+    ?amt ?ap ?ao .
+  }
+  UNION
+  {
+    ?person org:memberOf ?orgNode .
+    ?orgNode ?op ?oo .
+  }
+}

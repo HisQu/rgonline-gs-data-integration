@@ -58,11 +58,17 @@ The current pipeline is implemented via `just` recipes:
    `just sync` and `just test`
 
 2. **Data acquisition**  
-   `just fetch` (runs `gndo-doc-fetch`, `gs-fetch`, `dnb-fetch`)  
-   RGO automatic fetch is currently not implemented in this repo (`under development`).
+   `just fetch` (runs `gndo-doc-fetch`, `gs-fetch`, `rgo-fetch`, `dnb-fetch`)  
+   `rgo-fetch` downloads `rg5.xml` from the configured RG repository and ref.  
+   Note: export `GITHUB_TOKEN` before running `just rgo-fetch` or `just fetch`.
 
-3. **Build reduced samples**  
-   `just reduce` creates `example.ttl` for GS, DNB, and RGO.
+3. **Build reduced datasets**  
+   `just reduce` creates `example.ttl` for GS, DNB, and RGO using a cohort rule:
+   - include persons with birth year in 1361-1447
+   - if birth year is missing, include persons with death year in 1361-1497
+   - for fuzzy values, the first 4-digit year is used
+
+   Legacy 4-person demo extraction is still available via `just reduce-min`.
 
 4. **Choose active input variant**  
    `just use-example` or `just use-full` copies selected variants to `statements.ttl`.
@@ -80,8 +86,20 @@ The current pipeline is implemented via `just` recipes:
 8. **Index and query services**  
    `just qlever` and `just ui`.
 
-9. **Entity resolution / linking (`under development`)**  
-   [**LIMES**](https://aksw.org/Projects/LIMES.html) integration is planned but not yet part of the automated pipeline.
+9. **Build matching context table**  
+   `just match-context` runs `src/matching/fetch_context.py` and creates:
+   - `data/tabular/common_profiles.csv`
+   - `data/tabular/common_profiles.pkl`
+
+10. **Run entity matching**  
+   `just match-run` runs `src/matching/main_match.py` on `common_profiles.pkl` and writes:
+   - `data/matching_outputs/predictions_pairs.csv`
+
+Convenience command for both steps in the correct order:
+
+```bash
+just match
+```
 
 The default end-to-end command currently runs the reduced-example workflow:
 
@@ -119,17 +137,23 @@ Project mappings use the following preferred prefixes:
 Each source directory under `data/raw/` now supports three files:
 
 - `full.ttl`: complete source snapshot
-- `example.ttl`: reduced sample dataset (four selected example persons)
+- `example.ttl`: reduced working dataset (cohort by default, or mini examples via `reduce-min`)
 - `statements.ttl`: active file used by the rest of the pipeline
 
 This keeps downstream steps agnostic: they always read `statements.ttl`.
 
-### Build reduced samples
+### Build reduced datasets
 
 Run all reducers:
 
 ```bash
 just reduce
+```
+
+Or run legacy 4-person mini reducers:
+
+```bash
+just reduce-min
 ```
 
 Or per source:
@@ -152,6 +176,28 @@ Use reduced examples:
 
 ```bash
 just use-example
+```
+
+## Matching Workflow
+
+The current matching workflow is implemented with Splink in two explicit steps:
+
+1. Build context table from RDF source snapshots:
+
+```bash
+just match-context
+```
+
+2. Run pairwise matching on the generated context table:
+
+```bash
+just match-run
+```
+
+Or run both in one command:
+
+```bash
+just match
 ```
 
 

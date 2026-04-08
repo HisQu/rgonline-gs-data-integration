@@ -26,19 +26,19 @@ Each block defines its own comparisons, which can be integrated modularly into t
 
 The workflow is based on a shared, already prepared DataFrame in which each row represents exactly one source entity. This common profile format includes, among other things:
 
-- $$entity_id$$
-- $$source$$
-- $$preferred_name$$
-- $$variant_names$$
-- $$birth_year$$
-- $$death_year$$
-- $$activity_start$$
-- $$activity_end$$
-- $$mention_start$$
-- $$mention_end$$
-- $$places$$
-- $$gnd_id$$
-- $$wikidata_id$$
+- ``entity_id``
+- ``source``
+- ``preferred_name``
+- ``variant_names``
+- ``birth_year``
+- ``death_year``
+- ``activity_start``
+- ``activity_end``
+- ``mention_start``
+- ``mention_end``
+- ``places``
+- ``gnd_id``
+- ``wikidata_id``
 
 Additional helper columns are derived from this structure specifically for matching purposes, for example normalized name or place forms.
 
@@ -48,11 +48,11 @@ Additional helper columns are derived from this structure specifically for match
 
 The matching logic is split across several files so that preprocessing, comparison definitions, and execution remain clearly separated.
 
-### Main script: $$main_match$$
+### Main script: ``main_match``
 
 The main script is the central orchestration layer of the Splink workflow. It is designed so that new comparisons can be added easily or existing ones changed without rebuilding the overall structure.
 
-Typical tasks of $$main_match$$ are:
+Typical tasks of ``main_match`` are:
 
 1. Load prepared profile data
 2. Create helper columns for matching
@@ -81,7 +81,7 @@ The name comparisons form the first and most fundamental matching block.
 
 ### Preprocessing
 
-For names, helper columns are generated from $$preferred_name$$ and $$variant_names$$. The normalization is deliberately kept controlled and transparent.
+For names, helper columns are generated from ``preferred_name`` and ``variant_names``. The normalization is deliberately kept controlled and transparent.
 
 This includes:
 
@@ -93,25 +93,25 @@ This includes:
 
 Examples of such normalizations are:
 
-- $$Henricus$$ → $$heinrich$$
-- $$Gerardus$$ → $$gerhard$$
-- $$Fridericus$$ → $$friedrich$$
-- $$Theodericus$$ → $$dietrich$$
+- ``Henricus`` → ``heinrich``
+- ``Gerardus`` → ``gerhard``
+- ``Fridericus`` → ``friedrich``
+- ``Theodericus`` → ``dietrich``
 
 ### Name comparisons
 
 Several comparisons are planned or already implemented in the name block:
 
-- $$preferred\_preferred\_similarity$$  
+- ``preferred\_preferred\_similarity``  
   comparison of the normalized preferred name on both sides, initially via Jaro-Winkler
 
-- $$preferred\_variant\_best\_similarity$$  
+- ``preferred\_variant\_best\_similarity``  
   comparison of the preferred name on one side with the variants on the other side; modeled symmetrically
 
-- $$variant\_variant\_best\_similarity$$  
+- ``variant\_variant\_best\_similarity``  
   best comparison between two variant lists
 
-- $$all\_name\_token\_overlap$$  
+- ``all\_name\_token\_overlap``  
   overlap across aggregated name tokens
 
 The name comparisons are designed to capture different aspects of name similarity:
@@ -143,23 +143,23 @@ This means:
 
 ### Date comparisons
 
-#### $$death\_compatibility$$
+#### ``death\_compatibility``
 
 This comparison is source-aware, but intentionally modeled as a shared feature because both branches express the same domain question:
 
 **Is the pair temporally compatible with respect to a death point?**
 
 - DNB vs GS: direct comparison of death years by year difference
-- RGO vs DNB/GS: comparison of $$mention\_start$$ / $$mention\_end$$ against $$death\_year$$ with a configurable allowance
+- RGO vs DNB/GS: comparison of ``mention\_start`` / ``mention\_end`` against ``death\_year`` with a configurable allowance
 
-#### $$birth\_compatibility$$
+#### ``birth\_compatibility``
 
-Analogous to $$death\_compatibility$$, but referring to birth:
+Analogous to ``death\_compatibility``, but referring to birth:
 
 - DNB vs GS: direct comparison of birth years
-- RGO vs DNB/GS: comparison of earliest/latest mentions against $$birth\_year$$ with allowance
+- RGO vs DNB/GS: comparison of earliest/latest mentions against ``birth\_year`` with allowance
 
-#### $$activity\_overlap$$
+#### ``activity\_overlap``
 
 Here, an effective temporal interval is first constructed for each side:
 
@@ -202,19 +202,19 @@ This includes:
 
 Examples of removable contextual vocabulary include:
 
-- $$dioc$$
-- $$eccl$$
-- $$stift$$
-- $$kloster$$
-- $$domstift$$
-- $$ep$$
-- $$aep$$
+- ``dioc``
+- ``eccl``
+- ``stift``
+- ``kloster``
+- ``domstift``
+- ``ep``
+- ``aep``
 
 This decision is deliberately pragmatic: for matching purposes, a slightly over-generalized place core is often more useful than an overly specific institutional form.
 
 ### Place comparisons
 
-#### $$place\_best\_similarity$$
+#### ``place\_best\_similarity``
 
 Compares the best place pair between two place lists.
 The implementation is based on pairwise string comparison between elements of two arrays.
@@ -225,20 +225,20 @@ This feature captures:
 - medium similarity
 - otherwise non-similarity
 
-#### $$place\_token\_overlap$$
+#### ``place\_token\_overlap``
 
 Aggregates all normalized place tokens per entity and compares the overlap of the two token sets.
 
 This feature captures the overall place context more than a single best place value.
 
-#### $$place\_containment\_match$$
+#### ``place\_containment\_match``
 
 Checks containment-like relations between place expressions.
 This is especially useful for cases such as:
 
-- $$Bremen$$ vs $$Domstift Bremen$$
-- $$Moers$$ vs $$de Moers$$
-- $$Hoya$$ vs $$von Hoya$$
+- ``Bremen`` vs ``Domstift Bremen``
+- ``Moers`` vs ``de Moers``
+- ``Hoya`` vs ``von Hoya``
 
 This comparison models:
 - exact or containment-style matches
