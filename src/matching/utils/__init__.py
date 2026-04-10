@@ -35,6 +35,8 @@ from .output_utils import (
     export_dataframe_to_csv,
 )
 
+from .config import load_shared_normalization_config
+
 __all__ = ["prepare_name_columns_for_matching",
             "preferred_variant_best_jw_sql",
             "sql_abs_difference",
@@ -61,4 +63,5 @@ __all__ = ["prepare_name_columns_for_matching",
             "sql_missing_places",
             "DEFAULT_PROFILE_DISPLAY_COLUMNS",
             "build_pair_display_columns",
-            "export_dataframe_to_csv",]
+            "export_dataframe_to_csv",
+            "load_shared_normalization_config",]

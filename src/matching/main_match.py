@@ -9,6 +9,7 @@ from .comparisons import (
     build_name_comparison_pref_var_best,
     build_name_comparison_var_var_best,
     build_name_comparison_all_name_token_overlap,
+    build_name_comparison_name_structure,
     build_date_comparison_death_compatibility,
     build_date_comparison_birth_compatibility,
     build_date_comparison_activity_overlap,
@@ -120,12 +121,13 @@ def build_linker(
             build_name_comparison_pref_var_best(),
             build_name_comparison_var_var_best(),
             build_name_comparison_all_name_token_overlap(),
+            #build_name_comparison_name_structure(),
             build_date_comparison_death_compatibility(allowance=5),
             build_date_comparison_birth_compatibility(allowance=5),
             build_date_comparison_activity_overlap(strong_overlap_years=5, weak_overlap_years=1, close_distance_years=5),
-            # build_place_comparison_best_similarity(),
-            # build_place_comparison_token_overlap(),
-            # build_place_comparison_containment_match(),
+            build_place_comparison_best_similarity(),
+            build_place_comparison_token_overlap(),
+            build_place_comparison_containment_match(),
         ],
         retain_matching_columns=True,
         retain_intermediate_calculation_columns=True,
@@ -139,6 +141,7 @@ def build_linker(
             "variant_name_tokens",
             "gnd_id",
             "wikidata_id",
+            "places",
         ],
     )
 
@@ -264,7 +267,7 @@ if __name__ == "__main__":
     select *
     from {pred_splink_df.physical_name}
     order by match_probability desc
-    limit 50
+    limit 100
     """
 
     top50_splink_df = linker.misc.query_sql(sql, output_type="splink_df")
@@ -277,10 +280,10 @@ if __name__ == "__main__":
     csv_path = export_dataframe_to_csv(
         pred_df,
         ROOT_DIR / "data" / "matching_outputs" / "predictions_pairs.csv",
-        top_k=50,
+        top_k=500,
         columns=pair_display_columns,
     )
 
     print(prepared_df.loc[:, DEFAULT_PROFILE_DISPLAY_COLUMNS].head())
-    print(pred_df.head(50))
+    print(pred_df.head(10))
     print(f"Exported top predictions CSV to: {csv_path}")

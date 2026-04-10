@@ -123,7 +123,7 @@ def reduce_dnb(input_path: Path, output_path: Path) -> tuple[int, int, int]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", default="data/raw/dnb/full.ttl")
+    parser.add_argument("--input", default="data/raw/dnb/persons_full.ttl")
     parser.add_argument("--output", default="data/raw/dnb/example_min.ttl")
     args = parser.parse_args()
 

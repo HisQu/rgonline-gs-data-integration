@@ -13,55 +13,80 @@ def build_name_comparisons_pref_pref() -> list:
     - preferred_name_norm
     """
     return [
-        cl.JaroWinklerAtThresholds(
-            "preferred_name_norm",
-            score_threshold_or_thresholds=[0.97, 0.92, 0.88],
+        cl.CustomComparison(
+            output_column_name="preferred_name_similarity",
+            comparison_description="Preferred name exact/fuzzy comparison with TF adjustment",
+            comparison_levels=[
+                cll.CustomLevel(
+                    sql_condition='"preferred_name_norm_l" IS NULL OR "preferred_name_norm_r" IS NULL',
+                    label_for_charts="Null",
+                ).configure(is_null_level=True),
+
+                cll.ExactMatchLevel(
+                    "preferred_name_norm",
+                    term_frequency_adjustments=True,
+                ),
+                cll.JaroWinklerLevel("preferred_name_norm", 0.97),
+                cll.JaroWinklerLevel("preferred_name_norm", 0.92),
+                cll.JaroWinklerLevel("preferred_name_norm", 0.88),
+
+                cll.ElseLevel(),
+            ],
         )
     ]
 
-def build_name_comparison_pref_var_best() -> cl.CustomComparison:
-    """
-    preferred_variant_best_similarity
-
-    Symmetric custom comparison:
-    max(
-        best_jw(preferred_l, variants_r),
-        best_jw(preferred_r, variants_l)
+def build_name_comparison_name_structure() -> cl.CustomComparison:
+    return cl.CustomComparison(
+        output_column_name="name_structure_signal",
+        comparison_description="Penalise weak single-token preferred names",
+        comparison_levels=[
+            cll.CustomLevel(
+                sql_condition="""
+                    array_length("preferred_name_tokens_l") >= 2
+                    AND array_length("preferred_name_tokens_r") >= 2
+                """,
+                label_for_charts="both names have >= 2 tokens",
+            ),
+            cll.CustomLevel(
+                sql_condition="""
+                    array_length("preferred_name_tokens_l") = 1
+                    AND array_length("preferred_name_tokens_r") = 1
+                """,
+                label_for_charts="both names single-token only",
+            ),
+            cll.ElseLevel(),
+        ],
     )
-    """
+
+def build_name_comparison_pref_var_best() -> cl.CustomComparison:
     score_sql = preferred_variant_best_jw_sql()
 
     return cl.CustomComparison(
         output_column_name="preferred_variant_best_similarity",
-        comparison_description=(
-            "Best symmetric Jaro-Winkler similarity between preferred name "
-            "and the other side's variant names"
-        ),
+        comparison_description="Best symmetric Jaro-Winkler similarity between preferred and variant names",
         comparison_levels=[
             cll.CustomLevel(
-                sql_condition=f"{score_sql} >= 0.95",
-                label_for_charts="preferred-variant best JW >= 0.95",
+                sql_condition=f"{score_sql} >= 0.97",
+                label_for_charts="preferred-variant best JW >= 0.97",
             ),
             cll.CustomLevel(
-                sql_condition=f"{score_sql} >= 0.80",
-                label_for_charts="preferred-variant best JW >= 0.80",
+                sql_condition=f"{score_sql} >= 0.92",
+                label_for_charts="preferred-variant best JW >= 0.90",
             ),
             cll.CustomLevel(
-                sql_condition=f"{score_sql} >= 0.60",
-                label_for_charts="preferred-variant best JW >= 0.60",
+                sql_condition=f"{score_sql} >= 0.88",
+                label_for_charts="preferred-variant best JW >= 0.75",
             ),
-            cll.ElseLevel().configure(is_null_level=True),
-
-            # Why does this perform worse than the ElseLevel as null level?
-            # cll.CustomLevel(
-            #     sql_condition="""
-            #         "preferred_name_norm_l" IS NULL
-            #         OR "preferred_name_norm_r" IS NULL
-            #         OR "variant_names_norm_l" IS NULL
-            #         OR "variant_names_norm_r" IS NULL
-            #     """,
-            #     label_for_charts="Null",
-            # ).configure(is_null_level=True),
+            cll.CustomLevel(
+                sql_condition="""
+                    "preferred_name_norm_l" IS NULL
+                    OR "preferred_name_norm_r" IS NULL
+                    OR "variant_names_norm_l" IS NULL
+                    OR "variant_names_norm_r" IS NULL
+                """,
+                label_for_charts="Null",
+            ).configure(is_null_level=True),
+            cll.ElseLevel(),
         ],
     )
 
@@ -88,5 +113,5 @@ def build_name_comparison_all_name_token_overlap() -> cl.ArrayIntersectAtSizes:
     """
     return cl.ArrayIntersectAtSizes(
         "all_name_tokens",
-        size_threshold_or_thresholds=[3, 2, 1],
+        size_threshold_or_thresholds=[4, 3, 2],
     )

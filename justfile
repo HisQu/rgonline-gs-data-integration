@@ -56,7 +56,13 @@ gs-reduce-min:
 
 # Reduce DNB raw data to the cohort time window.
 dnb-reduce:
-    UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce.py
+	UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce_persons.py \
+		--input data/raw/dnb/persons_full.ttl \
+		--output data/raw/dnb/persons_example.ttl
+	UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce_places.py \
+		--persons data/raw/dnb/persons_example.ttl \
+		--places-input data/raw/dnb/places_full.ttl \
+		--output data/raw/dnb/places_example.ttl
 
 # Reduce DNB raw data to four legacy mini examples.
 dnb-reduce-min:
@@ -164,12 +170,16 @@ gs-clean:
 
 # Download the GND person authority dump and extract to data/raw/dnb/full.ttl
 dnb-fetch:
-    @mkdir -p data/raw/dnb
-    curl -L -o data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
-        https://data.dnb.de/opendata/authorities-gnd-person_lds.ttl.gz
-    gunzip -c data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
-        > data/raw/dnb/full.ttl
-    cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
+	@mkdir -p data/raw/dnb
+	curl -L -o data/raw/dnb/persons_full.ttl.gz \
+		https://data.dnb.de/opendata/authorities-gnd-person_lds.ttl.gz
+	gunzip -c data/raw/dnb/persons_full.ttl.gz \
+		> data/raw/dnb/persons_full.ttl
+
+	curl -L -o data/raw/dnb/places_full.ttl.gz \
+		https://data.dnb.de/opendata/authorities-gnd-geografikum_lds.ttl.gz
+	gunzip -c data/raw/dnb/places_full.ttl.gz \
+		> data/raw/dnb/places_full.ttl
 
 qlever-restart: qlever-stop qlever-start
 

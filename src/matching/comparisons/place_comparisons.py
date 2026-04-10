@@ -73,7 +73,7 @@ def build_place_comparison_containment_match() -> cl.CustomComparison:
             cll.CustomLevel(
                 sql_condition=sql_missing_places(),
                 label_for_charts="missing place evidence",
-            ),
+            ).configure(is_null_level=True),
             cll.CustomLevel(
                 sql_condition=level_1_sql,
                 label_for_charts="exact/containment place match",

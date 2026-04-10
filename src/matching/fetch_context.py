@@ -6,8 +6,11 @@ import pandas as pd
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import FOAF, OWL, RDF, RDFS
 
+from .utils import load_shared_normalization_config
+
 ROOT = Path(__file__).resolve().parents[2]
-DNB_FILE = ROOT / "data" / "raw" / "dnb" / "example.ttl"
+DNB_PERSON_FILE = ROOT / "data" / "raw" / "dnb" / "persons_example.ttl"
+DNB_PLACE_FILE = ROOT / "data" / "raw" / "dnb" / "places_example.ttl"
 GS_FILE = ROOT / "data" / "raw" / "gs" / "example.ttl"
 RGO_FILE = ROOT / "data" / "raw" / "rgo" / "full.ttl"
 
@@ -45,19 +48,27 @@ YEAR_COLUMNS = [
 
 LIST_COLUMNS = ["variant_names", "places"]
 
+DEFAULT_CONFIG_PATH = ROOT / "data" / "name_normalization_config.json"
+
 # Helpers
 YEAR_RE = re.compile(r"(?<!\d)(-?\d{3,4})(?!\d)")
 
 
-def load_rdf(file_path: str, rdf_format: Optional[str] = None) -> Graph:
-    """
-    Load one RDF/Turtle file into an rdflib Graph.
-    """
+def load_rdf_files(
+    file_paths: str | Path | Sequence[str | Path],
+    rdf_format: Optional[str] = None,
+) -> Graph:
     graph = Graph()
-    try:
-        graph.parse(str(file_path), format=rdf_format)
-    except Exception as exc:
-        raise ValueError(f"Could not parse RDF file: {file_path}") from exc
+
+    # Accept either one path or many paths
+    if isinstance(file_paths, (str, Path)):
+        file_paths = [file_paths]
+
+    for file_path in file_paths:
+        try:
+            graph.parse(str(file_path), format=rdf_format)
+        except Exception as exc:
+            raise ValueError(f"Could not parse RDF file: {file_path}") from exc
     return graph
 
 
@@ -242,9 +253,18 @@ def iter_dnb_persons(graph: Graph) -> list[URIRef]:
     persons = set(graph.subjects(GNDO.preferredNameForThePerson, None))
     return [p for p in persons if isinstance(p, URIRef)]
 
+def get_dnb_place_label(graph: Graph, place: Any) -> Optional[str]:
+    for predicate in (
+        GNDO.preferredNameForThePlaceOrGeographicName,
+        RDFS.label,
+        FOAF.name,
+    ):
+        label = first_literal(graph, place, predicate)
+        if label:
+            return label
+    return None
 
 def extract_dnb_columns(graph: Graph, person: URIRef) -> dict[str, Any]:
-    """Extract one DNB person into the target schema."""
     record = empty_common_record()
     record["entity_id"] = clean_text(person)
     record["source"] = "dnb"
@@ -257,10 +277,17 @@ def extract_dnb_columns(graph: Graph, person: URIRef) -> dict[str, Any]:
     birth_year = first_year(graph.objects(person, GNDO.dateOfBirth))
     death_year = first_year(graph.objects(person, GNDO.dateOfDeath))
 
-    place_uris = unique_list(
+    place_nodes = list(dict.fromkeys(
         list(graph.objects(person, GNDO.placeOfActivity))
         + list(graph.objects(person, GNDO.placeOfDeath))
-    )
+        + list(graph.objects(person, GNDO.placeOfBirth))
+    ))
+
+    place_labels = []
+    for place in place_nodes:
+        label = get_dnb_place_label(graph, place)
+        if label:
+            place_labels.append(label)
 
     gnd_id = first_literal(graph, person, GNDO.gndIdentifier)
     if not gnd_id:
@@ -282,7 +309,7 @@ def extract_dnb_columns(graph: Graph, person: URIRef) -> dict[str, Any]:
             "activity_end": None,
             "mention_start": None,
             "mention_end": None,
-            "places": place_uris,
+            "places": unique_list(place_labels),
             "gnd_id": gnd_id,
             "wikidata_id": wikidata_id,
         }
@@ -290,8 +317,16 @@ def extract_dnb_columns(graph: Graph, person: URIRef) -> dict[str, Any]:
     return record
 
 
-def build_dnb_dataframe(file_path: str, rdf_format: Optional[str] = None) -> pd.DataFrame:
-    graph = load_rdf(file_path, rdf_format=rdf_format)
+def build_dnb_dataframe(
+    person_file_path: str | Path,
+    place_file_path: str | Path | None = None,
+    rdf_format: Optional[str] = None,
+) -> pd.DataFrame:
+    file_paths = [person_file_path]
+    if place_file_path is not None:
+        file_paths.append(place_file_path)
+
+    graph = load_rdf_files(file_paths, rdf_format=rdf_format)
     records = [extract_dnb_columns(graph, person) for person in iter_dnb_persons(graph)]
     return finalize_dataframe(records)
 
@@ -369,8 +404,142 @@ def extract_gs_activity_interval(graph: Graph, person: Any) -> dict[str, Optiona
         "activity_end": max_year(end_values),
     }
 
+def normalize_for_prefix_match(text: str) -> str:
+    """Whitespace-normalized string for robust prefix checks."""
+    return clean_text(text)
 
-def extract_gs_columns(graph: Graph, person: Any) -> dict[str, Any]:
+
+def starts_with_phrase(text: str, phrases: Sequence[str]) -> bool:
+    text_norm = normalize_for_prefix_match(text).lower()
+    phrases_norm = sorted(
+        {clean_text(p).lower() for p in phrases if clean_text(p)},
+        key=len,
+        reverse=True,
+    )
+
+    for phrase in phrases_norm:
+        if text_norm == phrase or text_norm.startswith(phrase + " "):
+            return True
+    return False
+
+
+def build_locative_regex(markers: Sequence[str]) -> re.Pattern:
+    markers_norm = sorted(
+        {clean_text(m) for m in markers if clean_text(m)},
+        key=len,
+        reverse=True,
+    )
+    escaped = "|".join(re.escape(m) for m in markers_norm)
+    return re.compile(rf"\b(?:{escaped})\s+(.+)$", flags=re.IGNORECASE)
+
+
+def strip_known_institution_prefix(label: str, prefixes: Sequence[str]) -> Optional[str]:
+    """
+    Remove one known institution prefix from the start of an org label.
+    Longest prefixes are tried first.
+    """
+    label_clean = clean_text(label)
+    prefixes_norm = sorted(
+        {clean_text(p) for p in prefixes if clean_text(p)},
+        key=len,
+        reverse=True,
+    )
+
+    for prefix in prefixes_norm:
+        pattern = rf"^\s*{re.escape(prefix)}(?:\s+|,\s*)"
+        if re.match(pattern, label_clean, flags=re.IGNORECASE):
+            remainder = re.sub(pattern, "", label_clean, count=1, flags=re.IGNORECASE)
+            remainder = clean_text(remainder)
+            return remainder or None
+
+    return None
+
+
+def extract_gs_org_nodes_memberof(graph: Graph, person: Any) -> list[Any]:
+    """
+    First-pass GS organisation extraction:
+    only org:memberOf as agreed.
+    """
+    return list(set(graph.objects(person, ORG.memberOf)))
+
+
+def extract_place_candidate_from_org_label(
+    label: str,
+    prefixes: Sequence[str],
+    locative_markers: Sequence[str],
+    non_place_starters: Sequence[str],
+) -> Optional[str]:
+    """
+    Heuristics in this order:
+    1) rightmost comma segment
+    2) locative phrase
+    3) known institution prefix cut
+    4) fallback: last token
+    """
+    label = clean_text(label)
+    if not label:
+        return None
+
+    # 1) rightmost comma
+    if "," in label:
+        candidate = clean_text(label.rsplit(",", 1)[-1])
+        if candidate and not starts_with_phrase(candidate, non_place_starters):
+            return candidate
+
+    # 2) locative phrase
+    locative_re = build_locative_regex(locative_markers)
+    match = locative_re.search(label)
+    if match:
+        candidate = clean_text(match.group(1))
+        if candidate and not starts_with_phrase(candidate, non_place_starters):
+            return candidate
+
+    # 3) known institution prefix
+    remainder = strip_known_institution_prefix(label, prefixes)
+    if remainder and not starts_with_phrase(remainder, non_place_starters):
+        return remainder
+
+    # 4) fallback: only last token
+    tokens = label.split()
+    if len(tokens) >= 2:
+        candidate = clean_text(tokens[-1].strip(",;:"))
+        if candidate and not starts_with_phrase(candidate, non_place_starters):
+            return candidate
+
+    return None
+
+
+def extract_gs_places(
+    graph: Graph,
+    person: Any,
+    config: dict[str, Any],
+) -> list[str]:
+    prefixes = config["gs_org_place_prefixes"]
+    locative_markers = config["gs_org_place_locative_markers"]
+    non_place_starters = config["gs_org_place_non_place_starters"]
+
+    place_candidates: list[str] = []
+
+    for org_node in extract_gs_org_nodes_memberof(graph, person):
+        label = first_literal(graph, org_node, FOAF.name)
+        if not label:
+            label = first_literal(graph, org_node, RDFS.label)
+        if not label:
+            continue
+
+        candidate = extract_place_candidate_from_org_label(
+            label=label,
+            prefixes=prefixes,
+            locative_markers=locative_markers,
+            non_place_starters=non_place_starters,
+        )
+        if candidate:
+            place_candidates.append(candidate)
+
+    return unique_list(place_candidates)
+
+
+def extract_gs_columns(graph: Graph, person: Any, config: dict[str, Any]) -> dict[str, Any]:
     """Extract one GS person into the target schema."""
     record = empty_common_record()
     record["entity_id"] = derive_gs_entity_id(graph, person)
@@ -385,6 +554,7 @@ def extract_gs_columns(graph: Graph, person: Any) -> dict[str, Any]:
 
     activity = extract_gs_activity_interval(graph, person)
     gnd_id = extract_gs_gnd_id(graph, person)
+    places = extract_gs_places(graph, person, config=config)
 
     record.update(
         {
@@ -396,7 +566,7 @@ def extract_gs_columns(graph: Graph, person: Any) -> dict[str, Any]:
             "activity_end": activity["activity_end"],
             "mention_start": None,
             "mention_end": None,
-            "places": [],             # intentionally empty in first pass
+            "places": places,
             "gnd_id": gnd_id,
             "wikidata_id": None,
         }
@@ -404,9 +574,14 @@ def extract_gs_columns(graph: Graph, person: Any) -> dict[str, Any]:
     return record
 
 
-def build_gs_dataframe(file_path: str, rdf_format: Optional[str] = None) -> pd.DataFrame:
-    graph = load_rdf(file_path, rdf_format=rdf_format)
-    records = [extract_gs_columns(graph, person) for person in iter_gs_persons(graph)]
+def build_gs_dataframe(
+    file_path: str,
+    rdf_format: Optional[str] = None,
+    config_path: str | Path = DEFAULT_CONFIG_PATH,
+) -> pd.DataFrame:
+    graph = load_rdf_files(file_path, rdf_format=rdf_format)
+    config = load_shared_normalization_config(config_path)
+    records = [extract_gs_columns(graph, person, config=config) for person in iter_gs_persons(graph)]
     return finalize_dataframe(records)
 
 
@@ -520,7 +695,7 @@ def extract_rgo_columns(graph: Graph, person: URIRef) -> dict[str, Any]:
     return record
 
 def build_rgo_dataframe(file_path: str, rdf_format: Optional[str] = None) -> pd.DataFrame:
-    graph = load_rdf(file_path, rdf_format=rdf_format)
+    graph = load_rdf_files(file_path, rdf_format=rdf_format)
     records = [extract_rgo_columns(graph, person) for person in iter_rgo_persons(graph)]
     return finalize_dataframe(records)
 
@@ -545,8 +720,8 @@ def add_all_names_column(df: pd.DataFrame) -> pd.DataFrame:
 # Usage
 if __name__ == "__main__":
     # Build one DataFrame per source
-    dnb_df = build_dnb_dataframe(DNB_FILE)
-    gs_df = build_gs_dataframe(GS_FILE)
+    dnb_df = build_dnb_dataframe(DNB_PERSON_FILE, DNB_PLACE_FILE)
+    gs_df = build_gs_dataframe(GS_FILE, config_path=DEFAULT_CONFIG_PATH)
     rgo_df = build_rgo_dataframe(RGO_FILE)
 
     # Unify into one common long-format profile table

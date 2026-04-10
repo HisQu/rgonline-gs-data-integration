@@ -1,262 +1,207 @@
-# README – Splink-based matching workflow for historical person profiles
+# Matching Workflow (DNB, GS, RGO)
 
-## Overview
+This module builds source-specific person profiles from RDF, harmonizes them into one shared schema, and performs probabilistic record linkage with Splink (DuckDB backend).
 
-This project implements a stepwise matching workflow for historical person profiles from three different sources:
+Main orchestration files:
+- `src/matching/fetch_context.py`: extract and unify context from DNB, GS, and RGO
+- `src/matching/main_match.py`: normalize, compare, train, and predict matches
+- `src/matching/comparisons/`: custom comparison definitions
+- `src/matching/utils/`: normalization and SQL helper utilities
 
-- DNB
-- Germania Sacra (GS)
-- RG Online (RGO)
+## 1) What Is Extracted From Each Source
 
-The three sources provide different types of evidence:
-- DNB mainly contains normalized person information, life dates, and in some cases place references
-- GS contains life dates as well as activity/office periods
-- RGO mainly contains mention periods and place-related contexts derived from lemma and sublemma relations
+The extraction target schema (in `fetch_context.py`) contains one row per source-specific person profile:
+- `entity_id`, `source`
+- `preferred_name`, `variant_names`
+- `birth_year`, `death_year`
+- `activity_start`, `activity_end`
+- `mention_start`, `mention_end`
+- `places`
+- `gnd_id`, `wikidata_id`
 
-The goal is to identify the same entities despite these differences. For this purpose, the system uses Splink and organizes the comparison logic into three thematic blocks:
+### DNB
 
-- Name Matching
-- Date Matching
-- Place Matching
+From DNB person and place RDF:
+- Preferred name from `gndo:preferredNameForThePerson`
+- Variant names from `gndo:variantNameForThePerson`
+- Birth/death year from corresponding GND date predicates
+- Places from `placeOfActivity`, `placeOfBirth`, `placeOfDeath` (resolved to labels)
+- `gnd_id` from `gndo:gndIdentifier` or URI fallback
+- `wikidata_id` from `owl:sameAs` when present
 
-Each block defines its own comparisons, which can be integrated modularly into the main script.
----
+DNB rows do not carry mention intervals (`mention_start`/`mention_end` stay empty).
 
-## Project idea
+### GS
 
-The workflow is based on a shared, already prepared DataFrame in which each row represents exactly one source entity. This common profile format includes, among other things:
+From GS RDF person nodes:
+- Preferred name composed from `schema:givenName` + `schema:familyName`
+- Variant names currently left empty (no reliable variant-name property used)
+- Birth/death year from `schema:birthDate` and `schema:deathDate` when available
+- Activity interval from all held offices (`part:holder_of`, then min start / max end)
+- `gnd_id` from `owl:sameAs` links to DNB
+- Places inferred from organization labels attached through `org:memberOf`
 
-- ``entity_id``
-- ``source``
-- ``preferred_name``
-- ``variant_names``
-- ``birth_year``
-- ``death_year``
-- ``activity_start``
-- ``activity_end``
-- ``mention_start``
-- ``mention_end``
-- ``places``
-- ``gnd_id``
-- ``wikidata_id``
+GS place extraction uses configurable heuristics from `data/name_normalization_config.json`:
+- `gs_org_place_prefixes`
+- `gs_org_place_locative_markers`
+- `gs_org_place_non_place_starters`
 
-Additional helper columns are derived from this structure specifically for matching purposes, for example normalized name or place forms.
+Heuristic order to derive place candidates from org labels:
+1. Rightmost comma segment
+2. Locative marker pattern (for example `in`, `zu`, `bei`, `an der`)
+3. Institution-prefix stripping (for example `Domstift`, `Kloster`, ...)
+4. Fallback to last token
 
----
+### RGO
 
-## Core architecture
+From RGO person resources:
+- Preferred name and variant names via GNDO person-name predicates
+- Mention interval (`mention_start`, `mention_end`) from aggregated `rgo:dateValue` across lemma/subentry context
+- Places from lemma `rgo:mentionsPlace` relations (label-based)
 
-The matching logic is split across several files so that preprocessing, comparison definitions, and execution remain clearly separated.
+RGO context aggregation follows both direct and inverse paths:
+- `person -> rgo:appearsInLemma -> lemma`
+- `lemma -> rgo:mentionsPerson -> person`
+- lemma/subentry relations in both directions
 
-### Main script: ``main_match``
 
-The main script is the central orchestration layer of the Splink workflow. It is designed so that new comparisons can be added easily or existing ones changed without rebuilding the overall structure.
+## 2) Normalization Prior to Matching
 
-Typical tasks of ``main_match`` are:
+In `main_match.py`, normalization is applied in two stages:
+- `prepare_name_columns_for_matching(...)`
+- `prepare_place_columns_for_matching(...)`
 
-1. Load prepared profile data
-2. Create helper columns for matching
-3. Build a Splink linker with configurable comparisons
-4. Define blocking rules
-5. Train the model
-6. Calculate pairwise scores and match probabilities
+### Name normalization
 
----
+Config keys used from `data/name_normalization_config.json`:
+- `remove_particles`
+- `first_name_equivalents`
 
-## Comparison blocks
+Helper columns produced:
+- `preferred_name_norm`
+- `preferred_name_tokens`
+- `preferred_first_token`, `preferred_last_token`
+- `variant_names_norm`
+- `variant_name_tokens`
+- `all_name_tokens` (union of preferred and variant tokens)
 
-The actual domain-specific modeling is structured into three major blocks:
+This is where Latin/German first-name equivalents (for example `henricus -> heinrich`) are harmonized.
 
-- Name
-- Date
-- Place
+### Place normalization
 
-Each block is modular and defines its own comparisons. This makes it possible to add features step by step and test them in isolation.
+Config keys used from `data/name_normalization_config.json`:
+- `place_equivalents`
+- `place_remove_particles`
+- `place_remove_context_tokens`
 
----
+Helper columns produced:
+- `places_norm`
+- `place_tokens`
 
-## 1. Name Matching
+The heuristic first-name and place normalization rules were initially created from a lightweight exploratory skim of source labels/names using [extract_common_names.py](../rgo/extract_common_names.py) and [extract_place_prefixes.py](../gs/extract_place_prefixes.py), then iteratively refined during matching experiments. This reduces orthographic noise and strips context tokens so place evidence can be compared more robustly.
 
-The name comparisons form the first and most fundamental matching block.
+## 3) What Is Compared
 
-### Preprocessing
-
-For names, helper columns are generated from ``preferred_name`` and ``variant_names``. The normalization is deliberately kept controlled and transparent.
-
-This includes:
-
-- lowercasing
-- whitespace normalization
-- removing punctuation and brackets
-- small token-wise equivalence lists for first names
-- tokenization of preferred and variant names
-
-Examples of such normalizations are:
-
-- ``Henricus`` → ``heinrich``
-- ``Gerardus`` → ``gerhard``
-- ``Fridericus`` → ``friedrich``
-- ``Theodericus`` → ``dietrich``
+Comparison features are assembled in `main_match.py` from `comparisons/`.
 
 ### Name comparisons
 
-Several comparisons are planned or already implemented in the name block:
+1. Preferred vs preferred
+- Jaro-Winkler on `preferred_name_norm`
+- Thresholds: `0.97`, `0.92`, `0.88`
 
-- ``preferred\_preferred\_similarity``  
-  comparison of the normalized preferred name on both sides, initially via Jaro-Winkler
+2. Preferred vs variant (best symmetric)
+- Custom SQL computes best Jaro-Winkler between preferred on one side and variant list on the other, in both directions, then takes the max
+- Thresholds: `0.95`, `0.80`, `0.60`
 
-- ``preferred\_variant\_best\_similarity``  
-  comparison of the preferred name on one side with the variants on the other side; modeled symmetrically
+3. Variant vs variant (best pair)
+- Pairwise best Jaro-Winkler across `variant_names_norm` arrays
+- Thresholds: `0.95`, `0.80`, `0.60`
 
-- ``variant\_variant\_best\_similarity``  
-  best comparison between two variant lists
-
-- ``all\_name\_token\_overlap``  
-  overlap across aggregated name tokens
-
-The name comparisons are designed to capture different aspects of name similarity:
-- direct main-name comparison
-- main name against alternative name forms
-- variant lists against each other
-- global token context
-
----
-
-## 2. Date Matching
-
-The date block does not compare raw date strings, but models temporal compatibility.
-
-This is necessary because the three sources provide different types of temporal information:
-
-- DNB: mostly life dates
-- GS: life dates and/or activity dates
-- RGO: mention periods
-
-### Basic idea
-
-Temporal comparison is modeled as compatibility rather than lexical equality.
-
-This means:
-- exact years can be compared directly
-- intervals are compared by overlap, distance, or plausibility
-- RGO mention ranges are checked against life-date or activity evidence from the other sources
+4. Global name token overlap
+- Array intersection size on `all_name_tokens`
+- Thresholds: `3`, `2`, `1`
 
 ### Date comparisons
 
-#### ``death\_compatibility``
+1. Death compatibility (source-aware)
+- DNB-GS: absolute death-year differences
+- RGO-other: RGO mention range versus other-side death year with allowance (default `5` years)
 
-This comparison is source-aware, but intentionally modeled as a shared feature because both branches express the same domain question:
+2. Birth compatibility (source-aware)
+- DNB-GS: absolute birth-year differences
+- RGO-other: RGO mention range versus other-side birth year with allowance (default `5` years)
 
-**Is the pair temporally compatible with respect to a death point?**
+3. Activity overlap (effective intervals)
+- RGO uses mention interval
+- GS prefers activity interval, falls back to life dates
+- DNB uses life dates
+- Levels distinguish strong/weak overlap, close no-overlap, far no-overlap, and missing evidence
 
-- DNB vs GS: direct comparison of death years by year difference
-- RGO vs DNB/GS: comparison of ``mention\_start`` / ``mention\_end`` against ``death\_year`` with a configurable allowance
-
-#### ``birth\_compatibility``
-
-Analogous to ``death\_compatibility``, but referring to birth:
-
-- DNB vs GS: direct comparison of birth years
-- RGO vs DNB/GS: comparison of earliest/latest mentions against ``birth\_year`` with allowance
-
-#### ``activity\_overlap``
-
-Here, an effective temporal interval is first constructed for each side:
-
-- RGO: mention range
-- GS: preferred activity range, otherwise fallback to life dates
-- DNB: life dates
-
-These intervals are then compared, for example by:
-- strong overlap
-- weak overlap
-- small distance without overlap
-- large distance without overlap
-
-This block is particularly important because it does not treat source differences as a problem, but as a modelable evidence structure.
-
----
-
-## 3. Place Matching
-
-Places are treated as contextual information rather than as one single canonical place ID. Each person can carry multiple place values, and depending on the source these originate from very different contexts.
-
-### Origin of place information
-
-- GS: place-related literals, usually in institutional or affiliative contexts
-- DNB: geographic references and place-of-activity
-- RGO: places derived from lemma and sublemma contexts
-
-### Preprocessing
-
-Place preprocessing follows the same general logic as for names, but is configured specifically for places.
-
-This includes:
-
-- lowercasing
-- whitespace normalization
-- removing punctuation and brackets
-- token-wise normalization of orthographic variants
-- removal of place-specific particles
-- removal of frequent contextual and institutional tokens
-
-Examples of removable contextual vocabulary include:
-
-- ``dioc``
-- ``eccl``
-- ``stift``
-- ``kloster``
-- ``domstift``
-- ``ep``
-- ``aep``
-
-This decision is deliberately pragmatic: for matching purposes, a slightly over-generalized place core is often more useful than an overly specific institutional form.
+Date helper SQL lives in `utils/date_utils.py`.
 
 ### Place comparisons
 
-#### ``place\_best\_similarity``
+1. Best place similarity
+- Pairwise best Jaro-Winkler across `places_norm`
+- Thresholds: `0.95`, `0.85`
 
-Compares the best place pair between two place lists.
-The implementation is based on pairwise string comparison between elements of two arrays.
+2. Place token overlap
+- Array intersection size on `place_tokens`
+- Thresholds: `3`, `2`, `1`
 
-This feature captures:
-- exact agreement of one place expression
-- very high lexical similarity
-- medium similarity
-- otherwise non-similarity
+3. Place containment compatibility
+- Level 1: exact or containment-like normalized place match
+- Level 2: partial/plausible relation via shared tokens
+- Missing/no-evidence handling is explicit
 
-#### ``place\_token\_overlap``
+Place helper SQL lives in `utils/place_utils.py`.
 
-Aggregates all normalized place tokens per entity and compares the overlap of the two token sets.
+## 4) How the Model Is Trained and Used
 
-This feature captures the overall place context more than a single best place value.
+The matching run is orchestrated in `main_match.py`.
 
-#### ``place\_containment\_match``
+### Link mode and source split
 
-Checks containment-like relations between place expressions.
-This is especially useful for cases such as:
+- Splink runs in `link_only` mode (no within-source deduplication)
+- Input is split into three tables (`dnb`, `gs`, `rgo`)
+- Predictions are therefore only cross-source pairs
 
-- ``Bremen`` vs ``Domstift Bremen``
-- ``Moers`` vs ``de Moers``
-- ``Hoya`` vs ``von Hoya``
+### Blocking for prediction
 
-This comparison models:
-- exact or containment-style matches
-- partial/plausible core-place containment relations
-- otherwise no containment evidence
-- optional missing level, depending on the modeling decision
+Conservative blocking rules used for full prediction:
+- `preferred_first_token` + `preferred_last_token`
+- `preferred_first_token` + `death_year`
 
-This feature complements the other two place features well because it is robust against different lengths and institutionally expanded forms.
+### Parameter estimation
 
----
+Training attempts three steps:
+1. Prior estimate from deterministic rule (`preferred_name_norm` equality)
+2. `u` estimation via random sampling
+3. Multiple EM sessions with rotating blocks:
+	- `preferred_first_token`
+	- `preferred_last_token`
+	- `birth_year`
+	- `death_year`
 
-## Summary
+Rationale: a comparison feature cannot be estimated in an EM run if that same feature is used to block that run, so multiple EM rounds improve parameter coverage.
 
-The project consists of a flexible Splink-based matching workflow with:
+### Inference and output
 
-- a central main script for blocking, training, and inference
-- separate utility files for preprocessing
-- separate comparison files for Name, Date, and Place
-- a modularly extensible structure for further matching features
+- Pair prediction uses `threshold_match_probability` (default `0.85` in workflow function)
+- Outputs include `match_probability` and `match_weight` plus retained profile/context columns
+- Results are sorted descending by score
+- Top pairs are exported to `data/matching_outputs/predictions_pairs.csv`
+- A waterfall chart can be generated for inspection (`waterfall.html`)
 
-The current modeling takes into account that historical sources provide different types of evidence. Instead of ignoring these differences, they are integrated into the matching process as distinct comparison logics.
+## 5) Summary
+
+The current matcher combines:
+- Name similarity (preferred/variant and token overlap)
+- Temporal plausibility (birth/death/activity/mention intervals)
+- Place compatibility (string similarity, token overlap, containment signal)
+
+It is explicitly source-aware:
+- DNB and GS contribute stronger life/activity metadata
+- RGO contributes mention-time and contextual place evidence
+- Date logic adapts by source pair instead of applying one rigid rule to all records
