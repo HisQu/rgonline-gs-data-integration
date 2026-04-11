@@ -122,7 +122,7 @@ def build_linker(
             *build_name_comparisons_pref_pref(),
             build_name_comparison_pref_var_best(),
             build_name_comparison_var_var_best(),
-            build_name_comparison_all_name_token_overlap(),
+            #build_name_comparison_all_name_token_overlap(),
             #build_name_comparison_name_structure(),
             build_date_comparison_death_dnb_gs(small_diff=1, medium_diff=5),
             build_date_comparison_death_rgo_other(allowance=5),
@@ -271,10 +271,10 @@ if __name__ == "__main__":
         threshold_match_probability=0.5,
     )
 
+    # Add 'order by match_probability desc' after 'from ...' to get the top candidates
     sql = f"""
     select *
     from {pred_splink_df.physical_name}
-    order by match_probability desc
     limit 100
     """
 
