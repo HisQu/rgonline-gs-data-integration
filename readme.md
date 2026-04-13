@@ -63,7 +63,10 @@ The current pipeline is implemented via `just` recipes:
    Note: export `GITHUB_TOKEN` before running `just rgo-fetch` or `just fetch`.
 
 3. **Build reduced datasets**  
-   `just reduce` creates `cohort.ttl` for each source using year-based filtering (birth 1361–1447, fallback death 1431–1497).  
+   `just reduce` creates `cohort.ttl` for each source using year-based filtering:
+   - include a person if birth year is in [1361, 1447] — the RG5 start year minus 70 years and the RG5 end year
+   - if birth year is missing, include if death year is in [1431, 1497] — the RG5 start year and the RG5 end year plus 50 years
+   - for fuzzy date values, the first 4-digit year in the lexical form is used  
    `just extract-examples` creates `example.ttl` for each source with the four cross-source example persons present in all three data sources.
 
 4. **Choose active input variant**  
