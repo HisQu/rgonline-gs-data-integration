@@ -11,6 +11,10 @@ The raw Turtle file returned by the API contains several structural problems tha
 must be corrected before the data can be used in an RDF knowledge graph.
 The cleaning query `mappings/gs/clean.rq` addresses all of them.
 
+Project namespace prefix used in GS mappings:
+
+- `gsn: <https://personendatenbank.germania-sacra.de/index/gsn/>`
+
 ### 1. Type assertions encoded as typed string literals
 
 The API serialises RDF type assertions as `xsd:string` literals instead of IRI
@@ -54,11 +58,37 @@ four-digit year.  Many values are natural-language descriptions:
 "13. Jh."^^xsd:string
 "Mitte 10. Jahrhundert"^^xsd:string
 "993/994"^^xsd:string
+"zwischen Anfang 13. und 15. Jahrhundert"^^xsd:string
+"Anfang 15. Jahrhundert"^^xsd:string
 ```
 
 The clean pass promotes unambiguous four-digit year strings to `xsd:gYear` and
 tags the remaining free-text values as `@de`.  The same rule applies to
 `participation:startDate` / `participation:endDate` on office records.
+
+### Date normalization for GNDO harmonization
+
+To make the cleaned GS dates usable in GNDO-oriented harmonization, run:
+
+```bash
+just gs-fix-dates
+```
+
+This executes `scripts/fix_gs_clean_dates.py` on `data/raw/gs/clean.ttl`.
+The script applies simple, intentionally broad assumptions and rewrites date
+literals as `xsd:gYear`.
+
+Boundary rule:
+
+- lower-bound fields (`schema:birthDate`, `part:startDate`) pick the earliest plausible year
+- upper-bound fields (`schema:deathDate`, `part:endDate`) pick the latest plausible year
+
+Examples:
+
+- `1120/1130` -> start `1120`, end `1130`
+- `vor 1495` -> start `1395`, end `1495`
+- `um 1206` -> start `1196`, end `1216`
+- `Ende 14. Jahrhundert` -> end `1500` (wider upper bound)
 
 ### 5. Participation links as plain strings
 

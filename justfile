@@ -2,8 +2,10 @@
 default:
     @just --list
 
-# Set up the entire project environment and starts all services
-go: sync test gs-fetch gs-clean dnb-fetch qlever ui
+# Set up dependencies, build reduced example inputs, run harmonization,
+# export person-focused examples, and start query services.
+go: sync test fetch reduce use-example clean harmonize examples-export qlever ui
+setup: go
 
 # Install project and dev dependencies
 sync:
@@ -17,36 +19,145 @@ test *args:
 test-file file *args:
     uv run pytest {{ file }} {{ args }}
 
-fetch: gs-fetch dnb-fetch
+# Fetch latest GND ontology HTML documentation to docs/gndo.html
+gndo-doc-fetch:
+    ./scripts/fetch_gndo_html.sh
+
+fetch: gndo-doc-fetch gs-fetch dnb-fetch
 
 clean: gs-clean
 
-# Fetch Germania Sacra source data
-gs-fetch:
-    uv run python src/gs/fetch.py
+# Normalize fuzzy GS date literals in data/raw/gs/clean.ttl to xsd:gYear.
+gs-fix-dates *args:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python src/gs/fix_gs_clean_dates.py {{ args }}
 
-# Run the GS cleaning SPARQL UPDATE against the QLever endpoint
+# Reduce all raw sources to example subsets.
+reduce: gs-reduce dnb-reduce rgo-reduce
+
+# Reduce GS raw data to four example persons.
+gs-reduce:
+    @mkdir -p data/raw/gs
+    just robot query \
+        --input data/raw/gs/full.ttl \
+        --tdb true \
+        --query mappings/gs/reduce.rq data/raw/gs/example.ttl
+
+# Reduce DNB raw data to four example persons.
+dnb-reduce:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce.py
+
+# Reduce RGO source data to four example persons.
+rgo-reduce:
+    @mkdir -p data/raw/rgo
+    just robot query \
+        --input data/raw/rgo/full.ttl \
+        --tdb true \
+        --query mappings/rgo/reduce.rq data/raw/rgo/example.ttl
+
+# Activate full variants as pipeline inputs.
+use-full:
+    cp data/raw/gs/full.ttl data/raw/gs/statements.ttl
+    cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
+    cp data/raw/rgo/full.ttl data/raw/rgo/statements.ttl
+
+# Activate reduced example variants as pipeline inputs.
+use-example:
+    cp data/raw/gs/example.ttl data/raw/gs/statements.ttl
+    cp data/raw/dnb/example.ttl data/raw/dnb/statements.ttl
+    cp data/raw/rgo/example.ttl data/raw/rgo/statements.ttl
+
+# Harmonize GS and RGO source graphs to GNDO-oriented projections using ROBOT.
+# Writes merged statements and reasoned output to data/harmonized/.
+harmonize:
+    @mkdir -p data/harmonized
+    just robot query \
+        --input data/raw/gs/clean.ttl \
+        --tdb true \
+        --query mappings/gs/harmonize.rq data/harmonized/gs.ttl
+    just robot query \
+        --input data/raw/rgo/statements.ttl \
+        --tdb true \
+        --query mappings/rgo/harmonize.rq data/harmonized/rgo.ttl
+    just robot merge \
+        --input data/harmonized/gs.ttl \
+        --input data/harmonized/rgo.ttl \
+        --output data/harmonized/statements.ttl
+    just robot merge \
+        --input mappings/harmonize.ttl \
+        --input data/harmonized/statements.ttl \
+        --output data/harmonized/with-ontology.ttl
+    just robot reason \
+        --input data/harmonized/with-ontology.ttl \
+        --reasoner HermiT \
+        --output data/harmonized/statements.ttl
+    rm -f data/harmonized/with-ontology.ttl
+
+# Export per-person harmonized examples from data/harmonized/statements.ttl.
+# Default mode is focused (one person per file). To reproduce the previous
+# broad traversal behavior, pass: --mode neighborhood
+examples-export *args:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python src/export_harmonized_examples.py {{ args }}
+    for file in data/examples/harmonized/*.ttl; do \
+        case "$file" in \
+            *.reasoned.ttl) ;; \
+            *) tmp="${file%.ttl}.with-ontology.ttl"; \
+               just robot merge --input mappings/harmonize.ttl --input "$file" --output "$tmp"; \
+               just robot reason --input "$tmp" --reasoner HermiT --output "${file%.ttl}.reasoned.ttl"; \
+               rm -f "$tmp" ;; \
+        esac; \
+    done
+
+# Fetch Germania Sacra persons active in the RG5 timeframe (1361–1447).
+# Downloads all ~2775 pages, caches under data/raw/gs/pages/, filters by date,
+# and writes merged output to data/raw/gs/full.ttl.
+# Use --start-page N to resume from a specific page.
+gs-fetch *args:
+    uv run python src/gs/fetch.py {{ args }}
+    cp data/raw/gs/full.ttl data/raw/gs/statements.ttl
+
+# Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
+# then normalize fuzzy date literals in the cleaned output.
+# --tdb true bypasses the OWL API so that blank-node persons and their
+# owl:sameAs links are preserved.
 gs-clean:
-    curl -s -X POST "http://localhost:7001" \
-        --data-urlencode "update@mappings/gs/clean.rq" \
-        --data-urlencode "access-token=ecclesiastical-persons-token" \
-    | uv run python scripts/report_update.py Persons Organisations Offices
+    @mkdir -p data/raw/gs
+    just robot query \
+        --input data/raw/gs/statements.ttl \
+        --tdb true \
+        --query mappings/gs/clean-persons.rq data/raw/gs/clean-persons.ttl \
+        --query mappings/gs/clean-orgs.rq    data/raw/gs/clean-orgs.ttl \
+        --query mappings/gs/clean-amts.rq    data/raw/gs/clean-amts.ttl
+    just robot merge \
+        --input data/raw/gs/clean-persons.ttl \
+        --input data/raw/gs/clean-orgs.ttl \
+        --input data/raw/gs/clean-amts.ttl \
+        --output data/raw/gs/clean.ttl
+    just gs-fix-dates
 
-# Count ecclesiastical persons on the DNB endpoint (no data fetched)
-dnb-count:
-    uv run python src/dnb/fetch.py --dry-run
-
-# Fetch and materialize DNB source data
-dnb-fetch *args:
-    uv run python src/dnb/fetch.py {{ args }}
-
-# Fetch DNB data with verbose logging
-dnb-fetch-verbose:
-    uv run python src/dnb/fetch.py -v
+# Download the GND person authority dump and extract to data/raw/dnb/full.ttl
+dnb-fetch:
+    @mkdir -p data/raw/dnb
+    curl -L -o data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
+        https://data.dnb.de/opendata/authorities-gnd-person_lds.ttl.gz
+    gunzip -c data/raw/dnb/authorities-gnd-person_lds.ttl.gz \
+        > data/raw/dnb/full.ttl
+    cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
 
 qlever-restart: qlever-stop qlever-start
 
-qlever: qlever-index qlever-up
+qlever: qlever-stop qlever-index qlever-up
+
+# Run all competency-question SPARQL queries with ROBOT and save CSV outputs.
+# Output files are written to queries/cq/results/.
+cq:
+    @mkdir -p queries/cq/results
+    @set -e; \
+    for query in queries/cq/*.rq; do \
+        out="queries/cq/results/$(basename "${query%.rq}").csv"; \
+        just robot -vvv query \
+            --input data/harmonized/statements.ttl \
+            --query "$query" "$out"; \
+    done
 
 # Build the QLever index from all available source files
 qlever-index:
@@ -77,6 +188,7 @@ ui-setup:
         -v "$(pwd)/qlever-ui/db:/app/db" \
         -v "$(pwd)/scripts/setup_qlever_ui.py:/setup.py:ro" \
         -v "$(pwd)/queries/examples:/queries/examples:ro" \
+        -v "$(pwd)/queries/cq:/queries/cq:ro" \
         qleverui python /setup.py
 
 # Start the QLever UI container on port 7000

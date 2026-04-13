@@ -1,18 +1,14 @@
 [data]
 NAME             = qlever/ecclesiastical-persons
-DESCRIPTION      = Historical ecclesiastical persons: Germania Sacra, DNB/GND, Repertorium Germanicum Online (Vol. 8)
+DESCRIPTION      = Harmonized ecclesiastical-person data (GNDO-centered integration graph)
 
 [index]
-# INPUT_FILES is required by the CLI; the glob matches only files that exist.
-# Actual ingestion is controlled by MULTI_INPUT_JSON — missing sources are skipped.
-INPUT_FILES      = data/raw/*/statements.ttl
+# INPUT_FILES is required by the CLI.
+INPUT_FILES      = data/harmonized/statements.ttl
 
-# Each source is loaded into its own named graph.
-# for-each skips a pattern that matches no files, so missing sources produce no input.
+# Load only the harmonized output graph (no raw source graphs).
 MULTI_INPUT_JSON = [
-    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/gs",  "for-each": "data/raw/gs/statements.ttl"},
-    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/dnb", "for-each": "data/raw/dnb/statements.ttl"},
-    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/rgo", "for-each": "data/raw/rgo/statements.ttl"}
+    {"cmd": "cat {}", "format": "ttl", "graph": "https://data.rgonline-integration.de/graph/harmonized", "for-each": "data/harmonized/statements.ttl"}
   ]
 
 STXXL_MEMORY     = 4G

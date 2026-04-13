@@ -50,44 +50,109 @@ This repository is intended to be used for:
 - tracking extraction and matching experiments, and
 - presenting project results in a transparent and reproducible way.
 
-## Planned Pipeline Steps
+## Pipeline Steps
 
-1. **Acquisition**  
-   Source datasets are collected and prepared for processing.
+The current pipeline is implemented via `just` recipes:
 
-2. **Materialization to RDF Graphs**  
-   Source data is transformed into RDF using [**Morph-KGC**](https://morph-kgc.readthedocs.io/en/stable/).
+1. **Environment and tests**  
+   `just sync` and `just test`
 
-3. **Mapping to a Unified Schema**  
-   The generated RDF is aligned to a shared ontology and integrated into a common graph model.
+2. **Data acquisition**  
+   `just fetch` (runs `gndo-doc-fetch`, `gs-fetch`, `dnb-fetch`)  
+   RGO automatic fetch is currently not implemented in this repo (`under development`).
 
-4. **Entity Resolution**  
-   [**LIMES**](https://aksw.org/Projects/LIMES.html) is used to detect and link equivalent entities across datasets.
+3. **Build reduced samples**  
+   `just reduce` creates `example.ttl` for GS, DNB, and RGO.
 
-5. **Storage and Querying**  
-   The resulting RDF graphs are loaded into [**QLever**](https://github.com/ad-freiburg/qlever?tab=readme-ov-file) for querying and analysis.
+4. **Choose active input variant**  
+   `just use-example` or `just use-full` copies selected variants to `statements.ttl`.
+
+5. **Clean GS source graph**  
+   `just clean` (currently `gs-clean`) generates `data/raw/gs/clean.ttl`.
+
+6. **Harmonize to GNDO**  
+   `just harmonize` runs ROBOT mappings and writes merged output to `data/harmonized/full.ttl`.
+
+7. **Export per-person harmonized examples**  
+   `just examples-export` writes person files to `data/examples/harmonized/`.  
+   Use `just examples-export --mode neighborhood` to reproduce the previous broad export behavior.
+
+8. **Index and query services**  
+   `just qlever` and `just ui`.
+
+9. **Entity resolution / linking (`under development`)**  
+   [**LIMES**](https://aksw.org/Projects/LIMES.html) integration is planned but not yet part of the automated pipeline.
+
+The default end-to-end command currently runs the reduced-example workflow:
+
+```bash
+just go
+```
 
 ## Tech Stack Specification
 
-The pipeline will be implemented with the following core technologies:
+The currently used core technologies are:
 
-- **Morph-KGC**  
-  Used for RDF materialization from heterogeneous source data into knowledge graphs.  
-  It will serve as the mapping engine for transforming source data into RDF according to the chosen ontology and mapping definitions.
+- **ROBOT (via Docker)** for SPARQL CONSTRUCT-based cleaning, reduction, and harmonization.
+- **Python + uv** for source-specific fetch and transformation scripts.
+- **QLever** for indexing and SPARQL querying.
+- **LIMES** (`under development`) for future entity resolution.
 
-- **QLever**  
-  Used as the RDF triplestore and SPARQL query engine.  
-  It will store the materialized graphs, support querying across the integrated data, and provide the main environment for accessing the unified knowledge graph.
+## Namespace Prefixes
 
-- **LIMES**  
-  Used for entity resolution and record linkage.  
-  It will identify likely matches across records from different source datasets and support the creation of canonical entities or alignment links.
+Project mappings use the following preferred prefixes:
+
+- `gsn: <https://personendatenbank.germania-sacra.de/index/gsn/>`
+- `rgo: <https://example.org/ontology/>`
+- `rg: <https://example.org/rg/>`
+- `gndo: <https://d-nb.info/standards/elementset/gnd#>`
+- `gnd: <https://d-nb.info/gnd/>`
 
 ## Set up for production use
 
 ### Software Requirements
 - Docker
 - Python3 + uv
+
+## Data Variants and Switching
+
+Each source directory under `data/raw/` now supports three files:
+
+- `full.ttl`: complete source snapshot
+- `example.ttl`: reduced sample dataset (four selected example persons)
+- `statements.ttl`: active file used by the rest of the pipeline
+
+This keeps downstream steps agnostic: they always read `statements.ttl`.
+
+### Build reduced samples
+
+Run all reducers:
+
+```bash
+just reduce
+```
+
+Or per source:
+
+```bash
+just gs-reduce
+just dnb-reduce
+just rgo-reduce
+```
+
+### Switch active pipeline input
+
+Use full data:
+
+```bash
+just use-full
+```
+
+Use reduced examples:
+
+```bash
+just use-example
+```
 
 
 ## Maybe?

@@ -1,0 +1,44 @@
+# Name: CQ 04: Regesta, subentries, and evidence
+# SortKey: 104
+# CQ4
+# In which regesta and subentries does a person appear,
+# and what documentary evidence supports attributed actions or positions?
+
+PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rgo:  <https://example.org/ontology/>
+
+SELECT DISTINCT
+  ?person
+  ?rgoPerson
+  ?lemma
+  ?lemmaSourceId
+  ?lemmaHead
+  ?sublemma
+  ?sublemmaDate
+  ?sublemmaText
+  ?fundReferencePart1
+  ?fundReferencePart2
+  ?fundReferencePart3
+WHERE {
+  # Replace with another person IRI as needed.
+  VALUES ?person { <https://d-nb.info/gnd/136175414> }
+
+  ?rgoPerson (owl:sameAs|^owl:sameAs)* ?person .
+  FILTER(STRSTARTS(STR(?rgoPerson), "https://example.org/rg/person/"))
+
+  ?rgoPerson rgo:appearsInLemma ?lemma .
+
+  OPTIONAL { ?lemma rgo:sourceId ?lemmaSourceId }
+  OPTIONAL { ?lemma rgo:headText ?lemmaHead }
+
+  OPTIONAL {
+    ?lemma (rgo:hasSublemma|rgo:hasSubEntry) ?sublemma .
+    OPTIONAL { ?sublemma gndo:associatedDate ?sublemmaDate }
+    OPTIONAL { ?sublemma rgo:text ?sublemmaText }
+    OPTIONAL { ?sublemma rgo:fundReferencePart1 ?fundReferencePart1 }
+    OPTIONAL { ?sublemma rgo:fundReferencePart2 ?fundReferencePart2 }
+    OPTIONAL { ?sublemma rgo:fundReferencePart3 ?fundReferencePart3 }
+  }
+}
+ORDER BY ?lemma ?sublemma ?sublemmaDate

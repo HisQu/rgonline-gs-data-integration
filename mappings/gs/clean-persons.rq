@@ -1,0 +1,68 @@
+# Persons – local CONSTRUCT variant of clean.rq block 1.
+#
+# Designed for use with ROBOT + --tdb true, which loads the TTL directly into
+# Jena TDB without the OWL API.  The OWL API would strip owl:sameAs from blank
+# nodes (treating the axiom specially), so --tdb is required to preserve the
+# blank-node structure that this query depends on.
+#
+# Reads from the DEFAULT graph (TDB loads flat TTL into the default graph).
+# clean.rq (the QLever variant) reads from a named graph instead.
+
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+  ?person a foaf:Person ;
+    schema:givenName  ?givenName ;
+    schema:familyName ?familyName ;
+    schema:birthDate  ?birthDate ;
+    schema:deathDate  ?deathDate ;
+    part:holder_of    ?amtURI ;
+    org:memberOf      ?orgURI ;
+    owl:sameAs        ?gndURI .
+}
+WHERE {
+  # Persons are blank nodes; the canonical GS URI is recovered from owl:sameAs.
+  # The FILTERs select only root GS URIs (no #fragment), which are persons.
+  ?bn owl:sameAs ?person .
+  FILTER(STRSTARTS(STR(?person), STR(gsn:)))
+  FILTER(!CONTAINS(STR(?person), "#"))
+
+  OPTIONAL {
+    ?bn schema:givenName ?givenNameRaw .
+    BIND(STR(?givenNameRaw) AS ?givenName)
+  }
+  OPTIONAL {
+    ?bn schema:familyName ?familyNameRaw .
+    BIND(STR(?familyNameRaw) AS ?familyName)
+  }
+  OPTIONAL {
+    ?bn schema:birthDate ?birthDateRaw .
+    BIND(
+      IF(REGEX(STR(?birthDateRaw), "^[0-9]{4}$"),
+         STRDT(STR(?birthDateRaw), xsd:gYear),
+         STRLANG(STR(?birthDateRaw), "de"))
+      AS ?birthDate)
+  }
+  OPTIONAL {
+    ?bn schema:deathDate ?deathDateRaw .
+    BIND(
+      IF(REGEX(STR(?deathDateRaw), "^[0-9]{4}$"),
+         STRDT(STR(?deathDateRaw), xsd:gYear),
+         STRLANG(STR(?deathDateRaw), "de"))
+      AS ?deathDate)
+  }
+  OPTIONAL { ?bn part:holder_of ?amtURI }
+  OPTIONAL { ?bn org:memberOf   ?orgURI }
+  OPTIONAL {
+    ?bn owl:sameAs ?gndURI .
+    FILTER(
+      STRSTARTS(STR(?gndURI), "http://d-nb.info/gnd/") ||
+      STRSTARTS(STR(?gndURI), "https://d-nb.info/gnd/"))
+  }
+}

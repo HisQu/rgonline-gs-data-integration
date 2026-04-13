@@ -4,6 +4,8 @@
 data/raw/*/*
 !data/raw/**/.gitkeep
 !data/raw/**/example*
+data/harmonized/*
+!data/harmonized/.gitkeep
 *.pyc
 __pycache__/
 .venv/
@@ -24,3 +26,4 @@ rdf4j/logs/*
 
 # Environment variables
 .env
+docs/gndo.html

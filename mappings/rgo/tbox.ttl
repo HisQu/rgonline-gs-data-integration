@@ -1,0 +1,45 @@
+# this is automatically extracted from data/raw/rgo/rg5_aligned.ttl
+
+@prefix gndo:  <https://d-nb.info/standards/elementset/gnd#> .
+@prefix rgo:   <https://example.org/ontology/> .
+@prefix rg:    <https://example.org/ontology/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+rgo:fundReferencePart1
+        a       owl:DatatypeProperty , rdf:Property .
+
+rgo:RegestEntry  a  owl:Class .
+
+rgo:partOfLemma  a  owl:ObjectProperty , rdf:Property .
+
+rgo:headText  a  owl:DatatypeProperty , rdf:Property .
+
+rgo:SubEntry  a  owl:Class .
+
+rgo:RGOntology  a    owl:Ontology ;
+        rdfs:label  "RG ontology T-Box (extracted from data/raw/rgo/rg5_aligned.ttl)" .
+
+rgo:mentionsPerson  a  owl:ObjectProperty , rdf:Property .
+
+rgo:text  a      owl:DatatypeProperty , rdf:Property .
+
+rgo:fundReferencePart2
+        a       owl:DatatypeProperty , rdf:Property .
+
+rgo:sourceId  a  owl:DatatypeProperty , rdf:Property .
+
+rgo:volume  a    owl:DatatypeProperty , rdf:Property .
+
+rgo:hasSubEntry  a  owl:ObjectProperty , rdf:Property .
+
+rgo:appearsInLemma  a  owl:ObjectProperty , rdf:Property .
+
+rgo:dateValue  a  owl:DatatypeProperty , rdf:Property .
+
+rgo:fundReferencePart3
+        a       owl:DatatypeProperty , rdf:Property .
+
+rgo:mentionsPlace  a  owl:ObjectProperty , rdf:Property .

@@ -1,0 +1,34 @@
+# Organisations – local CONSTRUCT variant of clean.rq block 2.
+# See clean-persons.rq for notes on --tdb and default-graph access.
+
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX prov:   <http://www.w3.org/ns/prov#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+  ?org a ?orgClass ;
+    foaf:name  ?orgName ;
+    owl:sameAs ?klosterURI .
+}
+WHERE {
+  ?org a ?orgTypeStr .
+
+  FILTER(STRSTARTS(STR(?org), STR(gsn:)))
+  FILTER(CONTAINS(STR(?org), "#organisation-"))
+
+  OPTIONAL {
+    ?org foaf:name ?orgNameRaw .
+    BIND(STRLANG(STR(?orgNameRaw), "de") AS ?orgName)
+  }
+  OPTIONAL {
+    ?org owl:sameAs ?klosterURI .
+    FILTER(STRSTARTS(STR(?klosterURI), "https://klosterdatenbank.germania-sacra.de/"))
+  }
+
+  VALUES (?orgTypeStr ?orgClass) {
+    ("foaf:Organization"^^xsd:string foaf:Organization)
+    ("prov:Agent"^^xsd:string        prov:Agent)
+  }
+}

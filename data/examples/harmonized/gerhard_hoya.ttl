@@ -1,0 +1,1111 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix gnd: <https://d-nb.info/gnd/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix gsn: <https://personendatenbank.germania-sacra.de/index/gsn/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rgo: <https://example.org/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+gndo:NameOfThePerson a owl:Class .
+
+<https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F005-02827-001> a owl:NamedIndividual,
+        gndo:NameOfThePerson ;
+    gndo:forename "Gerhard" ;
+    gndo:surname "Hoya" .
+
+<https://example.org/rg/ort/10502432> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Bremen." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500075>,
+        <https://example.org/rg/lemma/10500106>,
+        <https://example.org/rg/lemma/10500140>,
+        <https://example.org/rg/lemma/10500142>,
+        <https://example.org/rg/lemma/10500256>,
+        <https://example.org/rg/lemma/10500554>,
+        <https://example.org/rg/lemma/10500597>,
+        <https://example.org/rg/lemma/10500676>,
+        <https://example.org/rg/lemma/10500769>,
+        <https://example.org/rg/lemma/10500825>,
+        <https://example.org/rg/lemma/10500872>,
+        <https://example.org/rg/lemma/10500906>,
+        <https://example.org/rg/lemma/10501097>,
+        <https://example.org/rg/lemma/10501114>,
+        <https://example.org/rg/lemma/10501138>,
+        <https://example.org/rg/lemma/10501277>,
+        <https://example.org/rg/lemma/10501415>,
+        <https://example.org/rg/lemma/10501483>,
+        <https://example.org/rg/lemma/10501496>,
+        <https://example.org/rg/lemma/10501559>,
+        <https://example.org/rg/lemma/10501574>,
+        <https://example.org/rg/lemma/10501608>,
+        <https://example.org/rg/lemma/10501612>,
+        <https://example.org/rg/lemma/10501615>,
+        <https://example.org/rg/lemma/10501620>,
+        <https://example.org/rg/lemma/10501654>,
+        <https://example.org/rg/lemma/10501702>,
+        <https://example.org/rg/lemma/10501755>,
+        <https://example.org/rg/lemma/10501781>,
+        <https://example.org/rg/lemma/10501932>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502008>,
+        <https://example.org/rg/lemma/10502150>,
+        <https://example.org/rg/lemma/10502215>,
+        <https://example.org/rg/lemma/10502219>,
+        <https://example.org/rg/lemma/10502423>,
+        <https://example.org/rg/lemma/10502514>,
+        <https://example.org/rg/lemma/10502612>,
+        <https://example.org/rg/lemma/10502625>,
+        <https://example.org/rg/lemma/10502628>,
+        <https://example.org/rg/lemma/10502638>,
+        <https://example.org/rg/lemma/10502647>,
+        <https://example.org/rg/lemma/10502815>,
+        <https://example.org/rg/lemma/10502821>,
+        <https://example.org/rg/lemma/10502907>,
+        <https://example.org/rg/lemma/10502916>,
+        <https://example.org/rg/lemma/10502965>,
+        <https://example.org/rg/lemma/10503001>,
+        <https://example.org/rg/lemma/10503134>,
+        <https://example.org/rg/lemma/10503143>,
+        <https://example.org/rg/lemma/10503157>,
+        <https://example.org/rg/lemma/10503317>,
+        <https://example.org/rg/lemma/10503337>,
+        <https://example.org/rg/lemma/10503356>,
+        <https://example.org/rg/lemma/10503388>,
+        <https://example.org/rg/lemma/10503457>,
+        <https://example.org/rg/lemma/10503522>,
+        <https://example.org/rg/lemma/10503687>,
+        <https://example.org/rg/lemma/10504001>,
+        <https://example.org/rg/lemma/10504044>,
+        <https://example.org/rg/lemma/10504057>,
+        <https://example.org/rg/lemma/10504082>,
+        <https://example.org/rg/lemma/10504102>,
+        <https://example.org/rg/lemma/10504108>,
+        <https://example.org/rg/lemma/10504136>,
+        <https://example.org/rg/lemma/10504140>,
+        <https://example.org/rg/lemma/10504202>,
+        <https://example.org/rg/lemma/10504229> ;
+    rgo:sourceId "10502432" .
+
+<https://example.org/rg/ort/10502434> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Bremen.: aep." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500075>,
+        <https://example.org/rg/lemma/10500597>,
+        <https://example.org/rg/lemma/10500676>,
+        <https://example.org/rg/lemma/10500872>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502150>,
+        <https://example.org/rg/lemma/10504229>,
+        <https://example.org/rg/lemma/10504328>,
+        <https://example.org/rg/lemma/10505783>,
+        <https://example.org/rg/lemma/10506667>,
+        <https://example.org/rg/lemma/10506747>,
+        <https://example.org/rg/lemma/10506983>,
+        <https://example.org/rg/lemma/10507136>,
+        <https://example.org/rg/lemma/10507459>,
+        <https://example.org/rg/lemma/10508129>,
+        <https://example.org/rg/lemma/10508560>,
+        <https://example.org/rg/lemma/10508898> ;
+    rgo:sourceId "10502434" .
+
+<https://example.org/rg/ort/10503410> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Carintia: dux" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500940>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10506859> ;
+    rgo:sourceId "10503410" .
+
+<https://example.org/rg/ort/10503416> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Carniola: dux" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500940>,
+        <https://example.org/rg/lemma/10501952> ;
+    rgo:sourceId "10503416" .
+
+<https://example.org/rg/ort/10503450> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Castella et Legio: rex" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10504177>,
+        <https://example.org/rg/lemma/10507012> ;
+    rgo:sourceId "10503450" .
+
+<https://example.org/rg/ort/10503928> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Colon.: eccl." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500028>,
+        <https://example.org/rg/lemma/10500140>,
+        <https://example.org/rg/lemma/10500176>,
+        <https://example.org/rg/lemma/10500453>,
+        <https://example.org/rg/lemma/10500515>,
+        <https://example.org/rg/lemma/10500546>,
+        <https://example.org/rg/lemma/10500551>,
+        <https://example.org/rg/lemma/10500915>,
+        <https://example.org/rg/lemma/10501017>,
+        <https://example.org/rg/lemma/10501233>,
+        <https://example.org/rg/lemma/10501315>,
+        <https://example.org/rg/lemma/10501419>,
+        <https://example.org/rg/lemma/10501581>,
+        <https://example.org/rg/lemma/10501755>,
+        <https://example.org/rg/lemma/10501783>,
+        <https://example.org/rg/lemma/10501807>,
+        <https://example.org/rg/lemma/10501932>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10501982>,
+        <https://example.org/rg/lemma/10502150>,
+        <https://example.org/rg/lemma/10502211> ;
+    rgo:sourceId "10503928" .
+
+<https://example.org/rg/ort/10506585> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Frising." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500210>,
+        <https://example.org/rg/lemma/10500828>,
+        <https://example.org/rg/lemma/10500941>,
+        <https://example.org/rg/lemma/10500954>,
+        <https://example.org/rg/lemma/10501028>,
+        <https://example.org/rg/lemma/10501110>,
+        <https://example.org/rg/lemma/10501144>,
+        <https://example.org/rg/lemma/10501265>,
+        <https://example.org/rg/lemma/10501272>,
+        <https://example.org/rg/lemma/10501314>,
+        <https://example.org/rg/lemma/10501320>,
+        <https://example.org/rg/lemma/10501423>,
+        <https://example.org/rg/lemma/10501479>,
+        <https://example.org/rg/lemma/10501732>,
+        <https://example.org/rg/lemma/10501744>,
+        <https://example.org/rg/lemma/10501869>,
+        <https://example.org/rg/lemma/10501908>,
+        <https://example.org/rg/lemma/10501938>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10501998>,
+        <https://example.org/rg/lemma/10502040>,
+        <https://example.org/rg/lemma/10502056>,
+        <https://example.org/rg/lemma/10502509>,
+        <https://example.org/rg/lemma/10502608>,
+        <https://example.org/rg/lemma/10502770>,
+        <https://example.org/rg/lemma/10502785>,
+        <https://example.org/rg/lemma/10502813>,
+        <https://example.org/rg/lemma/10502836>,
+        <https://example.org/rg/lemma/10502890>,
+        <https://example.org/rg/lemma/10503007>,
+        <https://example.org/rg/lemma/10503060>,
+        <https://example.org/rg/lemma/10503087>,
+        <https://example.org/rg/lemma/10503096>,
+        <https://example.org/rg/lemma/10503234>,
+        <https://example.org/rg/lemma/10503477>,
+        <https://example.org/rg/lemma/10503482>,
+        <https://example.org/rg/lemma/10503819>,
+        <https://example.org/rg/lemma/10504114>,
+        <https://example.org/rg/lemma/10504213>,
+        <https://example.org/rg/lemma/10504364>,
+        <https://example.org/rg/lemma/10504433>,
+        <https://example.org/rg/lemma/10504447>,
+        <https://example.org/rg/lemma/10504609>,
+        <https://example.org/rg/lemma/10504719>,
+        <https://example.org/rg/lemma/10504721>,
+        <https://example.org/rg/lemma/10504906>,
+        <https://example.org/rg/lemma/10504909>,
+        <https://example.org/rg/lemma/10504961>,
+        <https://example.org/rg/lemma/10504984>,
+        <https://example.org/rg/lemma/10505279>,
+        <https://example.org/rg/lemma/10505283>,
+        <https://example.org/rg/lemma/10505408>,
+        <https://example.org/rg/lemma/10505529>,
+        <https://example.org/rg/lemma/10505669>,
+        <https://example.org/rg/lemma/10505696>,
+        <https://example.org/rg/lemma/10505729>,
+        <https://example.org/rg/lemma/10505858>,
+        <https://example.org/rg/lemma/10505864>,
+        <https://example.org/rg/lemma/10505888>,
+        <https://example.org/rg/lemma/10505924>,
+        <https://example.org/rg/lemma/10506027>,
+        <https://example.org/rg/lemma/10506245>,
+        <https://example.org/rg/lemma/10506253>,
+        <https://example.org/rg/lemma/10506353>,
+        <https://example.org/rg/lemma/10506631>,
+        <https://example.org/rg/lemma/10506811>,
+        <https://example.org/rg/lemma/10506880>,
+        <https://example.org/rg/lemma/10507277>,
+        <https://example.org/rg/lemma/10507494>,
+        <https://example.org/rg/lemma/10507623>,
+        <https://example.org/rg/lemma/10507667>,
+        <https://example.org/rg/lemma/10508285>,
+        <https://example.org/rg/lemma/10508521>,
+        <https://example.org/rg/lemma/10508920>,
+        <https://example.org/rg/lemma/10508930>,
+        <https://example.org/rg/lemma/10508934>,
+        <https://example.org/rg/lemma/10508974>,
+        <https://example.org/rg/lemma/10508991>,
+        <https://example.org/rg/lemma/10509001>,
+        <https://example.org/rg/lemma/10509033>,
+        <https://example.org/rg/lemma/10509225>,
+        <https://example.org/rg/lemma/10509334>,
+        <https://example.org/rg/lemma/10509392>,
+        <https://example.org/rg/lemma/10509433>,
+        <https://example.org/rg/lemma/10509528> ;
+    rgo:sourceId "10506585" .
+
+<https://example.org/rg/ort/10506591> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Frising.: eccl." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500941>,
+        <https://example.org/rg/lemma/10501028>,
+        <https://example.org/rg/lemma/10501265>,
+        <https://example.org/rg/lemma/10501272>,
+        <https://example.org/rg/lemma/10501314>,
+        <https://example.org/rg/lemma/10501320>,
+        <https://example.org/rg/lemma/10501479>,
+        <https://example.org/rg/lemma/10501732>,
+        <https://example.org/rg/lemma/10501744>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10501998>,
+        <https://example.org/rg/lemma/10502040>,
+        <https://example.org/rg/lemma/10502509>,
+        <https://example.org/rg/lemma/10502608>,
+        <https://example.org/rg/lemma/10502785>,
+        <https://example.org/rg/lemma/10502813>,
+        <https://example.org/rg/lemma/10502890>,
+        <https://example.org/rg/lemma/10503087>,
+        <https://example.org/rg/lemma/10503819>,
+        <https://example.org/rg/lemma/10504114>,
+        <https://example.org/rg/lemma/10504433>,
+        <https://example.org/rg/lemma/10504447>,
+        <https://example.org/rg/lemma/10504609>,
+        <https://example.org/rg/lemma/10504721>,
+        <https://example.org/rg/lemma/10504906>,
+        <https://example.org/rg/lemma/10504909>,
+        <https://example.org/rg/lemma/10504984>,
+        <https://example.org/rg/lemma/10505283>,
+        <https://example.org/rg/lemma/10505408>,
+        <https://example.org/rg/lemma/10505529>,
+        <https://example.org/rg/lemma/10505669>,
+        <https://example.org/rg/lemma/10505858>,
+        <https://example.org/rg/lemma/10505864>,
+        <https://example.org/rg/lemma/10505888>,
+        <https://example.org/rg/lemma/10506245>,
+        <https://example.org/rg/lemma/10506353>,
+        <https://example.org/rg/lemma/10506631>,
+        <https://example.org/rg/lemma/10506880>,
+        <https://example.org/rg/lemma/10507277>,
+        <https://example.org/rg/lemma/10507623>,
+        <https://example.org/rg/lemma/10507667>,
+        <https://example.org/rg/lemma/10508285>,
+        <https://example.org/rg/lemma/10508521>,
+        <https://example.org/rg/lemma/10508920>,
+        <https://example.org/rg/lemma/10508930>,
+        <https://example.org/rg/lemma/10508934>,
+        <https://example.org/rg/lemma/10508974>,
+        <https://example.org/rg/lemma/10508991>,
+        <https://example.org/rg/lemma/10509001>,
+        <https://example.org/rg/lemma/10509225>,
+        <https://example.org/rg/lemma/10509334>,
+        <https://example.org/rg/lemma/10509392>,
+        <https://example.org/rg/lemma/10509433>,
+        <https://example.org/rg/lemma/10509528> ;
+    rgo:sourceId "10506591" .
+
+<https://example.org/rg/ort/10506941> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Germania" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500075>,
+        <https://example.org/rg/lemma/10500156>,
+        <https://example.org/rg/lemma/10500250>,
+        <https://example.org/rg/lemma/10500319>,
+        <https://example.org/rg/lemma/10500432>,
+        <https://example.org/rg/lemma/10500444>,
+        <https://example.org/rg/lemma/10500492>,
+        <https://example.org/rg/lemma/10500573>,
+        <https://example.org/rg/lemma/10500610>,
+        <https://example.org/rg/lemma/10500646>,
+        <https://example.org/rg/lemma/10501017>,
+        <https://example.org/rg/lemma/10501024>,
+        <https://example.org/rg/lemma/10501176>,
+        <https://example.org/rg/lemma/10501240>,
+        <https://example.org/rg/lemma/10501271>,
+        <https://example.org/rg/lemma/10501791>,
+        <https://example.org/rg/lemma/10501940>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502534>,
+        <https://example.org/rg/lemma/10502581>,
+        <https://example.org/rg/lemma/10502628>,
+        <https://example.org/rg/lemma/10502724>,
+        <https://example.org/rg/lemma/10503474>,
+        <https://example.org/rg/lemma/10503514>,
+        <https://example.org/rg/lemma/10503696>,
+        <https://example.org/rg/lemma/10504177>,
+        <https://example.org/rg/lemma/10504341>,
+        <https://example.org/rg/lemma/10504507>,
+        <https://example.org/rg/lemma/10505004>,
+        <https://example.org/rg/lemma/10505561>,
+        <https://example.org/rg/lemma/10505665>,
+        <https://example.org/rg/lemma/10505814>,
+        <https://example.org/rg/lemma/10506039>,
+        <https://example.org/rg/lemma/10506111>,
+        <https://example.org/rg/lemma/10506232>,
+        <https://example.org/rg/lemma/10506413>,
+        <https://example.org/rg/lemma/10506468>,
+        <https://example.org/rg/lemma/10506623>,
+        <https://example.org/rg/lemma/10506631>,
+        <https://example.org/rg/lemma/10506767>,
+        <https://example.org/rg/lemma/10506888>,
+        <https://example.org/rg/lemma/10506977>,
+        <https://example.org/rg/lemma/10506994>,
+        <https://example.org/rg/lemma/10507098>,
+        <https://example.org/rg/lemma/10507274>,
+        <https://example.org/rg/lemma/10507959>,
+        <https://example.org/rg/lemma/10508124>,
+        <https://example.org/rg/lemma/10508244>,
+        <https://example.org/rg/lemma/10508471>,
+        <https://example.org/rg/lemma/10508585>,
+        <https://example.org/rg/lemma/10508646>,
+        <https://example.org/rg/lemma/10508721>,
+        <https://example.org/rg/lemma/10508809>,
+        <https://example.org/rg/lemma/10508859>,
+        <https://example.org/rg/lemma/10509028>,
+        <https://example.org/rg/lemma/10509165>,
+        <https://example.org/rg/lemma/10509216>,
+        <https://example.org/rg/lemma/10509295>,
+        <https://example.org/rg/lemma/10509507>,
+        <https://example.org/rg/lemma/10509549> ;
+    rgo:sourceId "10506941" .
+
+<https://example.org/rg/ort/10506942> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Germanicus" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502213>,
+        <https://example.org/rg/lemma/10502217>,
+        <https://example.org/rg/lemma/10504775>,
+        <https://example.org/rg/lemma/10505004>,
+        <https://example.org/rg/lemma/10507031>,
+        <https://example.org/rg/lemma/10507785>,
+        <https://example.org/rg/lemma/10508563> ;
+    rgo:sourceId "10506942" .
+
+<https://example.org/rg/ort/10514278> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Osil." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500586>,
+        <https://example.org/rg/lemma/10501116>,
+        <https://example.org/rg/lemma/10501416>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502260>,
+        <https://example.org/rg/lemma/10502296>,
+        <https://example.org/rg/lemma/10502425>,
+        <https://example.org/rg/lemma/10502427>,
+        <https://example.org/rg/lemma/10502563>,
+        <https://example.org/rg/lemma/10502620>,
+        <https://example.org/rg/lemma/10503101>,
+        <https://example.org/rg/lemma/10503142>,
+        <https://example.org/rg/lemma/10503705>,
+        <https://example.org/rg/lemma/10504449>,
+        <https://example.org/rg/lemma/10504535> ;
+    rgo:sourceId "10514278" .
+
+<https://example.org/rg/ort/10514283> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Osil.: eccl." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500586>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502260>,
+        <https://example.org/rg/lemma/10502296>,
+        <https://example.org/rg/lemma/10502425>,
+        <https://example.org/rg/lemma/10502427>,
+        <https://example.org/rg/lemma/10502563>,
+        <https://example.org/rg/lemma/10503142>,
+        <https://example.org/rg/lemma/10504449> ;
+    rgo:sourceId "10514283" .
+
+<https://example.org/rg/ort/10518415> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Stiria: dux" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500940>,
+        <https://example.org/rg/lemma/10501952> ;
+    rgo:sourceId "10518415" .
+
+<https://example.org/rg/ort/10518813> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Tirolis:com." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500940>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10504162> ;
+    rgo:sourceId "10518813" .
+
+<https://example.org/rg/ort/10519946> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Trever.: eccl." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500010>,
+        <https://example.org/rg/lemma/10500028>,
+        <https://example.org/rg/lemma/10500037>,
+        <https://example.org/rg/lemma/10500395>,
+        <https://example.org/rg/lemma/10500548>,
+        <https://example.org/rg/lemma/10501199>,
+        <https://example.org/rg/lemma/10501204>,
+        <https://example.org/rg/lemma/10501807>,
+        <https://example.org/rg/lemma/10501912>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10501968>,
+        <https://example.org/rg/lemma/10502123>,
+        <https://example.org/rg/lemma/10502136>,
+        <https://example.org/rg/lemma/10503083>,
+        <https://example.org/rg/lemma/10503281>,
+        <https://example.org/rg/lemma/10503349>,
+        <https://example.org/rg/lemma/10503568>,
+        <https://example.org/rg/lemma/10503754>,
+        <https://example.org/rg/lemma/10503760>,
+        <https://example.org/rg/lemma/10504450>,
+        <https://example.org/rg/lemma/10505059>,
+        <https://example.org/rg/lemma/10505378>,
+        <https://example.org/rg/lemma/10505806>,
+        <https://example.org/rg/lemma/10505876>,
+        <https://example.org/rg/lemma/10506085>,
+        <https://example.org/rg/lemma/10506928>,
+        <https://example.org/rg/lemma/10507018>,
+        <https://example.org/rg/lemma/10507691>,
+        <https://example.org/rg/lemma/10507703>,
+        <https://example.org/rg/lemma/10507971>,
+        <https://example.org/rg/lemma/10508023>,
+        <https://example.org/rg/lemma/10508103>,
+        <https://example.org/rg/lemma/10508578>,
+        <https://example.org/rg/lemma/10508755>,
+        <https://example.org/rg/lemma/10508762>,
+        <https://example.org/rg/lemma/10508769>,
+        <https://example.org/rg/lemma/10508905>,
+        <https://example.org/rg/lemma/10508968>,
+        <https://example.org/rg/lemma/10509047> ;
+    rgo:sourceId "10519946" .
+
+<https://example.org/rg/ort/10520329> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Trident: eccl." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500272>,
+        <https://example.org/rg/lemma/10500325>,
+        <https://example.org/rg/lemma/10500385>,
+        <https://example.org/rg/lemma/10500431>,
+        <https://example.org/rg/lemma/10500637>,
+        <https://example.org/rg/lemma/10500684>,
+        <https://example.org/rg/lemma/10500955>,
+        <https://example.org/rg/lemma/10500958>,
+        <https://example.org/rg/lemma/10501009>,
+        <https://example.org/rg/lemma/10501055>,
+        <https://example.org/rg/lemma/10501176>,
+        <https://example.org/rg/lemma/10501212>,
+        <https://example.org/rg/lemma/10501226>,
+        <https://example.org/rg/lemma/10501313>,
+        <https://example.org/rg/lemma/10501430>,
+        <https://example.org/rg/lemma/10501848>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502007>,
+        <https://example.org/rg/lemma/10502114>,
+        <https://example.org/rg/lemma/10502339>,
+        <https://example.org/rg/lemma/10502656>,
+        <https://example.org/rg/lemma/10502901>,
+        <https://example.org/rg/lemma/10502928>,
+        <https://example.org/rg/lemma/10503040>,
+        <https://example.org/rg/lemma/10503208>,
+        <https://example.org/rg/lemma/10503285>,
+        <https://example.org/rg/lemma/10503550>,
+        <https://example.org/rg/lemma/10503737>,
+        <https://example.org/rg/lemma/10503767>,
+        <https://example.org/rg/lemma/10503789>,
+        <https://example.org/rg/lemma/10503825>,
+        <https://example.org/rg/lemma/10503907>,
+        <https://example.org/rg/lemma/10503919>,
+        <https://example.org/rg/lemma/10504256>,
+        <https://example.org/rg/lemma/10504455>,
+        <https://example.org/rg/lemma/10504664>,
+        <https://example.org/rg/lemma/10504720>,
+        <https://example.org/rg/lemma/10505256>,
+        <https://example.org/rg/lemma/10505305>,
+        <https://example.org/rg/lemma/10505311>,
+        <https://example.org/rg/lemma/10505467>,
+        <https://example.org/rg/lemma/10505499>,
+        <https://example.org/rg/lemma/10505735>,
+        <https://example.org/rg/lemma/10506105>,
+        <https://example.org/rg/lemma/10506168>,
+        <https://example.org/rg/lemma/10506463>,
+        <https://example.org/rg/lemma/10506477>,
+        <https://example.org/rg/lemma/10506666>,
+        <https://example.org/rg/lemma/10506708>,
+        <https://example.org/rg/lemma/10507124>,
+        <https://example.org/rg/lemma/10507640>,
+        <https://example.org/rg/lemma/10507826>,
+        <https://example.org/rg/lemma/10507840>,
+        <https://example.org/rg/lemma/10507897>,
+        <https://example.org/rg/lemma/10508357>,
+        <https://example.org/rg/lemma/10508393>,
+        <https://example.org/rg/lemma/10508417>,
+        <https://example.org/rg/lemma/10508529>,
+        <https://example.org/rg/lemma/10508637>,
+        <https://example.org/rg/lemma/10508906>,
+        <https://example.org/rg/lemma/10509469> ;
+    rgo:sourceId "10520329" .
+
+<https://example.org/rg/sublemma/10501952-1> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1432-08-30"^^xsd:date ;
+    rgo:fundReferencePart1 "L" ;
+    rgo:fundReferencePart2 "316" ;
+    rgo:fundReferencePart3 "306r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "alt. port. 30. aug. 1432 L 316 306r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-10> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1443-08-03"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "367" ;
+    rgo:fundReferencePart3 "156rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "et electores S.R.I., qui a Johanne rege Castelle et Legionis requiruntur ut intercedant apud Carolum regem Francie: fit mentio 3. aug. 1443 V 367 156rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-11> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1443-10-04"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "367" ;
+    rgo:fundReferencePart3 "159r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "qui apud papam intercessit pro Henrico germano nob. viri Gasparis Sclik cancellarii ipsius regis: breve de prom. d. Henrici antiqui prothonot. pape ad eccl. Frising. 4. oct. 1443 V 367 159r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-12> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    rgo:fundReferencePart1 "Arm. XXXIX" ;
+    rgo:fundReferencePart2 "7A" ;
+    rgo:fundReferencePart3 "325vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "breve responsorium quo promittit se missurum Johannem de Carvaial aud. ad personam regis ad dietam gener. [in Buda] et quo hortatur ipsum regem ut operetur pro unione eccl. et pacem regni [Hungarici] [cf. RTA XVII 296 p. 660] s.d. [an. 45/46] Arm. XXXIX 7A 325vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-13> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1446-11-23"^^xsd:date ;
+    rgo:fundReferencePart1 "DC" ;
+    rgo:fundReferencePart2 "21" ;
+    rgo:fundReferencePart3 "99rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "R.R., Augustrie [Austrie], Stirie, Karinthie et Carniole dux, com. Tyrolis: decl. obedientiam Eugenio IV. et precipit principibus etc. S.R.I. quatenus huic decl. se conforment in litt. p. Gasparem [Schlick] cancellarium d. regis subscriptis 23. nov. 1446 DC 21 99rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-14> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1446-11-23"^^xsd:date ;
+    rgo:fundReferencePart1 "DC" ;
+    rgo:fundReferencePart2 "21" ;
+    rgo:fundReferencePart3 "99v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "litt. ad card. S.R.E. sup. missione mag. Enee Silvii [de Piccolominibus] can. eccl. Dadentin. [Trident.] secr. et Procopii de Rabenstein mil. oratorum et consiliariorum ipsius regis sup. certis negotiis tam eccl. quam nationem Germanicam concernentibus in litt. p. Gasparem [Schlick] cancellarium d. regis subscriptis 23. nov. 1446 DC 21 99v." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-15> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1447-02-05"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "380" ;
+    rgo:fundReferencePart3 "49vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "Germanica natio, Fridericus R.R. et [Theodericus de Erpach] aep. Magunt., Fredericus [II.] marchio Brandenburg. ac alii prelati et principes nationis Germanice, quib. Eugenius IV. quasdam concessiones fecit, ut alliciat eos ad obedientiam eius: protestatur se noluisse aliquid concedere in preiudicium S.R.E. [ed. Mercati, Raccolta p. 176 nr. 5] 5. febr. 1447 V 380 49vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-16> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1447-02-05"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "365" ;
+    rgo:fundReferencePart3 "462rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "et Theodericus [de Erpach] aep. Magunt. et Fredericus [II.] marchio Brandenburg., electores S.R.I., qui p. suos oratores sepe a papa petiverunt, ut novum quoddam concil. gener. in Alamania in uno de 5 locis, videlicet Constantia, Argentina, Maguntia, Wormatia et Treveri, convocet: eis promittit ut, si omn. infra 10 menses in uno ex d. 5 locis consentiant, eo gener. concil. infra 18 menses initiandum convocaret [= Mercati, Raccolta p. 168s] 5. febr. 1447 V 365 462rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-17> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1447-02-05"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "365" ;
+    rgo:fundReferencePart3 "462vs",
+        "467r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "et supradicti aliique prelati et principes nationis Germanice pro Jacobo [de Sierck] olim aep. Trever. et Theoderico [de Moers] olim aep. Colon. etiam electoribus S.R.I. et eorum eccll. intervenientes: eis promittit ut quamprimum d. Jacobus et Theodericus Eugenium IV. agnoverint eos in pristinum statum restitueret [= Mercati, Raccolta p. 170s] 5. febr. 1447 V 365 462vs, fragm. s.d. V 365 467r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-18> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1447-02-05"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "365" ;
+    rgo:fundReferencePart3 "463rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "et supradicti aep. et marchio: decl. se contentum esse certis decretis Basilee editis et p. quond. Albertum R.R. acceptatis; insuper ratificat omnia que vig. huius acceptationis adhuc gesta sint; decernitque quod legatum ad partes Germanie transmitteret c. pot. ad concordandum c. ipso rege aliisque principibus sup. observantia et modificatione supradictorum; promittit, si infra 6 menses ei obedientiam declararent, se toleraturum quod principes d. decretis uterentur donec aut p. d. legatum concordatum factum aut p. suprad. concil. gener. aliter fuerit ordinatum [= Mercati, Raccolta p. 169s] 5. febr. 1447 V 365 463rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-19> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1447-02-07"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "365" ;
+    rgo:fundReferencePart3 "463v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "supradicti ac Fredericus [de Emmerberg] aep. Salzeburg. et Gerhardus [de Hoya] aep. Bremen. qui p. oratores obedientiam prestiterunt: omn. collationes ad quevis eccles. benef. temp. neutralitatis s.d. 17. mart. 38 computato factas ratificat et conf. etiam coll. illorum qui Basilee post transl. concil. remanserant, lites desup. extinguens preter lites sup. eccl. Frising. ac eccl. Osil., cassatque omn. sententias que contra adherentes d. neutralitati et eorum subditos fulminate fuerint si infra 6 menses ei obedientiam declararent; quascumque obligationes sup. ann. et min. servitiis ceterisque iur. S.R.E. debitis ad diem remitt.; dispensationes, indulta et novas prov. a d. concil. Basil. conc. confirmat et lites desup. pendentes cass.; omn. adherentes d. concil. etiam off. ibi exercentes absol. et rehab.; sup. eccl. Trever. ac eccl. Colon. ad supplic. R.R. et suprad. aep. Magunt. et marchionis Brandenburg. separatim ordinavit; que omnia c. assensu cardinalium se firmiter tenere promittit [= Mercati, Raccolta p. 171–172] 7. febr. 1447 V 365 463v–466r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-2> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1432-08-30"^^xsd:date ;
+    rgo:fundReferencePart1 "L" ;
+    rgo:fundReferencePart2 "316" ;
+    rgo:fundReferencePart3 "314v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "locis interd. 30. aug. 1432 L 316 314v." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-20> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1447-02-07"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "365" ;
+    rgo:fundReferencePart3 "480rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "et supradicti aep. Magunt. ac marchio Brandenburg., ad quorum instantiam papa [s.d. 7. febr. 47] certas concessiones sup. coll. ad quecumque benef. et eorum possessoribus edidit: decl. suas conc. n. extendi ad Theodericum [de Moers] olim aep. Colon. et Jacobum [de Sierck] olim aep. Trever. hactenus eorum eccll. privatos aut ad eorum provin. et dioc. donec p. papam aliter fuerit ordinatum s.d. [post 7. febr. 1447] V 365 480rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-21> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1447-02-17"^^xsd:date ;
+    rgo:fundReferencePart1 "V" ;
+    rgo:fundReferencePart2 "365" ;
+    rgo:fundReferencePart3 "479vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "ut supra: decl. suas conc. valere solum pro talibus qui a data ipsarum conc. sibi et suis successoribus obedirent nec antipape et concil. Basil. inantea adhererent 17. febr. 1447 V 365 479vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-3> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1432-08-30"^^xsd:date ;
+    rgo:fundReferencePart1 "L" ;
+    rgo:fundReferencePart2 "316" ;
+    rgo:fundReferencePart3 "315r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "ante diem 30. aug. 1432 L 316 315r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-4> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1432-09-15"^^xsd:date ;
+    rgo:fundReferencePart1 "L" ;
+    rgo:fundReferencePart2 "316" ;
+    rgo:fundReferencePart3 "285v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "lic. elig. confess. 15. sept. 1432 L 316 285v." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-5> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1436-02"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "4" ;
+    rgo:fundReferencePart3 "176r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "l.b. febr. 1436 T 4 176r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-6> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1436-07-11"^^xsd:date ;
+    rgo:fundReferencePart1 "L" ;
+    rgo:fundReferencePart2 "346" ;
+    rgo:fundReferencePart3 "285rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "lic. elig. confess. 11. iul. 1436 L 346 285rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-7> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1436-07-11"^^xsd:date ;
+    rgo:fundReferencePart1 "L",
+        "V" ;
+    rgo:fundReferencePart2 "342",
+        "366" ;
+    rgo:fundReferencePart3 "163vs",
+        "300vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "lic. visit. c. 100 personis s. sepulchrum et alia pia loca 11. iul. 1436 L 342 300vs, s.d. V 366 163vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-8> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1440-11-07"^^xsd:date ;
+    rgo:fundReferencePart1 "Arm. XXXIX" ;
+    rgo:fundReferencePart2 "7A" ;
+    rgo:fundReferencePart3 "300vss" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "R.R., de quo papa audiebat quod accederet ad dietam Nurembergensem pro pace eccl.: breve hortatorium ut Eugenio IV. obedientiam prebeat et schisma dissolvat sicut iam fecerint omn. orientales populi [ed. RTA XV p. 502s n. 274] s.d. [7. nov. 1440] Arm. XXXIX 7A 300vss." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10501952-9> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1443-05-27"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "390" ;
+    rgo:fundReferencePart3 "146v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10501952> ;
+    rgo:text "prov. alicui de preb. eccl. s. Gaugerici Camerac. dioc.: fit mentio 27. mai. 1443 S 390 146v." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-1> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1431-05-20"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "269" ;
+    rgo:fundReferencePart3 "245rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Artevelde, Artevolde, Incicovelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 110 l. T. p. 20. mai. 1431 S 269 245rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-2> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1431-05-25"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "266",
+        "269" ;
+    rgo:fundReferencePart3 "241r",
+        "243rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "licent. in decr. <et mag. in art.>: de benef. Camerac. dioc.; n.o. [capn.] in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 100 <210> l. T. p. 23. mai. 31 S 266 243rs, 25. mai. 1431 S 269 241r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-3> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1431-07"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "2",
+        "3" ;
+    rgo:fundReferencePart3 "27r",
+        "39v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "l.b. iul. 1431 T 2 39v, T 3 27r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-4> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1431-10-25"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "271" ;
+    rgo:fundReferencePart3 "212rs",
+        "212vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "qui benef. Camerac. dioc. vig. gr. expect. in rotulo univ. stud. Parisien. s.d. 29. mart. 24 contenta acc.: de nova prov.; n.o. capn. in par. eccl. de Arrevelde de curia nunc. Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 230 l. T. p. 25. oct. 31 S 271 212rs, de ref. 25. oct. 1431 S 271 212vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-5> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1432-12-30"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "282" ;
+    rgo:fundReferencePart3 "28rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 330 l. T. p. 30. decb. 1432 S 282 28rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-6> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1433-11-16"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "293",
+        "294" ;
+    rgo:fundReferencePart3 "237rss",
+        "72vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Nanneten., Tornac. et Camerac. diocc. insimul 140 l. T. p. 14. nov. 33 S 294 237rss, 16. nov. 1433 S 293 72vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-7> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1436-12-10"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "329" ;
+    rgo:fundReferencePart3 "272vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "litig. in concil. Basil. sup. benef. Nanneten. dioc.: fit mentio 10. decb. 1436 S 329 272vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-8> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1437-11"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "5" ;
+    rgo:fundReferencePart3 "114r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "l.b. nov. 1437 T 5 114r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-9> a owl:NamedIndividual,
+        rgo:Sublemma ;
+    gndo:associatedDate "1440-03-09"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "364" ;
+    rgo:fundReferencePart3 "16r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de prorog. exped. litt. prov. de benef. Nanneten. dioc. 9. mart. 1440 S 364 16r." ;
+    rgo:volume "5" .
+
+gnd:136175414 a gndo:DifferentiatedPerson ;
+    owl:sameAs <http://viaf.org/viaf/80564658>,
+        <http://www.wikidata.org/entity/Q15811935>,
+        <https://example.org/rg/person/10504820>,
+        gsn:005-02827-001 ;
+    foaf:page <https://de.wikipedia.org/wiki/Gerhard_III._%28Bremen%29> ;
+    gndo:biographicalOrHistoricalInformation "Erzbischof von Bremen"@de ;
+    gndo:dateOfDeath "1463"^^xsd:gYear ;
+    gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#notKnown> ;
+    gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE> ;
+    gndo:gndIdentifier "136175414" ;
+    gndo:oldAuthorityNumber "(DE-588a)136175414" ;
+    gndo:preferredNameEntityForThePerson [ ] ;
+    gndo:preferredNameForThePerson "Gerhard, von Hoya" ;
+    gndo:professionOrOccupation [ ] ;
+    gndo:variantNameEntityForThePerson [ ] ;
+    gndo:variantNameForThePerson "Hoya, Gerhard von" .
+
+rgo:Lemma a owl:Class .
+
+<https://example.org/rg/ort/10500782> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Arrevelde Traiect. dioc" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10500782" .
+
+<https://example.org/rg/ort/10501007> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Artevelde Artevolde Traiect. dioc." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10501007" .
+
+<https://example.org/rg/ort/10508980> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Incicovelde Traiect. dioc." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10508980" .
+
+<https://example.org/rg/ort/10513499> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Nanneten. dioc." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10506480> ;
+    rgo:sourceId "10513499" .
+
+<https://example.org/rg/ort/10514716> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Parisien.: univ. stud." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500163>,
+        <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10502374>,
+        <https://example.org/rg/lemma/10502607>,
+        <https://example.org/rg/lemma/10502734>,
+        <https://example.org/rg/lemma/10502913>,
+        <https://example.org/rg/lemma/10503569>,
+        <https://example.org/rg/lemma/10503611>,
+        <https://example.org/rg/lemma/10503672>,
+        <https://example.org/rg/lemma/10507706> ;
+    rgo:sourceId "10514716" .
+
+<https://example.org/rg/ort/10518892> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Tornac. dioc" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500045>,
+        <https://example.org/rg/lemma/10500391>,
+        <https://example.org/rg/lemma/10500528>,
+        <https://example.org/rg/lemma/10501367>,
+        <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10502300>,
+        <https://example.org/rg/lemma/10502314>,
+        <https://example.org/rg/lemma/10503481>,
+        <https://example.org/rg/lemma/10503762>,
+        <https://example.org/rg/lemma/10504913>,
+        <https://example.org/rg/lemma/10505361>,
+        <https://example.org/rg/lemma/10505693>,
+        <https://example.org/rg/lemma/10505715>,
+        <https://example.org/rg/lemma/10505727>,
+        <https://example.org/rg/lemma/10505850>,
+        <https://example.org/rg/lemma/10506440>,
+        <https://example.org/rg/lemma/10506481>,
+        <https://example.org/rg/lemma/10506622>,
+        <https://example.org/rg/lemma/10507704>,
+        <https://example.org/rg/lemma/10508347>,
+        <https://example.org/rg/lemma/10509059>,
+        <https://example.org/rg/lemma/10509346> ;
+    rgo:sourceId "10518892" .
+
+<https://example.org/rg/ort/10519101> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Arrevelde" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519101" .
+
+<https://example.org/rg/ort/10519114> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Artevelde Artevolde" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519114" .
+
+<https://example.org/rg/ort/10519417> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Incicovelde" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519417" .
+
+gsn:005-02827-001 a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:136175414,
+        <https://example.org/rg/person/10504820> ;
+    gndo:affiliationAsLiteral "Domstift Bremen"@de ;
+    gndo:dateOfDeath "1463"^^xsd:gYear ;
+    gndo:periodOfActivity "1438 - 1442",
+        "1442 - 1463" ;
+    gndo:preferredNameEntityForThePerson <https://data.rgonline-integration.de/id/name/https%3A%2F%2Fpersonendatenbank.germania-sacra.de%2Findex%2Fgsn%2F005-02827-001> ;
+    gndo:preferredNameForThePerson "Gerhard Hoya" ;
+    gndo:professionOrOccupationAsLiteral "Dompropst"@de,
+        "Erzbischof"@de .
+
+gndo:DifferentiatedPerson a owl:Class .
+
+<https://example.org/rg/ort/10503024> a owl:NamedIndividual,
+        gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Camerac d i o c" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500202>,
+        <https://example.org/rg/lemma/10500249>,
+        <https://example.org/rg/lemma/10500377>,
+        <https://example.org/rg/lemma/10500499>,
+        <https://example.org/rg/lemma/10500797>,
+        <https://example.org/rg/lemma/10500804>,
+        <https://example.org/rg/lemma/10501369>,
+        <https://example.org/rg/lemma/10501513>,
+        <https://example.org/rg/lemma/10501819>,
+        <https://example.org/rg/lemma/10501880>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10502314>,
+        <https://example.org/rg/lemma/10503048>,
+        <https://example.org/rg/lemma/10503633>,
+        <https://example.org/rg/lemma/10503686>,
+        <https://example.org/rg/lemma/10504958>,
+        <https://example.org/rg/lemma/10504965>,
+        <https://example.org/rg/lemma/10505382>,
+        <https://example.org/rg/lemma/10505674>,
+        <https://example.org/rg/lemma/10505762>,
+        <https://example.org/rg/lemma/10506049>,
+        <https://example.org/rg/lemma/10506325>,
+        <https://example.org/rg/lemma/10506440>,
+        <https://example.org/rg/lemma/10507671>,
+        <https://example.org/rg/lemma/10508009>,
+        <https://example.org/rg/lemma/10508170>,
+        <https://example.org/rg/lemma/10509059>,
+        <https://example.org/rg/lemma/10509348> ;
+    rgo:sourceId "10503024" .
+
+<https://example.org/rg/person/10504820> a owl:NamedIndividual,
+        gndo:DifferentiatedPerson ;
+    owl:sameAs gnd:136175414,
+        gsn:005-02827-001 ;
+    gndo:associatedDate "1431-05-20"^^xsd:date,
+        "1431-05-25"^^xsd:date,
+        "1431-10-25"^^xsd:date,
+        "1432-12-30"^^xsd:date,
+        "1433-11-16"^^xsd:date,
+        "1436-12-10"^^xsd:date,
+        "1440-03-09"^^xsd:date,
+        "1431-07"^^xsd:gYearMonth,
+        "1437-11"^^xsd:gYearMonth ;
+    gndo:placeOfActivity <https://example.org/rg/ort/10500782>,
+        <https://example.org/rg/ort/10501007>,
+        <https://example.org/rg/ort/10503024>,
+        <https://example.org/rg/ort/10508980>,
+        <https://example.org/rg/ort/10513499>,
+        <https://example.org/rg/ort/10514716>,
+        <https://example.org/rg/ort/10518892>,
+        <https://example.org/rg/ort/10519101>,
+        <https://example.org/rg/ort/10519114>,
+        <https://example.org/rg/ort/10519417> ;
+    gndo:preferredNameForThePerson "Gerardus" ;
+    gndo:variantNameForThePerson "de Hoya" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10504820" .
+
+<https://example.org/rg/lemma/10502199> a owl:NamedIndividual,
+        rgo:Lemma ;
+    gndo:relatedPerson <https://example.org/rg/person/10504820> ;
+    gndo:relatedPlaceOrGeographicName <https://example.org/rg/ort/10500782>,
+        <https://example.org/rg/ort/10501007>,
+        <https://example.org/rg/ort/10503024>,
+        <https://example.org/rg/ort/10508980>,
+        <https://example.org/rg/ort/10513499>,
+        <https://example.org/rg/ort/10514716>,
+        <https://example.org/rg/ort/10518892>,
+        <https://example.org/rg/ort/10519101>,
+        <https://example.org/rg/ort/10519114>,
+        <https://example.org/rg/ort/10519417> ;
+    rgo:hasSublemma <https://example.org/rg/sublemma/10502199-1>,
+        <https://example.org/rg/sublemma/10502199-2>,
+        <https://example.org/rg/sublemma/10502199-3>,
+        <https://example.org/rg/sublemma/10502199-4>,
+        <https://example.org/rg/sublemma/10502199-5>,
+        <https://example.org/rg/sublemma/10502199-6>,
+        <https://example.org/rg/sublemma/10502199-7>,
+        <https://example.org/rg/sublemma/10502199-8>,
+        <https://example.org/rg/sublemma/10502199-9> ;
+    rgo:headText "Gerardus de Hoya cler. Camerac. dioc., licent. in decr." ;
+    rgo:sourceId "10502199" ;
+    rgo:volume "5" .
+
+gndo:PlaceOrGeographicName a owl:Class .
+
+rgo:Sublemma a owl:Class .
+
+<https://example.org/rg/lemma/10501952> a owl:NamedIndividual,
+        rgo:Lemma ;
+    gndo:relatedPlaceOrGeographicName <https://example.org/rg/ort/10502432>,
+        <https://example.org/rg/ort/10502434>,
+        <https://example.org/rg/ort/10503024>,
+        <https://example.org/rg/ort/10503410>,
+        <https://example.org/rg/ort/10503416>,
+        <https://example.org/rg/ort/10503450>,
+        <https://example.org/rg/ort/10503928>,
+        <https://example.org/rg/ort/10506585>,
+        <https://example.org/rg/ort/10506591>,
+        <https://example.org/rg/ort/10506941>,
+        <https://example.org/rg/ort/10506942>,
+        <https://example.org/rg/ort/10514278>,
+        <https://example.org/rg/ort/10514283>,
+        <https://example.org/rg/ort/10518415>,
+        <https://example.org/rg/ort/10518813>,
+        <https://example.org/rg/ort/10519946>,
+        <https://example.org/rg/ort/10520329> ;
+    rgo:hasSublemma <https://example.org/rg/sublemma/10501952-1>,
+        <https://example.org/rg/sublemma/10501952-10>,
+        <https://example.org/rg/sublemma/10501952-11>,
+        <https://example.org/rg/sublemma/10501952-12>,
+        <https://example.org/rg/sublemma/10501952-13>,
+        <https://example.org/rg/sublemma/10501952-14>,
+        <https://example.org/rg/sublemma/10501952-15>,
+        <https://example.org/rg/sublemma/10501952-16>,
+        <https://example.org/rg/sublemma/10501952-17>,
+        <https://example.org/rg/sublemma/10501952-18>,
+        <https://example.org/rg/sublemma/10501952-19>,
+        <https://example.org/rg/sublemma/10501952-2>,
+        <https://example.org/rg/sublemma/10501952-20>,
+        <https://example.org/rg/sublemma/10501952-21>,
+        <https://example.org/rg/sublemma/10501952-3>,
+        <https://example.org/rg/sublemma/10501952-4>,
+        <https://example.org/rg/sublemma/10501952-5>,
+        <https://example.org/rg/sublemma/10501952-6>,
+        <https://example.org/rg/sublemma/10501952-7>,
+        <https://example.org/rg/sublemma/10501952-8>,
+        <https://example.org/rg/sublemma/10501952-9> ;
+    rgo:headText "Fredericus R.R. Fredericus dux Austrie [deinde Romanorum rex] dux Austrie iunior, nob. vir" ;
+    rgo:sourceId "10501952" ;
+    rgo:volume "5" .
+

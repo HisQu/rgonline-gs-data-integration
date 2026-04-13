@@ -1,0 +1,48 @@
+# Name: CQ 05: Temporal network clusters
+# SortKey: 105
+# CQ5
+# Which people, places, and institutions cluster around the same periods,
+# indicating possible networks, conflicts, or political-ecclesiastical connections?
+
+PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rgo:  <https://example.org/ontology/>
+
+SELECT
+  ?year
+  ?person
+  ?coPerson
+  (COUNT(DISTINCT ?lemma) AS ?shared_regesta)
+  (GROUP_CONCAT(DISTINCT STR(?place); separator=" | ") AS ?places)
+  (GROUP_CONCAT(DISTINCT STR(?institution); separator=" | ") AS ?institutions)
+WHERE {
+  # Focus on canonical DNB persons as anchors.
+  ?person a gndo:DifferentiatedPerson .
+  FILTER(STRSTARTS(STR(?person), "https://d-nb.info/gnd/"))
+
+  ?rgoPerson (owl:sameAs|^owl:sameAs)* ?person .
+  FILTER(STRSTARTS(STR(?rgoPerson), "https://example.org/rg/person/"))
+
+  ?rgoPerson rgo:appearsInLemma ?lemma .
+
+  OPTIONAL {
+    ?rgoPerson gndo:associatedDate ?date .
+    BIND(SUBSTR(STR(?date), 1, 4) AS ?year)
+  }
+
+  OPTIONAL { ?rgoPerson gndo:placeOfActivity ?place }
+  OPTIONAL { ?rgoPerson gndo:affiliation ?institution }
+
+  OPTIONAL {
+    ?lemma gndo:relatedPerson ?coRgoPerson .
+    FILTER(?coRgoPerson != ?rgoPerson)
+    OPTIONAL {
+      ?coRgoPerson (owl:sameAs|^owl:sameAs)* ?coGndPerson .
+      FILTER(STRSTARTS(STR(?coGndPerson), "https://d-nb.info/gnd/"))
+    }
+    BIND(COALESCE(?coGndPerson, ?coRgoPerson) AS ?coPerson)
+  }
+}
+GROUP BY ?year ?person ?coPerson
+HAVING (COUNT(DISTINCT ?lemma) >= 2)
+ORDER BY ?year DESC(?shared_regesta) ?person ?coPerson

@@ -1,0 +1,9 @@
+person,sourceEntity,nameType,nameValue
+https://d-nb.info/gnd/136175414,https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001,affiliation_literal,Domstift Bremen
+https://d-nb.info/gnd/136175414,https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001,forename,Gerhard
+https://d-nb.info/gnd/136175414,https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001,occupation_or_title_literal,Dompropst
+https://d-nb.info/gnd/136175414,https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001,occupation_or_title_literal,Erzbischof
+https://d-nb.info/gnd/136175414,https://example.org/rg/person/10504820,preferred_name,Gerardus
+https://d-nb.info/gnd/136175414,https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001,preferred_name,Gerhard Hoya
+https://d-nb.info/gnd/136175414,https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001,surname,Hoya
+https://d-nb.info/gnd/136175414,https://example.org/rg/person/10504820,variant_name,de Hoya

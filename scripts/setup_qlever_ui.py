@@ -4,7 +4,7 @@ Runs inside the qlever-ui Docker container — Django is already on the path.
 
 Creates the backend if missing, makes it the default, deletes all
 pre-installed demo backends, configures prefix auto-completion,
-and loads example queries from /queries/examples/*.rq.
+and loads example queries from /queries/examples/*.rq and /queries/cq/*.rq.
 Idempotent: safe to re-run.
 """
 import os
@@ -64,7 +64,7 @@ def _load_examples(examples_dir: Path) -> list[dict]:
         })
     return examples
 
-EXAMPLES = _load_examples(Path("/queries/examples"))
+EXAMPLES = _load_examples(Path("/queries/examples")) + _load_examples(Path("/queries/cq"))
 
 # ── migrate ────────────────────────────────────────────────────────────────
 call_command("migrate", verbosity=1)

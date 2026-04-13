@@ -1,0 +1,122 @@
+# Harmonize RGO data to GNDO where possible and preserve only residual
+# source-specific semantics in RG ontology terms.
+
+PREFIX rgo:    <https://example.org/ontology/>
+PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rg:     <https://example.org/ontology/>
+
+CONSTRUCT {
+  ?s ?p ?o .
+}
+WHERE {
+  # Pass through RGO person core GNDO statements.
+  {
+    ?person a gndo:DifferentiatedPerson .
+    BIND(?person AS ?s)
+    BIND(rdf:type AS ?p)
+    BIND(gndo:DifferentiatedPerson AS ?o)
+  }
+  UNION
+  {
+    ?person gndo:preferredNameForThePerson ?name .
+    BIND(?person AS ?s)
+    BIND(gndo:preferredNameForThePerson AS ?p)
+    BIND(?name AS ?o)
+  }
+  UNION
+  {
+    ?person gndo:variantNameForThePerson ?name .
+    BIND(?person AS ?s)
+    BIND(gndo:variantNameForThePerson AS ?p)
+    BIND(?name AS ?o)
+  }
+
+  # Keep place entities and labels in GNDO.
+  UNION
+  {
+    ?place a gndo:PlaceOrGeographicName .
+    BIND(?place AS ?s)
+    BIND(rdf:type AS ?p)
+    BIND(gndo:PlaceOrGeographicName AS ?o)
+  }
+  UNION
+  {
+    ?place gndo:preferredNameForThePlaceOrGeographicName ?placeName .
+    BIND(?place AS ?s)
+    BIND(gndo:preferredNameForThePlaceOrGeographicName AS ?p)
+    BIND(?placeName AS ?o)
+  }
+
+  # GNDO-native mappings for RGO source fields.
+  UNION
+  {
+    ?s rgo:mentionsPerson ?o .
+    BIND(gndo:relatedPerson AS ?p)
+  }
+  UNION
+  {
+    ?s rgo:mentionsPlace ?o .
+    BIND(gndo:relatedPlaceOrGeographicName AS ?p)
+  }
+  UNION
+  {
+    ?s rgo:dateValue ?o .
+    BIND(gndo:associatedDate AS ?p)
+  }
+
+  # Lift sublemma dates to person activity dates.
+  UNION
+  {
+    ?person a gndo:DifferentiatedPerson ;
+      rgo:appearsInLemma ?lemma .
+    ?lemma rgo:hasSubEntry ?sublemma .
+    ?sublemma rgo:dateValue ?dateValue .
+    BIND(?person AS ?s)
+    BIND(gndo:associatedDate AS ?p)
+    BIND(?dateValue AS ?o)
+  }
+
+  # Lift places linked at lemma level to person place of activity.
+  UNION
+  {
+    ?person a gndo:DifferentiatedPerson ;
+      rgo:appearsInLemma ?lemma .
+    ?place a gndo:PlaceOrGeographicName ;
+      rgo:appearsInLemma ?lemma .
+    BIND(?person AS ?s)
+    BIND(gndo:placeOfActivity AS ?p)
+    BIND(?place AS ?o)
+  }
+
+  # Preserve residual source-only fields in RG ontology terms.
+  UNION
+  {
+    VALUES (?srcProp ?dstProp) {
+      (rgo:headText           rg:headText)
+      (rgo:text               rg:text)
+      (rgo:sourceId           rg:sourceId)
+      (rgo:volume             rg:volume)
+      (rgo:appearsInLemma     rg:appearsInLemma)
+      (rgo:hasSubEntry        rg:hasSublemma)
+      (rgo:partOfLemma        rg:partOfLemma)
+      (rgo:fundReferencePart1 rg:fundReferencePart1)
+      (rgo:fundReferencePart2 rg:fundReferencePart2)
+      (rgo:fundReferencePart3 rg:fundReferencePart3)
+    }
+    ?s ?srcProp ?o .
+    BIND(?dstProp AS ?p)
+  }
+
+  # Map source classes to RG ontology classes.
+  UNION
+  {
+    VALUES (?srcClass ?dstClass) {
+      (rgo:RegestEntry rg:Lemma)
+      (rgo:SubEntry    rg:Sublemma)
+    }
+    ?s a ?srcClass .
+    BIND(rdf:type AS ?p)
+    BIND(?dstClass AS ?o)
+  }
+}

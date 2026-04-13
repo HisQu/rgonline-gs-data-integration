@@ -1,0 +1,357 @@
+# Gerhard Hoya — integrated example from GS, DNB, and RGO
+# GND ID: 136175414
+# GS page source: data/raw/gs/pages/page-00858.ttl
+# RGO person source: https://example.org/rg/person/10504820
+# GS canonical person URIs:
+#   https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001
+#   https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001
+
+# --- GS (current source stage) ---
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns0: <http://purl.org/vocab/participation/schema#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357749> ns0:endDate "1463"^^xsd:string ;
+    ns0:startDate "1442"^^xsd:string ;
+    foaf:name "Erzbischof"@de .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357750> ns0:endDate "1442"^^xsd:string ;
+    ns0:role_at "person:048-02342-001#organisation-357750"^^xsd:string ;
+    ns0:startDate "1438"^^xsd:string ;
+    foaf:name "Dompropst"@de .
+
+<https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#organisation-357750> a "foaf:Organization"^^xsd:string,
+        "prov:Agent"^^xsd:string ;
+    ns0:role "person:048-02342-001#amt-357750"^^xsd:string ;
+    owl:sameAs <https://klosterdatenbank.germania-sacra.de/gsn/343> ;
+    foaf:name "Domstift Bremen"^^xsd:string .
+
+[] rdfs:Container [ a "foaf:Person"^^xsd:string ;
+            ns0:holder_of <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357749>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#amt-357750> ;
+            schema1:deathDate "1463"^^xsd:string ;
+            schema1:familyName "Hoya"^^xsd:string ;
+            schema1:givenName "Gerhard"^^xsd:string ;
+            owl:sameAs <http://d-nb.info/gnd/136175414>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001>,
+                <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001> ;
+            org:memberOf <https://personendatenbank.germania-sacra.de/index/gsn/048-02342-001#organisation-357750> ] .
+
+# --- DNB (current source stage) ---
+@prefix schema: <http://schema.org/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix lib: <http://purl.org/library/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix editeur: <https://ns.editeur.org/thema/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix umbel: <http://umbel.org/umbel#> .
+@prefix naf: <https://id.loc.gov/authorities/names/> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix rdau: <http://rdaregistry.info/Elements/u/> .
+@prefix bflc: <http://id.loc.gov/ontologies/bflc/> .
+@prefix thesoz: <http://lod.gesis.org/thesoz/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix isbd: <http://iflastandards.info/ns/isbd/elements/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mesh: <http://id.nlm.nih.gov/mesh/vocab#> .
+@prefix ram: <https://data.bnf.fr/ark:/12148/> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix marcRole: <http://id.loc.gov/vocabulary/relators/> .
+@prefix agrelon: <https://d-nb.info/standards/elementset/agrelon#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix nsogg: <https://purl.org/bncf/tid/> .
+@prefix dnbt: <https://d-nb.info/standards/elementset/dnb#> .
+@prefix dbp: <http://dbpedia.org/property/> .
+@prefix embne: <https://datos.bne.es/resource/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dnb_intern: <http://dnb.de/> .
+@prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix v: <http://www.w3.org/2006/vcard/ns#> .
+@prefix cidoc: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix dcatde: <http://dcat-ap.de/def/dcatde/> .
+@prefix ebu: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .
+@prefix wdrs: <http://www.w3.org/2007/05/powder-s#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix gbv: <http://purl.org/ontology/gbv/> .
+@prefix agrovoc: <https://aims.fao.org/aos/agrovoc/> .
+@prefix lcsh: <https://id.loc.gov/authorities/subjects/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://d-nb.info/gnd/136175414> a gndo:DifferentiatedPerson;
+  wdrs:describedby <https://d-nb.info/gnd/136175414/about> .
+
+<https://d-nb.info/gnd/136175414/about> dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
+  dcterms:modified "2008-09-02T14:36:23.000"^^xsd:dateTime;
+  gndo:descriptionLevel <https://d-nb.info/standards/vocab/gnd/description-level#1> .
+
+<https://d-nb.info/gnd/136175414> gndo:gndIdentifier "136175414";
+  foaf:page <https://de.wikipedia.org/wiki/Gerhard_III._%28Bremen%29>;
+  owl:sameAs <http://viaf.org/viaf/80564658>, <http://www.wikidata.org/entity/Q15811935>;
+  gndo:oldAuthorityNumber "(DE-588a)136175414";
+  gndo:variantNameForThePerson "Hoya, Gerhard von";
+  gndo:variantNameEntityForThePerson _:node1ji78aarmx5084235 .
+
+_:node1ji78aarmx5084235 gndo:forename "Gerhard";
+  gndo:prefix "von";
+  gndo:surname "Hoya" .
+
+<https://d-nb.info/gnd/136175414> gndo:preferredNameForThePerson "Gerhard, von Hoya";
+  gndo:preferredNameEntityForThePerson _:node1ji78aarmx5084236 .
+
+_:node1ji78aarmx5084236 gndo:personalName "Gerhard";
+  gndo:nameAddition "von Hoya" .
+
+<https://d-nb.info/gnd/136175414> gndo:geographicAreaCode <https://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE>;
+  wdrs:describedby <https://d-nb.info/gnd/136175414/about> .
+
+<https://d-nb.info/gnd/136175414/about> dcterms:creator <https://ld.zdb-services.de/resource/organisations/DE-12>;
+  dcatde:maintainer <https://ld.zdb-services.de/resource/organisations/DE-12> .
+
+<https://d-nb.info/gnd/136175414> gndo:biographicalOrHistoricalInformation "Erzbischof von Bremen"@de;
+  gndo:gender <https://d-nb.info/standards/vocab/gnd/gender#notKnown>;
+  gndo:professionOrOccupation _:node1ji78aarmx5084237 .
+
+_:node1ji78aarmx5084237 a rdf:Seq;
+  rdf:_1 <https://d-nb.info/gnd/4015471-3> .
+
+<https://d-nb.info/gnd/136175414> gndo:dateOfDeath "1463"^^xsd:gYear .
+
+# --- RGO (current source stage) ---
+@prefix rgo: <https://example.org/ontology/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/rg/lemma/10502199> a rgo:RegestEntry ;
+    rgo:hasSubEntry <https://example.org/rg/sublemma/10502199-1>,
+        <https://example.org/rg/sublemma/10502199-2>,
+        <https://example.org/rg/sublemma/10502199-3>,
+        <https://example.org/rg/sublemma/10502199-4>,
+        <https://example.org/rg/sublemma/10502199-5>,
+        <https://example.org/rg/sublemma/10502199-6>,
+        <https://example.org/rg/sublemma/10502199-7>,
+        <https://example.org/rg/sublemma/10502199-8>,
+        <https://example.org/rg/sublemma/10502199-9> ;
+    rgo:headText "Gerardus de Hoya cler. Camerac. dioc., licent. in decr." ;
+    rgo:mentionsPerson <https://example.org/rg/person/10504820> ;
+    rgo:mentionsPlace <https://example.org/rg/ort/10500782>,
+        <https://example.org/rg/ort/10501007>,
+        <https://example.org/rg/ort/10503024>,
+        <https://example.org/rg/ort/10508980>,
+        <https://example.org/rg/ort/10513499>,
+        <https://example.org/rg/ort/10514716>,
+        <https://example.org/rg/ort/10518892>,
+        <https://example.org/rg/ort/10519101>,
+        <https://example.org/rg/ort/10519114>,
+        <https://example.org/rg/ort/10519417> ;
+    rgo:sourceId "10502199" ;
+    rgo:volume "5" .
+
+<https://example.org/rg/ort/10500782> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Arrevelde Traiect. dioc" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10500782" .
+
+<https://example.org/rg/ort/10501007> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Artevelde Artevolde Traiect. dioc." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10501007" .
+
+<https://example.org/rg/ort/10503024> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Camerac d i o c" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500202>,
+        <https://example.org/rg/lemma/10500249>,
+        <https://example.org/rg/lemma/10500377>,
+        <https://example.org/rg/lemma/10500499>,
+        <https://example.org/rg/lemma/10500797>,
+        <https://example.org/rg/lemma/10500804>,
+        <https://example.org/rg/lemma/10501369>,
+        <https://example.org/rg/lemma/10501513>,
+        <https://example.org/rg/lemma/10501819>,
+        <https://example.org/rg/lemma/10501880>,
+        <https://example.org/rg/lemma/10501952>,
+        <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10502314>,
+        <https://example.org/rg/lemma/10503048>,
+        <https://example.org/rg/lemma/10503633>,
+        <https://example.org/rg/lemma/10503686>,
+        <https://example.org/rg/lemma/10504958>,
+        <https://example.org/rg/lemma/10504965>,
+        <https://example.org/rg/lemma/10505382>,
+        <https://example.org/rg/lemma/10505674>,
+        <https://example.org/rg/lemma/10505762>,
+        <https://example.org/rg/lemma/10506049>,
+        <https://example.org/rg/lemma/10506325>,
+        <https://example.org/rg/lemma/10506440>,
+        <https://example.org/rg/lemma/10507671>,
+        <https://example.org/rg/lemma/10508009>,
+        <https://example.org/rg/lemma/10508170>,
+        <https://example.org/rg/lemma/10509059>,
+        <https://example.org/rg/lemma/10509348> ;
+    rgo:sourceId "10503024" .
+
+<https://example.org/rg/ort/10508980> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Incicovelde Traiect. dioc." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10508980" .
+
+<https://example.org/rg/ort/10513499> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Nanneten. dioc." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10506480> ;
+    rgo:sourceId "10513499" .
+
+<https://example.org/rg/ort/10514716> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Parisien.: univ. stud." ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500163>,
+        <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10502374>,
+        <https://example.org/rg/lemma/10502607>,
+        <https://example.org/rg/lemma/10502734>,
+        <https://example.org/rg/lemma/10502913>,
+        <https://example.org/rg/lemma/10503569>,
+        <https://example.org/rg/lemma/10503611>,
+        <https://example.org/rg/lemma/10503672>,
+        <https://example.org/rg/lemma/10507706> ;
+    rgo:sourceId "10514716" .
+
+<https://example.org/rg/ort/10518892> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Tornac. dioc" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10500045>,
+        <https://example.org/rg/lemma/10500391>,
+        <https://example.org/rg/lemma/10500528>,
+        <https://example.org/rg/lemma/10501367>,
+        <https://example.org/rg/lemma/10502199>,
+        <https://example.org/rg/lemma/10502300>,
+        <https://example.org/rg/lemma/10502314>,
+        <https://example.org/rg/lemma/10503481>,
+        <https://example.org/rg/lemma/10503762>,
+        <https://example.org/rg/lemma/10504913>,
+        <https://example.org/rg/lemma/10505361>,
+        <https://example.org/rg/lemma/10505693>,
+        <https://example.org/rg/lemma/10505715>,
+        <https://example.org/rg/lemma/10505727>,
+        <https://example.org/rg/lemma/10505850>,
+        <https://example.org/rg/lemma/10506440>,
+        <https://example.org/rg/lemma/10506481>,
+        <https://example.org/rg/lemma/10506622>,
+        <https://example.org/rg/lemma/10507704>,
+        <https://example.org/rg/lemma/10508347>,
+        <https://example.org/rg/lemma/10509059>,
+        <https://example.org/rg/lemma/10509346> ;
+    rgo:sourceId "10518892" .
+
+<https://example.org/rg/ort/10519101> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Arrevelde" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519101" .
+
+<https://example.org/rg/ort/10519114> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Artevelde Artevolde" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519114" .
+
+<https://example.org/rg/ort/10519417> a gndo:PlaceOrGeographicName ;
+    gndo:preferredNameForThePlaceOrGeographicName "Traiect. dioc, Incicovelde" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10519417" .
+
+<https://example.org/rg/person/10504820> a gndo:DifferentiatedPerson ;
+    gndo:preferredNameForThePerson "Gerardus" ;
+    gndo:variantNameForThePerson "de Hoya" ;
+    rgo:appearsInLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:sourceId "10504820" .
+
+<https://example.org/rg/sublemma/10502199-1> a rgo:SubEntry ;
+    rgo:dateValue "1431-05-20"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "269" ;
+    rgo:fundReferencePart3 "245rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Artevelde, Artevolde, Incicovelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 110 l. T. p. 20. mai. 1431 S 269 245rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-2> a rgo:SubEntry ;
+    rgo:dateValue "1431-05-25"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "266",
+        "269" ;
+    rgo:fundReferencePart3 "241r",
+        "243rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "licent. in decr. <et mag. in art.>: de benef. Camerac. dioc.; n.o. [capn.] in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 100 <210> l. T. p. 23. mai. 31 S 266 243rs, 25. mai. 1431 S 269 241r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-3> a rgo:SubEntry ;
+    rgo:dateValue "1431-07"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "2",
+        "3" ;
+    rgo:fundReferencePart3 "27r",
+        "39v" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "l.b. iul. 1431 T 2 39v, T 3 27r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-4> a rgo:SubEntry ;
+    rgo:dateValue "1431-10-25"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "271" ;
+    rgo:fundReferencePart3 "212rs",
+        "212vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "qui benef. Camerac. dioc. vig. gr. expect. in rotulo univ. stud. Parisien. s.d. 29. mart. 24 contenta acc.: de nova prov.; n.o. capn. in par. eccl. de Arrevelde de curia nunc. Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 230 l. T. p. 25. oct. 31 S 271 212rs, de ref. 25. oct. 1431 S 271 212vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-5> a rgo:SubEntry ;
+    rgo:dateValue "1432-12-30"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "282" ;
+    rgo:fundReferencePart3 "28rs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Tornac., Camerac. et Nanneten. diocc. insimul 330 l. T. p. 30. decb. 1432 S 282 28rs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-6> a rgo:SubEntry ;
+    rgo:dateValue "1433-11-16"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "293",
+        "294" ;
+    rgo:fundReferencePart3 "237rss",
+        "72vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de nova prov. de benef. Camerac. dioc.; n.o. capn. in par. eccl. de Arrevelde Traiect. dioc. et beneff. Nanneten., Tornac. et Camerac. diocc. insimul 140 l. T. p. 14. nov. 33 S 294 237rss, 16. nov. 1433 S 293 72vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-7> a rgo:SubEntry ;
+    rgo:dateValue "1436-12-10"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "329" ;
+    rgo:fundReferencePart3 "272vs" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "litig. in concil. Basil. sup. benef. Nanneten. dioc.: fit mentio 10. decb. 1436 S 329 272vs." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-8> a rgo:SubEntry ;
+    rgo:dateValue "1437-11"^^xsd:gYearMonth ;
+    rgo:fundReferencePart1 "T" ;
+    rgo:fundReferencePart2 "5" ;
+    rgo:fundReferencePart3 "114r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "l.b. nov. 1437 T 5 114r." ;
+    rgo:volume "5" .
+
+<https://example.org/rg/sublemma/10502199-9> a rgo:SubEntry ;
+    rgo:dateValue "1440-03-09"^^xsd:date ;
+    rgo:fundReferencePart1 "S" ;
+    rgo:fundReferencePart2 "364" ;
+    rgo:fundReferencePart3 "16r" ;
+    rgo:partOfLemma <https://example.org/rg/lemma/10502199> ;
+    rgo:text "de prorog. exped. litt. prov. de benef. Nanneten. dioc. 9. mart. 1440 S 364 16r." ;
+    rgo:volume "5" .

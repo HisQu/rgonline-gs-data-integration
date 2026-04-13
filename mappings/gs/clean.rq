@@ -19,6 +19,7 @@
 #     dropped.
 
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
 PREFIX org:    <http://www.w3.org/ns/org#>
 PREFIX owl:    <http://www.w3.org/2002/07/owl#>
 PREFIX part:   <http://purl.org/vocab/participation/schema#>
@@ -49,7 +50,7 @@ WHERE {
         owl:sameAs ?person .
 
     # Keep only the canonical GS person URI (no fragment) as subject.
-    FILTER(STRSTARTS(STR(?person), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    FILTER(STRSTARTS(STR(?person), STR(gsn:)))
     FILTER(!CONTAINS(STR(?person), "#"))
 
     OPTIONAL {
@@ -104,7 +105,7 @@ WHERE {
   GRAPH <https://data.rgonline-integration.de/graph/gs> {
     ?org a ?orgTypeStr .
 
-    FILTER(STRSTARTS(STR(?org), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    FILTER(STRSTARTS(STR(?org), STR(gsn:)))
     FILTER(CONTAINS(STR(?org), "#organisation-"))
 
     OPTIONAL {
@@ -144,7 +145,7 @@ WHERE {
   GRAPH <https://data.rgonline-integration.de/graph/gs> {
     ?amt foaf:name ?officeName .
 
-    FILTER(STRSTARTS(STR(?amt), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+    FILTER(STRSTARTS(STR(?amt), STR(gsn:)))
     FILTER(CONTAINS(STR(?amt), "#amt-"))
 
     OPTIONAL {
@@ -169,7 +170,7 @@ WHERE {
       # SUBSTR(..., 8) skips the leading "person:" (7 characters).
       BIND(
         IRI(CONCAT(
-          "https://personendatenbank.germania-sacra.de/index/gsn/",
+          STR(gsn:),
           SUBSTR(STR(?roleAtRaw), 8)))
         AS ?orgURI)
     }
