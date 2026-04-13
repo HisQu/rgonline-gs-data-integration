@@ -33,6 +33,7 @@ gs-fix-dates *args:
 
 # Build cohort.ttl for all three sources using year-based filtering.
 reduce: gs-reduce dnb-reduce rgo-reduce
+alias cohort := reduce
 
 # Build example.ttl for all three sources using the four cross-source example persons.
 extract-examples: gs-extract-examples dnb-extract-examples rgo-extract-examples
