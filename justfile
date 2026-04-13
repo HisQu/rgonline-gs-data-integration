@@ -31,55 +31,62 @@ clean: gs-clean
 gs-fix-dates *args:
     UV_CACHE_DIR=/tmp/uv-cache uv run python src/gs/fix_gs_clean_dates.py {{ args }}
 
-# Reduce all raw sources to cohort subsets (birth year 1361-1447,
-# fallback death year 1361-1497 if birth is missing).
+# Build cohort.ttl for all three sources using year-based filtering.
 reduce: gs-reduce dnb-reduce rgo-reduce
 
-# Legacy 4-person mini examples for quick demos.
-reduce-min: gs-reduce-min dnb-reduce-min rgo-reduce-min
+# Build example.ttl for all three sources using the four cross-source example persons.
+extract-examples: gs-extract-examples dnb-extract-examples rgo-extract-examples
 
-# Reduce GS raw data to the cohort time window.
+# Reduce GS raw data to the cohort time window (birth 1361–1447, fallback death 1431–1497).
 gs-reduce:
     @mkdir -p data/raw/gs
     just robot query \
         --input data/raw/gs/full.ttl \
         --tdb true \
-        --query mappings/gs/reduce.rq data/raw/gs/example.ttl
+        --query mappings/gs/reduce.rq data/raw/gs/cohort.ttl
 
-# Reduce GS raw data to four legacy mini examples.
-gs-reduce-min:
+# Extract four cross-source example persons from GS full data.
+gs-extract-examples:
     @mkdir -p data/raw/gs
     just robot query \
         --input data/raw/gs/full.ttl \
         --tdb true \
-        --query mappings/gs/create_min_examples.rq data/raw/gs/example_min.ttl
+        --query mappings/gs/create_min_examples.rq data/raw/gs/example.ttl
 
 # Reduce DNB raw data to the cohort time window.
 dnb-reduce:
 	UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce_persons.py \
+		--input data/raw/dnb/persons_full.ttl \
+		--output data/raw/dnb/persons_cohort.ttl
+	UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce_places.py \
+		--persons data/raw/dnb/persons_cohort.ttl \
+		--places-input data/raw/dnb/places_full.ttl \
+		--output data/raw/dnb/places_cohort.ttl
+	cat data/raw/dnb/persons_cohort.ttl data/raw/dnb/places_cohort.ttl > data/raw/dnb/cohort.ttl
+
+# Extract four cross-source example persons from DNB full data.
+dnb-extract-examples:
+	UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/create_min_examples.py \
 		--input data/raw/dnb/persons_full.ttl \
 		--output data/raw/dnb/persons_example.ttl
 	UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/reduce_places.py \
 		--persons data/raw/dnb/persons_example.ttl \
 		--places-input data/raw/dnb/places_full.ttl \
 		--output data/raw/dnb/places_example.ttl
+	cat data/raw/dnb/persons_example.ttl data/raw/dnb/places_example.ttl > data/raw/dnb/example.ttl
 
-# Reduce DNB raw data to four legacy mini examples.
-dnb-reduce-min:
-    UV_CACHE_DIR=/tmp/uv-cache uv run python mappings/dnb/create_min_examples.py
-
-# Reduce RGO source data to cohort scope (RG5 is already in range).
+# Reduce RGO source data to cohort scope (RG5 is already fully within the cohort time range).
 rgo-reduce:
     @mkdir -p data/raw/rgo
-    cp data/raw/rgo/full.ttl data/raw/rgo/example.ttl
+    cp data/raw/rgo/full.ttl data/raw/rgo/cohort.ttl
 
-# Reduce RGO source data to four legacy mini examples.
-rgo-reduce-min:
+# Extract four cross-source example persons from RGO full data.
+rgo-extract-examples:
     @mkdir -p data/raw/rgo
     just robot query \
         --input data/raw/rgo/full.ttl \
         --tdb true \
-        --query mappings/rgo/create_min_examples.rq data/raw/rgo/example_min.ttl
+        --query mappings/rgo/create_min_examples.rq data/raw/rgo/example.ttl
 
 # Activate full variants as pipeline inputs.
 use-full:
@@ -87,7 +94,13 @@ use-full:
     cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
     cp data/raw/rgo/full.ttl data/raw/rgo/statements.ttl
 
-# Activate reduced example variants as pipeline inputs.
+# Activate cohort-filtered variants as pipeline inputs.
+use-cohort:
+    cp data/raw/gs/cohort.ttl data/raw/gs/statements.ttl
+    cp data/raw/dnb/cohort.ttl data/raw/dnb/statements.ttl
+    cp data/raw/rgo/cohort.ttl data/raw/rgo/statements.ttl
+
+# Activate four-person example variants as pipeline inputs.
 use-example:
     cp data/raw/gs/example.ttl data/raw/gs/statements.ttl
     cp data/raw/dnb/example.ttl data/raw/dnb/statements.ttl
@@ -168,7 +181,9 @@ gs-clean:
         --output data/raw/gs/clean.ttl
     just gs-fix-dates
 
-# Download the GND person authority dump and extract to data/raw/dnb/full.ttl
+# Download the GND person and place authority dumps.
+# Produces persons_full.ttl and places_full.ttl as internal files,
+# then merges them into full.ttl for use with use-full / QLever.
 dnb-fetch:
 	@mkdir -p data/raw/dnb
 	curl -L -o data/raw/dnb/persons_full.ttl.gz \
@@ -180,6 +195,8 @@ dnb-fetch:
 		https://data.dnb.de/opendata/authorities-gnd-geografikum_lds.ttl.gz
 	gunzip -c data/raw/dnb/places_full.ttl.gz \
 		> data/raw/dnb/places_full.ttl
+
+	cat data/raw/dnb/persons_full.ttl data/raw/dnb/places_full.ttl > data/raw/dnb/full.ttl
 
 qlever-restart: qlever-stop qlever-start
 
@@ -215,12 +232,12 @@ qlever-up: qlever-index qlever-start
 # Build the common matching input table from source RDF snapshots.
 # Writes data/tabular/common_profiles.csv and data/tabular/common_profiles.pkl.
 match-context:
-    uv run python src/matching/fetch_context.py
+    PYTHONPATH=src uv run python -m matching.fetch_context
 
 # Run Splink-based matching using the prepared common profile table.
 # Writes pairwise predictions to data/matching_outputs/predictions_pairs.csv.
 match-run:
-    uv run python src/matching/main_match.py
+    PYTHONPATH=src uv run python -m matching.main_match
 
 # Full matching workflow: first build context table, then run matching.
 match: match-context match-run

@@ -9,10 +9,9 @@ from rdflib.namespace import FOAF, OWL, RDF, RDFS
 from .utils import load_shared_normalization_config
 
 ROOT = Path(__file__).resolve().parents[2]
-DNB_PERSON_FILE = ROOT / "data" / "raw" / "dnb" / "persons_example.ttl"
-DNB_PLACE_FILE = ROOT / "data" / "raw" / "dnb" / "places_example.ttl"
-GS_FILE = ROOT / "data" / "raw" / "gs" / "example.ttl"
-RGO_FILE = ROOT / "data" / "raw" / "rgo" / "full.ttl"
+DNB_FILE = ROOT / "data" / "raw" / "dnb" / "statements.ttl"
+GS_FILE = ROOT / "data" / "raw" / "gs" / "statements.ttl"
+RGO_FILE = ROOT / "data" / "raw" / "rgo" / "statements.ttl"
 
 GNDO = Namespace("https://d-nb.info/standards/elementset/gnd#")
 SCHEMA = Namespace("http://schema.org/")
@@ -318,15 +317,10 @@ def extract_dnb_columns(graph: Graph, person: URIRef) -> dict[str, Any]:
 
 
 def build_dnb_dataframe(
-    person_file_path: str | Path,
-    place_file_path: str | Path | None = None,
+    file_path: str | Path,
     rdf_format: Optional[str] = None,
 ) -> pd.DataFrame:
-    file_paths = [person_file_path]
-    if place_file_path is not None:
-        file_paths.append(place_file_path)
-
-    graph = load_rdf_files(file_paths, rdf_format=rdf_format)
+    graph = load_rdf_files(file_path, rdf_format=rdf_format)
     records = [extract_dnb_columns(graph, person) for person in iter_dnb_persons(graph)]
     return finalize_dataframe(records)
 
@@ -720,7 +714,7 @@ def add_all_names_column(df: pd.DataFrame) -> pd.DataFrame:
 # Usage
 if __name__ == "__main__":
     # Build one DataFrame per source
-    dnb_df = build_dnb_dataframe(DNB_PERSON_FILE, DNB_PLACE_FILE)
+    dnb_df = build_dnb_dataframe(DNB_FILE)
     gs_df = build_gs_dataframe(GS_FILE, config_path=DEFAULT_CONFIG_PATH)
     rgo_df = build_rgo_dataframe(RGO_FILE)
 

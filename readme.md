@@ -63,21 +63,17 @@ The current pipeline is implemented via `just` recipes:
    Note: export `GITHUB_TOKEN` before running `just rgo-fetch` or `just fetch`.
 
 3. **Build reduced datasets**  
-   `just reduce` creates `example.ttl` for GS, DNB, and RGO using a cohort rule:
-   - include persons with birth year in 1361-1447
-   - if birth year is missing, include persons with death year in 1361-1497
-   - for fuzzy values, the first 4-digit year is used
-
-   Legacy 4-person demo extraction is still available via `just reduce-min`.
+   `just reduce` creates `cohort.ttl` for each source using year-based filtering (birth 1361–1447, fallback death 1431–1497).  
+   `just extract-examples` creates `example.ttl` for each source with the four cross-source example persons present in all three data sources.
 
 4. **Choose active input variant**  
-   `just use-example` or `just use-full` copies selected variants to `statements.ttl`.
+   `just use-full`, `just use-cohort`, or `just use-example` copies the selected variant to `statements.ttl`.
 
 5. **Clean GS source graph**  
    `just clean` (currently `gs-clean`) generates `data/raw/gs/clean.ttl`.
 
 6. **Harmonize to GNDO**  
-   `just harmonize` runs ROBOT mappings and writes merged output to `data/harmonized/full.ttl`.
+   `just harmonize` runs ROBOT mappings and writes merged output to `data/harmonized/statements.ttl`.
 
 7. **Export per-person harmonized examples**  
    `just examples-export` writes person files to `data/examples/harmonized/`.  
@@ -136,8 +132,9 @@ Project mappings use the following preferred prefixes:
 
 Each source directory under `data/raw/` now supports three files:
 
-- `full.ttl`: complete source snapshot
-- `example.ttl`: reduced working dataset (cohort by default, or mini examples via `reduce-min`)
+- `full.ttl`: complete source snapshot (written by the fetcher)
+- `cohort.ttl`: year-filtered subset written by `just reduce`
+- `example.ttl`: four cross-source example persons written by `just extract-examples`
 - `statements.ttl`: active file used by the rest of the pipeline
 
 This keeps downstream steps agnostic: they always read `statements.ttl`.
@@ -148,12 +145,6 @@ Run all reducers:
 
 ```bash
 just reduce
-```
-
-Or run legacy 4-person mini reducers:
-
-```bash
-just reduce-min
 ```
 
 Or per source:
@@ -172,7 +163,13 @@ Use full data:
 just use-full
 ```
 
-Use reduced examples:
+Use cohort-filtered data:
+
+```bash
+just use-cohort
+```
+
+Use four-person examples:
 
 ```bash
 just use-example
