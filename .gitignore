@@ -10,6 +10,7 @@ data/harmonized/*
 __pycache__/
 .venv/
 .pytest_cache/
+.tdb
 
 # QLever index files (built locally from Qleverfile)
 qlever/*
