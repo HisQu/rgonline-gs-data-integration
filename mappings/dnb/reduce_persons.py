@@ -5,8 +5,8 @@ Input:  data/raw/dnb/full.ttl
 Output: data/raw/dnb/example.ttl
 
 Selection rule:
-- include a person if birth year is in [1361, 1447]
-- if birth year is missing, include if death year is in [1361, 1497]
+- include a person if birth year is in [1361, 1447], which is the start year of the RG5 minus 70 years and RG5 end year
+- if birth year is missing, include if death year is in [1431, 1497], which is the start year of the RG5 and the end year plus 50 years
 - for fuzzy values, use the first 4-digit year in the lexical form
 
 The extractor keeps full top-level blocks for selected person URIs and their
@@ -22,7 +22,7 @@ from pathlib import Path
 
 BIRTH_START = 1361
 BIRTH_END = 1447
-DEATH_FALLBACK_START = 1361
+DEATH_FALLBACK_START = 1431
 DEATH_FALLBACK_END = 1497
 
 SUBJECT_RE = re.compile(r"^\s*(<[^>]+>|_:[A-Za-z][A-Za-z0-9._-]*)\s+")

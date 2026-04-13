@@ -13,7 +13,7 @@ CONSTRUCT {
 WHERE {
   # Cohort selector:
   # 1) birth year in [1361, 1447]
-  # 2) if birth is missing: death year in [1361, 1497]
+  # 2) if birth is missing: death year in [1431, 1497]
   # For fuzzy strings (e.g. "um 1385"), use the first 4-digit year.
   ?person owl:sameAs ?gsPersonURI .
   FILTER(STRSTARTS(STR(?gsPersonURI), STR(gsn:)))
@@ -32,7 +32,7 @@ WHERE {
   }
 
   BIND(BOUND(?birthYear) && ?birthYear >= 1361 && ?birthYear <= 1447 AS ?birthMatch)
-  BIND(!BOUND(?birthYear) && BOUND(?deathYear) && ?deathYear >= 1361 && ?deathYear <= 1497 AS ?deathFallbackMatch)
+  BIND(!BOUND(?birthYear) && BOUND(?deathYear) && ?deathYear >= 1431 && ?deathYear <= 1497 AS ?deathFallbackMatch)
   FILTER(?birthMatch || ?deathFallbackMatch)
 
   {
