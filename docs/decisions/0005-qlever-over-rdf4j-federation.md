@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Superseded by ADR 0008 (DNB federation replaced by local materialization)
 
 ## Context
 
