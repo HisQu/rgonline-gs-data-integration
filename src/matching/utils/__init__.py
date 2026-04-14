@@ -27,7 +27,8 @@ from .place_utils import (
     prepare_place_columns_for_matching,
     sql_nonempty_places,
     sql_any_place_pair,
-    sql_missing_places
+    sql_missing_places,
+    sql_best_place_pair_jw
 )
 from .output_utils import (
     DEFAULT_PROFILE_DISPLAY_COLUMNS,
@@ -64,4 +65,5 @@ __all__ = ["prepare_name_columns_for_matching",
             "DEFAULT_PROFILE_DISPLAY_COLUMNS",
             "build_pair_display_columns",
             "export_dataframe_to_csv",
-            "load_shared_normalization_config",]
+            "load_shared_normalization_config",
+            "sql_best_place_pair_jw",]

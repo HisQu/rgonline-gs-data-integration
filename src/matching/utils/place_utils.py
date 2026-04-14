@@ -1,6 +1,7 @@
 import json
 import re
 from typing import Any, Dict, Iterable, List
+import unicodedata
 
 import pandas as pd
 
@@ -58,15 +59,22 @@ def unique_preserve_order(values: Iterable[str]) -> List[str]:
         result.append(value)
     return result
 
+def strip_combining_marks(text: str) -> str:
+    text = unicodedata.normalize("NFKD", text)
+    return "".join(ch for ch in text if not unicodedata.combining(ch))
 
 def normalize_basic_place_text(text: Any) -> str:
     """
     Minimal mechanical normalization for place strings:
+    - unicode normalization
+    - remove combining marks
     - lowercase
     - remove punctuation and brackets
     - normalize whitespace
     """
-    text = str(text or "").strip().lower()
+    text = str(text or "").strip()
+    text = strip_combining_marks(text)
+    text = text.lower()
     text = PUNCT_AND_BRACKETS_RE.sub(" ", text)
     text = WHITESPACE_RE.sub(" ", text).strip()
     return text
@@ -186,6 +194,9 @@ def prepare_place_columns_for_matching(
 
     out["places"] = out["places"].apply(ensure_list)
 
+
+    # places = ["Bad Honnef", "St. Peter", "Köln"]
+    # places_norm = ["bad honnef", "st peter", "koln"]
     out["places_norm"] = out["places"].apply(
         lambda places: normalize_place_list(
             places=places,
@@ -195,6 +206,7 @@ def prepare_place_columns_for_matching(
         )
     )
 
+    # place_tokens = ["bad", "honnef", "st", "peter", "koln"]
     out["place_tokens"] = out["places"].apply(
         lambda places: flatten_place_tokens(
             places=places,
@@ -257,4 +269,32 @@ def sql_missing_places() -> str:
     return (
         f'("places_norm_l" IS NULL OR list_count({places_l}) = 0 '
         f'OR "places_norm_r" IS NULL OR list_count({places_r}) = 0)'
+    )
+
+def sql_best_place_pair_jw() -> str:
+    """
+    Return SQL for the maximum Jaro-Winkler similarity across all
+    non-empty normalized place pairs in places_norm_l / places_norm_r.
+    """
+    places_l = sql_nonempty_places("l")
+    places_r = sql_nonempty_places("r")
+
+    return (
+        f"coalesce("
+        f"  list_max("
+        f"    list_transform("
+        f"      {places_l}, "
+        f"      lambda lval: coalesce("
+        f"        list_max("
+        f"          list_transform("
+        f"            {places_r}, "
+        f"            lambda rval: jaro_winkler_similarity(lval, rval)"
+        f"          )"
+        f"        ), "
+        f"        0.0"
+        f"      )"
+        f"    )"
+        f"  ), "
+        f"  0.0"
+        f")"
     )

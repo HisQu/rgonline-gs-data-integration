@@ -9,15 +9,13 @@ from .comparisons import (
     build_name_comparison_pref_var_best,
     build_name_comparison_var_var_best,
     build_name_comparison_all_name_token_overlap,
-    build_name_comparison_name_structure,
     build_date_comparison_birth_rgo_other,
     build_date_comparison_birth_dnb_gs,
     build_date_comparison_death_dnb_gs,
     build_date_comparison_death_rgo_other,
     build_date_comparison_activity_overlap,
-    build_place_comparison_best_similarity,
     build_place_comparison_token_overlap,
-    build_place_comparison_containment_match,
+    build_place_comparison_match_quality,
 )
 from .utils import (
     DEFAULT_PROFILE_DISPLAY_COLUMNS,
@@ -122,20 +120,18 @@ def build_linker(
             *build_name_comparisons_pref_pref(),
             build_name_comparison_pref_var_best(),
             build_name_comparison_var_var_best(),
-            #build_name_comparison_all_name_token_overlap(),
-            #build_name_comparison_name_structure(),
+            #build_name_comparison_all_name_token_overlap(), # not used since highly correlated to pref_var and var_var
             build_date_comparison_death_dnb_gs(small_diff=1, medium_diff=5),
             build_date_comparison_death_rgo_other(allowance=5),
-            build_date_comparison_birth_dnb_gs(small_diff=1, medium_diff=5),
+            build_date_comparison_birth_dnb_gs(small_diff=3, medium_diff=10),
             build_date_comparison_birth_rgo_other(allowance=5, minimum_age_at_first_mention=12),
             build_date_comparison_activity_overlap(
                 strong_overlap_years=10,
                 moderate_overlap_years=3,
                 close_distance_years=5,
             ),
-            build_place_comparison_best_similarity(),
+            build_place_comparison_match_quality(),
             build_place_comparison_token_overlap(),
-            build_place_comparison_containment_match(),
         ],
         retain_matching_columns=True,
         retain_intermediate_calculation_columns=True,
@@ -183,7 +179,7 @@ def train_linker(linker: Linker) -> tuple[Linker, list]:
 
     try:
         linker.training.estimate_u_using_random_sampling(
-            max_pairs=200_000,
+            max_pairs=1e7,
             seed=42,
         )
     except Exception as exc:
@@ -275,6 +271,7 @@ if __name__ == "__main__":
     sql = f"""
     select *
     from {pred_splink_df.physical_name}
+    order by match_probability desc
     limit 100
     """
 

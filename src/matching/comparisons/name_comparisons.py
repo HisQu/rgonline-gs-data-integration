@@ -35,29 +35,6 @@ def build_name_comparisons_pref_pref() -> list:
         )
     ]
 
-def build_name_comparison_name_structure() -> cl.CustomComparison:
-    return cl.CustomComparison(
-        output_column_name="name_structure_signal",
-        comparison_description="Penalise weak single-token preferred names",
-        comparison_levels=[
-            cll.CustomLevel(
-                sql_condition="""
-                    array_length("preferred_name_tokens_l") >= 2
-                    AND array_length("preferred_name_tokens_r") >= 2
-                """,
-                label_for_charts="both names have >= 2 tokens",
-            ),
-            cll.CustomLevel(
-                sql_condition="""
-                    array_length("preferred_name_tokens_l") = 1
-                    AND array_length("preferred_name_tokens_r") = 1
-                """,
-                label_for_charts="both names single-token only",
-            ),
-            cll.ElseLevel(),
-        ],
-    )
-
 def build_name_comparison_pref_var_best() -> cl.CustomComparison:
     score_sql = preferred_variant_best_jw_sql()
 
@@ -113,5 +90,5 @@ def build_name_comparison_all_name_token_overlap() -> cl.ArrayIntersectAtSizes:
     """
     return cl.ArrayIntersectAtSizes(
         "all_name_tokens",
-        size_threshold_or_thresholds=[4, 3, 2],
+        size_threshold_or_thresholds=[5, 4, 3],
     )
