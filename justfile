@@ -122,10 +122,8 @@ harmonize:
     just robot merge \
         --input data/harmonized/gs.ttl \
         --input data/harmonized/rgo.ttl \
-        --output data/harmonized/statements.ttl
-    just robot merge \
+        --input data/raw/dnb/statements.ttl \
         --input mappings/harmonize.ttl \
-        --input data/harmonized/statements.ttl \
         --output data/harmonized/with-ontology.ttl
     just robot reason \
         --input data/harmonized/with-ontology.ttl \
@@ -217,10 +215,32 @@ cq:
             --query "$query" "$out"; \
     done
 
+# Run one/single competency-question query by number (e.g. `just scq 5`).
+# Output file is written to queries/cq/results/.
+scq number:
+    @mkdir -p queries/cq/results
+    @set -e; \
+    num_padded="$(printf "%02d" "{{number}}")"; \
+    set -- queries/cq/"${num_padded}"-*.rq; \
+    if [ "$1" = "queries/cq/${num_padded}-*.rq" ]; then \
+        echo "No CQ file found for number {{number}} (expected queries/cq/${num_padded}-*.rq)"; \
+        exit 1; \
+    fi; \
+    if [ "$#" -ne 1 ]; then \
+        echo "Expected exactly one CQ file for number {{number}}, found $#"; \
+        exit 1; \
+    fi; \
+    query="$1"; \
+    out="queries/cq/results/$(basename "${query%.rq}").csv"; \
+    just robot -vvv query \
+        --input data/harmonized/statements.ttl \
+        --query "$query" "$out"
+
 # Build the QLever index from all available source files
 qlever-index:
+    @if [ ! -f data/raw/dnb/statements.ttl ] && [ -f data/raw/dnb/full.ttl ]; then cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl; fi
     qlever index --overwrite-existing \
-        --multi-input-json '[{"cmd":"cat {}","format":"ttl","graph":"https://data.rgonline-integration.de/graph/harmonized","for-each":"data/harmonized/statements.ttl"},{"cmd":"cat {}","format":"ttl","graph":"https://data.rgonline-integration.de/graph/dnb","for-each":"data/raw/dnb/statements.ttl"}]'
+        --multi-input-json '[{"cmd":"cat {}","format":"ttl","graph":"https://data.hisqu.de/graph/harmonized","for-each":"data/harmonized/statements.ttl"}]'
 
 # Start the QLever SPARQL endpoint (port 7001)
 qlever-start:

@@ -32,7 +32,7 @@ WHERE {
     BIND(?entity AS ?gsUri)
   }
   OPTIONAL {
-    FILTER(STRSTARTS(STR(?entity), "https://example.org/rg/person/"))
+    FILTER(STRSTARTS(STR(?entity), "https://rg-online.dhi-roma.it/rg/person/"))
     BIND(?entity AS ?rgoUri)
   }
 
