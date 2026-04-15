@@ -4,9 +4,19 @@
 # Which people, places, and institutions cluster around the same periods,
 # indicating possible networks, conflicts, or political-ecclesiastical connections?
 
-PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
-PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-PREFIX rgo:  <https://rg-online.dhi-roma.it/ontology/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gnd:    <https://d-nb.info/gnd/>
+PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rg:     <https://rg-online.dhi-roma.it/rg/>
+PREFIX rgo:    <https://rg-online.dhi-roma.it/ontology/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 SELECT
   ?year
