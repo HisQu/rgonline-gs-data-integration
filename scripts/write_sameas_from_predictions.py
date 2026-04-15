@@ -12,7 +12,7 @@ from rdflib import Graph, URIRef
 from rdflib.namespace import OWL
 
 SOURCE_TO_DEFAULT_FILE = {
-    "dnb": Path("data/raw/dnb/statments.ttl"),
+    "dnb": Path("data/raw/dnb/statements.ttl"),
     "gs": Path("data/raw/gs/statements.ttl"),
     "rgo": Path("data/raw/rgo/statements.ttl"),
 }
