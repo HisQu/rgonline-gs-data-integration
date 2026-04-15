@@ -2,216 +2,161 @@
 This document should outline how entities inside one source and across multiple ones can be matched using the Python tool [Splink](link). Inside the three corpora there are three overlapping features that are compared based on different rules.
 
 ## Name Matching
-Name and byname matching will initially be handled through a reduced feature block focused on normalization, tokenization, and lexical comparison.
 
-Since the three sources differ strongly in how they encode names, the matching process first transforms all preferred names and name
-variants into comparable normalized forms and then derives a small set of lexical similarity features from them. Those preprocessing steps are:
+Name matching is based on a small lexical feature set derived from normalized preferred names and name variants.
+
+Since the three sources differ strongly in how they encode names, all preferred names and variant names are first transformed into comparable normalized forms. The current preprocessing steps are:
 
 - normalize case and whitespace
 - remove punctuation and brackets
-- separate role and title tokens from names where possible
-- normalize common orthographic variants
-- use small equivalence lists for common Latin/German first-name variants
-- tokenize all preferred names and variant names
+- remove configured particles
+- map configured Latin/German first-name equivalents
+- tokenize preferred names and variant names
 
-This is meant to reduce superficial differences while preserving the core person-related name evidence needed for later matching. Based on these representations, the name matching block uses the following comparison features:
+This is intended to reduce superficial variation while preserving the core lexical name evidence needed for record linkage.
 
-- preferred_preferred_similarity
-  comparison of the normalized preferred name of entity A with the normalized
-  preferred name of entity B (i.e. GS preferred: ``Gerhard, von Hoya`` vs. DNB preferred: ``Gerhard Hoya``)
+The active name comparison block currently uses the following features:
 
-- preferred_variant_best_similarity
-  best lexical similarity between the preferred name of one entity and any
-  variant name of the other entity (i.e. GS preferred: ``Dietrich II. Moers`` vs. DNB variant: `Dietrich, von Moers`)
+- `preferred_name_similarity`  
+  comparison of the normalized preferred name of entity A with the normalized preferred name of entity B. This comparison includes:
+  - exact normalized match with term-frequency adjustment
+  - Jaro-Winkler similarity thresholds at `0.97`, `0.92`, and `0.88`
 
-- variant_variant_best_similarity
-  best lexical similarity between any variant name of entity A and any variant
-  name of entity B (i.e. RGO variant: `de Moers` vs. DNB variant: `Dietrich, von Moers`)
+- `preferred_variant_best_similarity`  
+  best symmetric lexical similarity between the preferred name of one entity and any variant name of the other entity. The current comparison uses custom SQL and Jaro-Winkler thresholds at `0.97`, `0.92`, and `0.88`
 
-- all_name_token_overlap
-  token overlap over all preferred and variant names of both entities
+- `variant_variant_best_similarity`  
+  best lexical similarity between any normalized variant name of entity A and any normalized variant name of entity B. This comparison uses pairwise Jaro-Winkler thresholds at `0.95`, `0.80`, and `0.60`
 
-These features are intended to capture the most common matching situations: direct preferred-name similarity, cross-matches between preferred and variant forms, similarity between variants only, and overlap in the overall set of name
-tokens.
+A previously tested global token-overlap feature over all preferred and variant-name tokens, `all_name_token_overlap`, is currently not part of the active model. In practice, it proved to be highly correlated with the preferred/variant similarity features and could therefore lead to unstable or counterintuitive learned weights.
 
-For Splink, these features will later be represented through several comparison
-levels and the planned logic is approximately as follows:
+Taken together, the active name features are intended to capture the most common matching situations:
+- direct preferred-name similarity
+- cross-matches between preferred and variant forms
+- cases where matching evidence is only visible in variant-name material
 
-- very high similarity / strong agreement
-- medium similarity / plausible agreement
-- weak similarity / low evidence
-- no meaningful similarity
-
-For token overlap, a comparable graded structure is intended, e.g.:
-
-- strong token overlap
-- partial token overlap
-- little or no token overlap
-
-Additional name-based features may later be introduced if needed. These are not part of the first implementation, but remain possible extensions:
-
-- given_name_similarity
-- byname_similarity
-- roman_numeral_match
-
-These additional features may become useful once the initial lexical feature set has been tested and if further precision is needed for more difficult historical cases.
+Additional name-based features such as separate given-name similarity, byname similarity, or explicit Roman-numeral handling remain possible extensions, but are not part of the current matcher.
 
 
 ## Date Matching
-The three sources do not provide the same type of temporal information: DNB provides life dates, GS provides life dates and/or periods of activity, whereas RGO provides mention dates derived from regest contexts. For this reason, temporal comparison is based on interval compatibility and plausibility rather than direct string comparison.
 
-The initial preprocessing steps are
+The three sources do not provide the same type of temporal information: DNB provides life dates, GS provides life dates and/or periods of activity, whereas RGO provides mention dates derived from regest contexts. For this reason, temporal comparison is based on source-aware compatibility rules and effective intervals rather than raw string comparison.
 
-- normalize all available date values to comparable year-based representations  
-- derive birth year where available  
-- derive death year where available  
-- derive activity start and end years where available  
-- derive mention start and end years from all RGO mention dates  
+The preprocessing steps derive year-based temporal features as follows:
 
-For RGO, all available mention dates are sorted and aggregated into a mention range:
+- normalize all available date values to comparable year representations
+- derive `birth_year` where available
+- derive `death_year` where available
+- derive `activity_start` and `activity_end` where available
+- derive `mention_start` and `mention_end` from aggregated RGO mention dates
 
-- `mention_min` = earliest observed mention  
-- `mention_max` = latest observed mention  
+For RGO, all observed mention dates are aggregated into a mention interval:
+- `mention_start` = earliest observed mention
+- `mention_end` = latest observed mention
 
-For GS and DNB, a preferred temporal profile is constructed before comparison:
+For interval-based comparison, an effective temporal interval is constructed per source side:
+- RGO uses the mention interval
+- GS prefers the activity interval and falls back to life-date evidence where needed
+- DNB uses life dates
 
-- life dates are used as the primary temporal information where available  
-- if birth and/or death dates are missing, periods of activity are used as fallback temporal information  
-- this yields a comparable source-side temporal interval even when the available evidence differs between sources  
+The active date comparison block uses the following features:
 
-This means that the matching step does not compare raw dates directly, but compares:
-- life dates where available  
-- fallback activity/evidence ranges where life dates are incomplete  
-- mention ranges for RGO  
+### `death_dnb_gs`
 
-The date matching block uses the following comparison features:
+This comparison applies only to DNB-GS pairs and directly compares death years.
 
-### ``death_compatibility``
+Current levels:
+- death years equal
+- absolute death-year difference `\leq 1`
+- absolute death-year difference `\leq 5`
+- absolute death-year difference `> 5`
+- irrelevant or missing death evidence
 
-GS vs. DNB:
-- Level 1: death years equal  
-- Level 2: absolute difference ≤ 1 year  
-- Level 3: absolute difference ≤ 5 years  
-- Level 4: absolute difference > 5 years  
-- Level 5: missing value on one or both sides  
+### `death_rgo_other`
 
-RGO vs. GS/DNB: 
+This comparison applies only to RGO-DNB and RGO-GS pairs and interprets the RGO mention range against the other side's death year, with an allowance of `5` years.
 
-- Level 1: mention_max ≤ death_year  
-- Level 2: mention_max ≤ death_year + allowance  
-- Level 3: mention_min ≤ death_year + allowance < mention_max  
-- Level 4: mention_min > death_year + allowance
-- Level 5: missing value on one or both sides  
-  
+Current levels:
+- mention end `\leq` death year
+- mention end `\leq` death year `+ 5`
+- mention range crosses death year `+ 5`
+- mention start `>` death year `+ 5`
+- irrelevant or missing death evidence
 
-### ``birth_compatibility``
-Analogue to the death_compatibility: 
-GS vs. DNB:
+### `birth_dnb_gs`
 
-- Level 1: birth years equal  
-- Level 2: absolute difference ≤ 2 years  
-- Level 3: absolute difference ≤ 10 years  
-- Level 4: absolute difference > 10 years  
-- Level 5: missing value on one or both sides  
+This comparison applies only to DNB-GS pairs and directly compares birth years.
 
-RGO vs. GS/DNB:
+Current levels:
+- birth years equal
+- absolute birth-year difference `\leq 3`
+- absolute birth-year difference `\leq 10`
+- absolute birth-year difference `> 10`
+- irrelevant or missing birth evidence
 
-- Level 1: mention_min ≥ birth_year  
-- Level 2: mention_min within 5 years before birth_year  
-- Level 3: mention_min within 20 years before birth_year  
-- Level 4: mention_min more than 20 years before birth_year  
-- Level 5: missing value on one or both sides  
+### `birth_rgo_other`
 
+This comparison applies only to RGO-DNB and RGO-GS pairs and compares the RGO mention range against the other side's birth year.
 
-### ``activity_overlap``
-This feature compares the available temporal interval of one source with the available interval of the other source. For DNB and GS, this may be an explicit period of activity or a fallback source-side interval derived from available temporal evidence. For RGO, it is the aggregated mention range.
+The current logic distinguishes whether the first observed mention occurs plausibly after birth, or implausibly before it. The active parameters are:
+- allowance before birth: `5` years
+- minimum age at first mention: `12` years
 
-GS vs. DNB
+Current levels:
+- first mention `\geq` birth year `+ 12`
+- first mention `\geq` birth year
+- mention range crosses birth year `- 5`
+- mention end `<` birth year `- 5`
+- irrelevant or missing birth evidence
 
-- Level 1: activity ranges overlap strongly  
-- Level 2: activity ranges overlap weakly  
-- Level 3: no overlap, but range distance ≤ 5 years  
-- Level 4: no overlap, range distance > 5 years  
-- Level 5: missing value on one or both sides  
+### `activity_overlap`
 
-RGO vs. GS/DNB
+This feature compares the effective temporal interval of one source with that of the other source. It is not split into separate DNB-GS and RGO-other variants; instead, it uses the source-specific effective intervals described above.
 
-- Level 1: mention range overlaps activity range  
-- Level 2: no overlap, but distance ≤ 5 years  
-- Level 3: no overlap, but distance ≤ 15 years  
-- Level 4: distance > 15 years  
-- Level 5: missing value on one or both sides  
+The current implementation distinguishes:
+- strong interval overlap
+- moderate interval overlap
+- small interval overlap
+- no overlap, but temporally close
+- no overlap and temporally distant
+- missing interval evidence
 
-Taken together, these date-based comparison levels provide graded temporal evidence for matching. They allow exact agreement, approximate agreement, partial compatibility, and clear incompatibility to be distinguished explicitly, even though the three sources differ substantially in the kind of temporal information they provide.
+In the active matcher, the parameters are:
+- strong overlap: at least `5` years
+- moderate overlap: at least `3` years
+- small overlap: at least `1` year
+- close distance without overlap: at most `5` years
+
+Taken together, these date-based features provide graded temporal evidence for matching. They distinguish exact agreement, approximate agreement, plausible compatibility, and clear incompatibility while remaining sensitive to the fact that DNB, GS, and RGO encode different kinds of temporal information.
 
 
 ## Place Matching
 
-Place information will be treated as contextual compatibility evidence derived from all place-related values associated with a person. Since all three sources may contain multiple place references, place comparison is based on sets of place labels aggregated per entity.
+Place information is treated as contextual compatibility evidence derived from all place-related values associated with a person. Since all three sources may contain multiple place references, place comparison is based on aggregated normalized place values rather than a single raw literal.
 
-The sources contribute place information in different ways:
-
-- GS provides place-related literals, typically through affiliations 
-- DNB provides geographic references and place-of-activity information
-- RGO provides places indirectly through places mentioned in connected lemma or
-  subentry contexts
-
-The initial preprocessing steps for place information are:
-
+The place preprocessing steps include:
 - normalize case and whitespace
 - remove punctuation and brackets
-- normalize common orthographic variants
-- tokenize all place values
-- separate or downweight frequent institutional/contextual tokens where useful
-  (e.g. words such as dioc, eccl, stift, kloster, domstift)
+- normalize configured place variants
+- remove configured place particles and context tokens
 
-The place matching block uses the following comparison features:
+The active place comparison block currently uses two features:
 
-- place_best_similarity
-- place_token_overlap
-- place_containment_match
+- `place_match_quality`  
+  one combined custom comparison over `places_norm`, with the following level order:
+  - exact normalized place match
+  - containment match between normalized place pairs
+  - best pairwise Jaro-Winkler similarity `\geq 0.97`
+  - best pairwise Jaro-Winkler similarity `\geq 0.90`
+  - else
+  - missing place evidence is handled explicitly as a null level
 
-These features are designed to capture three different aspects of place agreement:
+- `place_token_overlap`  
+  overlap size over the aggregated normalized place values in `places_norm`, using array-intersection thresholds at `4` and `3`
 
-- the strongest lexical similarity between any single place mention on both sides
-- the overlap of the overall place context
-- direct containment relations between shorter and longer place forms
+The combined `place_match_quality` feature is intended to capture different kinds of strong local agreement:
+- exact shared place labels
+- cases where one normalized place form is contained in another
+- very high or medium lexical similarity between the best-matching place pair
 
-### `place_best_similarity`
-All place labels of entity A are compared with all place labels of entity B, and the best lexical score is taken. This captures
-cases where at least one place form is strongly similar even if the two entities carry different numbers of place references.
-
-The planned comparison levels are approximately:
-
-- Level 1: exact normalized match between two place values
-- Level 2: very high lexical similarity between the best-matching place pair
-- Level 3: medium lexical similarity between the best-matching place pair
-- Level 4: low or no meaningful lexical similarity
-- Level 5: missing value on one or both sides
-
-### `place_token_overlap`
-All tokens from all place values on both sides are combined and compared as sets. This is intended to capture broader contextual
-agreement across multiple place mentions.
-
-The planned comparison levels are approximately:
-
-- Level 1: strong token overlap across the place sets
-- Level 2: medium token overlap
-- Level 3: weak token overlap
-- Level 4: no meaningful token overlap
-- Level 5: missing value on one or both sides
-
-### `place_containment_match`
-The comparison checks whether one normalized place form is contained in another, or whether both contain the same core place term. This is useful for cases where one source gives a shorter location label and another gives a longer institutionalized or qualified place form.
-
-Examples of this pattern include:
-- "Bremen" vs. "Domstift Bremen"
-- "Moers" vs. "de Moers"
-- "Hoya" vs. "von Hoya"
-
-The planned comparison levels are approximately:
-
-- Level 1: exact containment or same clear core place expression
-- Level 2: partial containment / plausible core-place containment
-- Level 3: no containment relation
-- Level 4: missing value on one or both sides
+Together with the overlap feature, this allows the matcher to capture both strong single-place agreement and broader contextual compatibility across multiple place references. Further details on the implementation of all comparisons can be seen [here](../../src/matching/readme.md)
