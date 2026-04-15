@@ -78,7 +78,6 @@ def build_prediction_blocking_rules() -> list:
     return [
         block_on("preferred_first_token", "preferred_last_token"),
         block_on("preferred_first_token", "death_year"),
-        block_on("preferred_last_token", "death_year"),
     ]
 
 
@@ -180,7 +179,7 @@ def train_linker(linker: Linker) -> tuple[Linker, list]:
 
     try:
         linker.training.estimate_u_using_random_sampling(
-            max_pairs=100_000,
+            max_pairs=1e7,
             seed=42,
         )
     except Exception as exc:

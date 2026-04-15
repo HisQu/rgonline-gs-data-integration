@@ -130,8 +130,7 @@ def build_reference_pairs_from_gnd(prepared_df: pd.DataFrame) -> pd.DataFrame:
 
 def extract_predicted_gs_dnb_pairs(pred_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Extract GS<->DNB pairs and orient them canonically as (dnb, gs),
-    regardless of l/r ordering.
+    Extract GS<->DNB pairs and orient them as (dnb, gs)
     """
     if pred_df.empty:
         return pd.DataFrame()
@@ -184,10 +183,7 @@ def _notna_and_equal(left: pd.Series, right: pd.Series) -> pd.Series:
 def annotate_prediction_blocking(reference_df: pd.DataFrame) -> pd.DataFrame:
     """
     Diagnose whether a reference GS<->DNB pair would pass at least one
-    prediction blocking rule from main_match.py:
-
-    1) preferred_first_token + preferred_last_token
-    2) preferred_first_token + death_year
+    prediction blocking rule from main_match
     """
     out = reference_df.copy()
 

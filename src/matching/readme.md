@@ -118,10 +118,6 @@ Comparison features are assembled in `main_match.py` from `comparisons/`.
 - Pairwise best Jaro-Winkler across `variant_names_norm` arrays
 - Thresholds: `0.95`, `0.80`, `0.60`
 
-4. Global name token overlap
-- Array intersection size on `all_name_tokens`
-- Thresholds: `3`, `2`, `1`
-
 ### Date comparisons
 
 1. Death compatibility (source-aware)
@@ -136,24 +132,25 @@ Comparison features are assembled in `main_match.py` from `comparisons/`.
 - RGO uses mention interval
 - GS prefers activity interval, falls back to life dates
 - DNB uses life dates
-- Levels distinguish strong/weak overlap, close no-overlap, far no-overlap, and missing evidence
+- Levels distinguish strong/moderate/weak overlap, close no-overlap, far no-overlap, and missing evidence
 
 Date helper SQL lives in `utils/date_utils.py`.
 
 ### Place comparisons
 
-1. Best place similarity
-- Pairwise best Jaro-Winkler across `places_norm`
-- Thresholds: `0.95`, `0.85`
+1. Place match quality
+- One combined custom comparison on `places_norm`
+- Level order:
+  - exact normalized place match (`halle` vs. `halle`)
+  - containment match between normalized place pairs (`magdeburg` vs. `kloster magdeburg`)
+  - best pairwise Jaro-Winkler >= `0.97`
+  - best pairwise Jaro-Winkler >= `0.90`
+  - else
+- Missing place evidence is handled explicitly as a null level
 
 2. Place token overlap
-- Array intersection size on `place_tokens`
-- Thresholds: `3`, `2`, `1`
-
-3. Place containment compatibility
-- Level 1: exact or containment-like normalized place match
-- Level 2: partial/plausible relation via shared tokens
-- Missing/no-evidence handling is explicit
+- Array intersection size on `places_norm`
+- Thresholds: `4`, `3`
 
 Place helper SQL lives in `utils/place_utils.py`.
 
@@ -188,7 +185,7 @@ Rationale: a comparison feature cannot be estimated in an EM run if that same fe
 
 ### Inference and output
 
-- Pair prediction uses `threshold_match_probability` (default `0.85` in workflow function)
+- Pair prediction uses `threshold_match_probability` (default `0.5` in workflow function)
 - Outputs include `match_probability` and `match_weight` plus retained profile/context columns
 - Results are sorted descending by score
 - Top pairs are exported to `data/matching_outputs/predictions_pairs.csv`
@@ -205,3 +202,48 @@ It is explicitly source-aware:
 - DNB and GS contribute stronger life/activity metadata
 - RGO contributes mention-time and contextual place evidence
 - Date logic adapts by source pair instead of applying one rigid rule to all records
+
+
+# Evaluation
+
+A minimal evaluation, is based upon comparing the predicted matching pairs to existing GS-DNB links via their shared `gnd_id` values. Some GS profiles already contain a `gnd_id` that points to the corresponding DNB person. These identifiers are used as external evidence for known true matches.
+
+A reference pair is defined as:
+- one GS row with non-empty `gnd_id`
+- one DNB row with the same `gnd_id`
+
+If a `gnd_id` occurs multiple times on either side, all resulting GS-DNB pairings are included as reference pairs.
+
+## What is compared
+The [evaluation script](./evaluate_matches.py) iterates through the tabular entity data and extracts all GS-DNB pairs via the shared `gnd_id`. It then checks which of those pairs are present in the predicted matches dataframe and distinguishes missed pairs by cause.
+
+## Miss categories
+Missed reference pairs are split into two groups:
+
+- `failed_prediction_blocking`  
+  The pair would not satisfy any of the prediction blocking rules and therefore could never appear in the exported matches.
+
+- `passed_blocking_but_below_threshold`  
+  The pair is compatible with at least one prediction blocking rule, but still does not appear in the exported thresholded matches.
+
+## Current results
+Evaluation summary:
+- prediction file: `data/matching_outputs/predictions_pairs.pkl`
+- GS rows with `gnd_id`: 842
+- DNB rows with `gnd_id`: 9302
+- reference positive pairs total: 530
+- reference pairs found by Splink: 177
+- reference pairs missed by Splink: 353
+- recall on all reference pairs: 0.3340
+- missed due to prediction blocking: 183
+- missed despite passing blocking: 170
+
+Expressed as formulas:
+
+- raw recall:
+  - `177 / 530 = 0.33396`
+- recall after excluding pairs that are impossible under the current blocking rules:
+  - `177 / (530 - 183) = 177 / 347 = 0.51009`
+
+## Interpretation
+These numbers should be interpreted as a minimal recall-oriented evaluation on a restricted GS-DNB subset with existing identifier evidence. They do not measure any precision-oriented metric. They also do not account for pairs without an existing `gnd_id`, namely all RGO records and some GS records. The results are nevertheless useful because they show how much loss is already caused by blocking and how much additional loss occurs later during probabilistic scoring and thresholding.

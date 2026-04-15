@@ -243,6 +243,14 @@ match-run:
 # Full matching workflow: first build context table, then run matching.
 match: match-context match-run
 
+# Write bidirectional owl:sameAs links from predictions_pairs.csv into
+# data/raw/*/cohort.ttl files (in-place by default).
+match-writeback *args:
+    uv run python scripts/write_sameas_from_predictions.py {{ args }}
+
+# Build context, run matching, then write sameAs links back into cohort files.
+match-all: match-context match-run match-writeback
+
 ui: ui-stop ui-build ui-setup ui-start
 
 # Build the QLever UI Docker image
