@@ -197,7 +197,6 @@ dnb-fetch:
 		> data/raw/dnb/places_full.ttl
 
 	cat data/raw/dnb/persons_full.ttl data/raw/dnb/places_full.ttl > data/raw/dnb/full.ttl
-	cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
 
 qlever-restart: qlever-stop qlever-start
 
