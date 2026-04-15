@@ -4,7 +4,7 @@ default:
 
 # Set up dependencies, build reduced example inputs, run harmonization,
 # export person-focused examples, and start query services.
-go: sync test fetch reduce use-example clean harmonize examples-export qlever ui
+go: sync test fetch reduce use-cohort clean harmonize examples-export qlever ui
 setup: go
 
 # Install project and dev dependencies
@@ -243,7 +243,11 @@ match-run:
 # Full matching workflow: first build context table, then run matching.
 match: match-context match-run
 
-ui: ui-stop ui-build ui-setup ui-start
+ui: ui-stop ui-fetch ui-build ui-setup ui-start
+
+# Clone or pull the QLever UI source from GitHub
+ui-fetch:
+    if [ -d qlever-ui/.git ]; then git -C qlever-ui pull --ff-only; else git clone https://github.com/ad-freiburg/qlever-ui qlever-ui; fi
 
 # Build the QLever UI Docker image
 ui-build:
