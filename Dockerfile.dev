@@ -1,0 +1,89 @@
+# Dev container for rgonline-gs-data-integration
+#
+# Includes:
+#   - Python 3.12 + uv  (pipeline, entity matching)
+#   - OpenJDK 21        (Apache Jena / Fuseki)
+#   - Docker CLI        (ROBOT via `just robot` / docker compose)
+#   - just              (task runner)
+#   - qlever + qlever-bin + qlever-control  (SPARQL index/server, native binaries)
+#
+# Build:
+#   docker build -f Dockerfile.dev -t rgonline-dev .
+#
+# Run (mount repo + host Docker socket):
+#   docker run -it --rm \
+#     -v $(pwd):/workspace \
+#     -v /var/run/docker.sock:/var/run/docker.sock \
+#     -p 3030:3030 -p 7001:7001 \
+#     rgonline-dev
+
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# ── System packages ────────────────────────────────────────────────────────────
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        openjdk-21-jre-headless \
+        python3.12 \
+        python3.12-venv \
+        python3-pip \
+        curl \
+        git \
+        gzip \
+        zsh \
+        ca-certificates \
+        gnupg \
+        lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── Docker CLI + Compose plugin (for `just robot`) ────────────────────────────
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+        | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+         https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+        > /etc/apt/sources.list.d/docker.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        docker-ce-cli \
+        docker-compose-plugin \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── QLever (CLI wrapper + native index/server binaries) ───────────────────────
+RUN curl -fsSL https://packages.qlever.dev/qlever.gpg \
+        | gpg --dearmor -o /usr/share/keyrings/qlever.gpg \
+    && echo \
+        "deb [arch=amd64 signed-by=/usr/share/keyrings/qlever.gpg] \
+         https://packages.qlever.dev/ noble main" \
+        > /etc/apt/sources.list.d/qlever.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        qlever \
+        qlever-bin \
+        qlever-control \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── uv (Python package/project manager) ──────────────────────────────────────
+RUN curl -fsSL https://astral.sh/uv/install.sh | sh \
+    && mv /root/.local/bin/uv /root/.local/bin/uvx /usr/local/bin/
+
+# ── just (task runner) ────────────────────────────────────────────────────────
+RUN curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+
+# ── Python project dependencies ───────────────────────────────────────────────
+WORKDIR /workspace
+
+COPY pyproject.toml uv.lock ./
+
+# Install deps into a project-local venv so uv run works out of the box
+RUN uv sync --dev --frozen
+
+# Project source is mounted at runtime; activate the venv for interactive use
+ENV PATH="/workspace/.venv/bin:$PATH"
+ENV SHELL=/bin/zsh
+
+RUN echo 'export PATH="/workspace/.venv/bin:$PATH"' >> /root/.zshrc
+
+CMD ["/bin/zsh"]

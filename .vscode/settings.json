@@ -12,5 +12,6 @@
     "qlever/ecclesiastical-persons.server-log.txt": true
   },
   "git.repositoryScanIgnoredFolders": ["qlever-ui"],
-  "git.detectSubmodules": false
+  "git.detectSubmodules": false,
+  "cSpell.enabled": false
 }

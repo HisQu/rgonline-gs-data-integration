@@ -1,5 +1,5 @@
-@prefix rgo:    <https://example.org/ontology/> .
-@prefix rg:     <https://example.org/ontology/> .
+@prefix rgo:    <https://rg-online.dhi-roma.it/ontology/> .
+@prefix rg:     <https://rg-online.dhi-roma.it/rg/> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix gnd:    <https://d-nb.info/gnd/> .
 @prefix gndo:   <https://d-nb.info/standards/elementset/gnd#> .
@@ -22,19 +22,19 @@
 #################################################################
 
 gnd:136175414
-    owl:sameAs <https://example.org/rg/person/10504820>,
+    owl:sameAs <https://rg-online.dhi-roma.it/rg/person/10504820>,
         gsn:005-02827-001 .
 
 gnd:118525530
-    owl:sameAs <https://example.org/rg/person/10517697>,
+    owl:sameAs <https://rg-online.dhi-roma.it/rg/person/10517697>,
         gsn:012-00347-001 .
 
 gnd:10427526X
-    owl:sameAs <https://example.org/rg/person/10505909>,
+    owl:sameAs <https://rg-online.dhi-roma.it/rg/person/10505909>,
         gsn:015-00498-001 .
 
 gnd:137509782
-    owl:sameAs <https://example.org/rg/person/10504302>,
+    owl:sameAs <https://rg-online.dhi-roma.it/rg/person/10504302>,
         gsn:048-02156-001 .
 
 #################################################################

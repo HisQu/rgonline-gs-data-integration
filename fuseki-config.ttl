@@ -1,0 +1,42 @@
+PREFIX :        <#>
+PREFIX fuseki:  <http://jena.apache.org/fuseki#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ja:      <http://jena.hpl.hp.com/2005/11/Assembler#>
+
+[] rdf:type fuseki:Server ;
+   fuseki:services (
+     :service
+   ) .
+
+:service rdf:type fuseki:Service ;
+    fuseki:name "integration" ;
+    fuseki:endpoint [
+        fuseki:operation fuseki:query ;
+        fuseki:name "sparql"
+    ] ;
+    fuseki:endpoint [
+        fuseki:operation fuseki:update ;
+        fuseki:name "update"
+    ] ;
+    fuseki:dataset :dataset ;
+    .
+
+# Dataset backed by an OWL inference model over the harmonized merge output.
+:dataset rdf:type ja:RDFDataset ;
+    ja:defaultGraph :model_inf ;
+    .
+
+# OWL forward-chaining rule reasoner (Jena OWLFBRuleReasoner).
+:model_inf a ja:InfModel ;
+    ja:baseModel :baseModel ;
+    ja:reasoner [
+        ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner>
+    ] .
+
+# Base data: the ROBOT-merged harmonized graph (GS + RGO + DNB + TBox).
+# Path is relative to the working directory from which fuseki-server is started
+# (i.e. the project root).
+:baseModel a ja:MemoryModel ;
+    ja:content [ja:externalContent <file:data/harmonized/statements.ttl> ] ;
+    .

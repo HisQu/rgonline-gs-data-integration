@@ -4,24 +4,38 @@
 # Which people, places, and institutions cluster around the same periods,
 # indicating possible networks, conflicts, or political-ecclesiastical connections?
 
-PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
-PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-PREFIX rgo:  <https://example.org/ontology/>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gnd:    <https://d-nb.info/gnd/>
+PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rg:     <https://rg-online.dhi-roma.it/rg/>
+PREFIX rgo:    <https://rg-online.dhi-roma.it/ontology/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 SELECT
   ?year
   ?person
   ?coPerson
+  ?preferredName
+  ?coPreferredName
   (COUNT(DISTINCT ?lemma) AS ?shared_regesta)
   (GROUP_CONCAT(DISTINCT STR(?place); separator=" | ") AS ?places)
   (GROUP_CONCAT(DISTINCT STR(?institution); separator=" | ") AS ?institutions)
 WHERE {
   # Focus on canonical DNB persons as anchors.
   ?person a gndo:DifferentiatedPerson .
+  ?person gndo:preferredNameForThePerson ?preferredName .
   FILTER(STRSTARTS(STR(?person), "https://d-nb.info/gnd/"))
 
   ?rgoPerson (owl:sameAs|^owl:sameAs)* ?person .
-  FILTER(STRSTARTS(STR(?rgoPerson), "https://example.org/rg/person/"))
+  ?rgoPerson gndo:preferredNameForThePerson ?coPreferredName.
+  FILTER(STRSTARTS(STR(?rgoPerson), "https://rg-online.dhi-roma.it/rg/person/"))
 
   ?rgoPerson rgo:appearsInLemma ?lemma .
 
@@ -43,6 +57,6 @@ WHERE {
     BIND(COALESCE(?coGndPerson, ?coRgoPerson) AS ?coPerson)
   }
 }
-GROUP BY ?year ?person ?coPerson
+GROUP BY ?year ?person ?coPerson ?preferredName ?coPreferredName
 HAVING (COUNT(DISTINCT ?lemma) >= 2)
 ORDER BY ?year DESC(?shared_regesta) ?person ?coPerson

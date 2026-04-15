@@ -1,0 +1,50 @@
+# Name: CQ 07: Cross-source name divergence
+# SortKey: 107
+# CQ7
+# For linked triads, how strongly do preferred names diverge between DNB, GS,
+# and RGO?
+
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gnd:    <https://d-nb.info/gnd/>
+PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rg:     <https://rg-online.dhi-roma.it/rg/>
+PREFIX rgo:    <https://rg-online.dhi-roma.it/ontology/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+SELECT
+  ?dnbPerson
+  ?gsPerson
+  ?rgoPerson
+  ?dnbName
+  ?gsName
+  ?rgoName
+  (LCASE(STR(?dnbName)) AS ?dnb_norm)
+  (LCASE(STR(?gsName)) AS ?gs_norm)
+  (LCASE(STR(?rgoName)) AS ?rgo_norm)
+WHERE {
+  ?dnbPerson a gndo:DifferentiatedPerson ;
+             owl:sameAs ?gsPerson , ?rgoPerson ;
+             gndo:preferredNameForThePerson ?dnbName .
+
+  FILTER(STRSTARTS(STR(?dnbPerson), "https://d-nb.info/gnd/"))
+  FILTER(STRSTARTS(STR(?gsPerson), "https://personendatenbank.germania-sacra.de/index/gsn/"))
+  FILTER(STRSTARTS(STR(?rgoPerson), "https://rg-online.dhi-roma.it/rg/person/"))
+
+  OPTIONAL { ?gsPerson  gndo:preferredNameForThePerson ?gsName }
+  OPTIONAL { ?rgoPerson gndo:preferredNameForThePerson ?rgoName }
+
+  FILTER(BOUND(?gsName) && BOUND(?rgoName))
+  FILTER(
+    LCASE(STR(?dnbName)) != LCASE(STR(?gsName)) ||
+    LCASE(STR(?dnbName)) != LCASE(STR(?rgoName)) ||
+    LCASE(STR(?gsName))  != LCASE(STR(?rgoName))
+  )
+}
+ORDER BY ?dnbPerson

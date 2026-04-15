@@ -4,49 +4,18 @@
 # Which individuals can be reliably identified as the same historical person
 # across DNB, Germania Sacra, and RGO, and where do sources disagree?
 
-PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
-PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gnd:    <https://d-nb.info/gnd/>
+PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rg:     <https://rg-online.dhi-roma.it/rg/>
+PREFIX rgo:    <https://rg-online.dhi-roma.it/ontology/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
-SELECT
-  ?gndPerson
-  (COUNT(DISTINCT ?dnbUri) AS ?dnb_links)
-  (COUNT(DISTINCT ?gsUri) AS ?gs_links)
-  (COUNT(DISTINCT ?rgoUri) AS ?rgo_links)
-  (GROUP_CONCAT(DISTINCT STR(?gsUri);  separator=" | ") AS ?gs_uris)
-  (GROUP_CONCAT(DISTINCT STR(?rgoUri); separator=" | ") AS ?rgo_uris)
-  (COUNT(DISTINCT ?nameForm) AS ?distinct_name_forms)
-  (GROUP_CONCAT(DISTINCT ?nameForm; separator=" || ") AS ?name_forms)
-WHERE {
-  ?gndPerson a gndo:DifferentiatedPerson .
-  FILTER(STRSTARTS(STR(?gndPerson), "https://d-nb.info/gnd/"))
 
-  ?entity (owl:sameAs|^owl:sameAs)* ?gndPerson .
-  FILTER(isIRI(?entity))
-
-  OPTIONAL {
-    FILTER(STRSTARTS(STR(?entity), "https://d-nb.info/gnd/"))
-    BIND(?entity AS ?dnbUri)
-  }
-  OPTIONAL {
-    FILTER(STRSTARTS(STR(?entity), "https://personendatenbank.germania-sacra.de/index/gsn/"))
-    BIND(?entity AS ?gsUri)
-  }
-  OPTIONAL {
-    FILTER(STRSTARTS(STR(?entity), "https://example.org/rg/person/"))
-    BIND(?entity AS ?rgoUri)
-  }
-
-  OPTIONAL {
-    {
-      ?entity gndo:preferredNameForThePerson ?nameLit .
-    }
-    UNION
-    {
-      ?entity gndo:variantNameForThePerson ?nameLit .
-    }
-    BIND(STR(?nameLit) AS ?nameForm)
-  }
-}
-GROUP BY ?gndPerson
-HAVING (COUNT(DISTINCT ?gsUri) > 0 && COUNT(DISTINCT ?rgoUri) > 0)
-ORDER BY DESC(?distinct_name_forms) ?gndPerson

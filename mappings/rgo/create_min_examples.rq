@@ -1,0 +1,39 @@
+PREFIX rgo: <https://rg-online.dhi-roma.it/ontology/>
+PREFIX gnd: <https://d-nb.info/standards/elementset/gnd>
+
+CONSTRUCT {
+  ?person ?pp ?po .
+  ?lemma ?lp ?lo .
+  ?sublemma ?sp ?so .
+  ?place ?plp ?plo .
+}
+WHERE {
+  VALUES ?person {
+    <https://rg-online.dhi-roma.it/rg/person/10504820>
+    <https://rg-online.dhi-roma.it/rg/person/10517697>
+    <https://rg-online.dhi-roma.it/rg/person/10505909>
+    <https://rg-online.dhi-roma.it/rg/person/10504302>
+  }
+
+  {
+    ?person ?pp ?po .
+  }
+  UNION
+  {
+    ?person rgo:appearsInLemma ?lemma .
+    ?lemma ?lp ?lo .
+  }
+  UNION
+  {
+    ?person rgo:appearsInLemma ?lemma .
+    ?lemma rgo:hasSubEntry ?sublemma .
+    ?sublemma ?sp ?so .
+  }
+  UNION
+  {
+    ?person rgo:appearsInLemma ?lemma .
+    ?place a gnd:PlaceOrGeographicName ;
+      rgo:appearsInLemma ?lemma .
+    ?place ?plp ?plo .
+  }
+}

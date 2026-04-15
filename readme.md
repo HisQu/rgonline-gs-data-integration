@@ -50,6 +50,11 @@ This repository is intended to be used for:
 - tracking extraction and matching experiments, and
 - presenting project results in a transparent and reproducible way.
 
+## Prerequisites
+
+- Docker
+- Python3 + uv
+
 ## Pipeline Steps
 
 The current pipeline is implemented via `just` recipes:
@@ -58,20 +63,25 @@ The current pipeline is implemented via `just` recipes:
    `just sync` and `just test`
 
 2. **Data acquisition**  
-   `just fetch` (runs `gndo-doc-fetch`, `gs-fetch`, `dnb-fetch`)  
-   RGO automatic fetch is currently not implemented in this repo (`under development`).
+   `just fetch` (runs `gndo-doc-fetch`, `gs-fetch`, `rgo-fetch`, `dnb-fetch`)  
+   `rgo-fetch` downloads `rg5.xml` from the configured RG repository and ref.  
+   Note: export `GITHUB_TOKEN` before running `just rgo-fetch` or `just fetch`.
 
-3. **Build reduced samples**  
-   `just reduce` creates `example.ttl` for GS, DNB, and RGO.
+3. **Build reduced datasets**  
+   `just reduce` creates `cohort.ttl` for each source using year-based filtering:
+   - include a person if birth year is in [1361, 1447] — the RG5 start year minus 70 years and the RG5 end year
+   - if birth year is missing, include if death year is in [1431, 1497] — the RG5 start year and the RG5 end year plus 50 years
+   - for fuzzy date values, the first 4-digit year in the lexical form is used  
+   `just extract-examples` creates `example.ttl` for each source with the four cross-source example persons present in all three data sources.
 
 4. **Choose active input variant**  
-   `just use-example` or `just use-full` copies selected variants to `statements.ttl`.
+   `just use-full`, `just use-cohort`, or `just use-example` copies the selected variant to `statements.ttl`.
 
 5. **Clean GS source graph**  
    `just clean` (currently `gs-clean`) generates `data/raw/gs/clean.ttl`.
 
 6. **Harmonize to GNDO**  
-   `just harmonize` runs ROBOT mappings and writes merged output to `data/harmonized/full.ttl`.
+   `just harmonize` runs ROBOT mappings and writes merged output to `data/harmonized/statements.ttl`.
 
 7. **Export per-person harmonized examples**  
    `just examples-export` writes person files to `data/examples/harmonized/`.  
@@ -80,8 +90,20 @@ The current pipeline is implemented via `just` recipes:
 8. **Index and query services**  
    `just qlever` and `just ui`.
 
-9. **Entity resolution / linking (`under development`)**  
-   [**LIMES**](https://aksw.org/Projects/LIMES.html) integration is planned but not yet part of the automated pipeline.
+9. **Build matching context table**  
+   `just match-context` runs `src/matching/fetch_context.py` and creates:
+   - `data/tabular/common_profiles.csv`
+   - `data/tabular/common_profiles.pkl`
+
+10. **Run entity matching**  
+   `just match-run` runs `src/matching/main_match.py` on `common_profiles.pkl` and writes:
+   - `data/matching_outputs/predictions_pairs.csv`
+
+Convenience command for both steps in the correct order:
+
+```bash
+just match
+```
 
 The default end-to-end command currently runs the reduced-example workflow:
 
@@ -103,8 +125,8 @@ The currently used core technologies are:
 Project mappings use the following preferred prefixes:
 
 - `gsn: <https://personendatenbank.germania-sacra.de/index/gsn/>`
-- `rgo: <https://example.org/ontology/>`
-- `rg: <https://example.org/rg/>`
+- `rgo: <https://rg-online.dhi-roma.it/ontology/>`
+- `rg: <https://rg-online.dhi-roma.it/rg/>`
 - `gndo: <https://d-nb.info/standards/elementset/gnd#>`
 - `gnd: <https://d-nb.info/gnd/>`
 
@@ -118,13 +140,14 @@ Project mappings use the following preferred prefixes:
 
 Each source directory under `data/raw/` now supports three files:
 
-- `full.ttl`: complete source snapshot
-- `example.ttl`: reduced sample dataset (four selected example persons)
+- `full.ttl`: complete source snapshot (written by the fetcher)
+- `cohort.ttl`: year-filtered subset written by `just reduce`
+- `example.ttl`: four cross-source example persons written by `just extract-examples`
 - `statements.ttl`: active file used by the rest of the pipeline
 
 This keeps downstream steps agnostic: they always read `statements.ttl`.
 
-### Build reduced samples
+### Build reduced datasets
 
 Run all reducers:
 
@@ -148,10 +171,38 @@ Use full data:
 just use-full
 ```
 
-Use reduced examples:
+Use cohort-filtered data:
+
+```bash
+just use-cohort
+```
+
+Use four-person examples:
 
 ```bash
 just use-example
+```
+
+## Matching Workflow
+
+The current matching workflow is implemented with Splink in two explicit steps:
+
+1. Build context table from RDF source snapshots:
+
+```bash
+just match-context
+```
+
+2. Run pairwise matching on the generated context table:
+
+```bash
+just match-run
+```
+
+Or run both in one command:
+
+```bash
+just match
 ```
 
 

@@ -10,10 +10,15 @@ data/harmonized/*
 __pycache__/
 .venv/
 .pytest_cache/
+.tdb
 
 # QLever index files (built locally from Qleverfile)
 qlever/*
 !qlever/.gitkeep
+
+# Apache Jena Fuseki binaries and runtime files (downloaded locally)
+fuseki/*
+!fuseki/.gitkeep
 
 # QLever UI (cloned separately, not part of this repo)
 qlever-ui/
@@ -27,3 +32,17 @@ rdf4j/logs/*
 # Environment variables
 .env
 docs/gndo.html
+
+# Samples generated via scripts
+example.ttl
+
+# Output files from matching process
+data/matching_outputs/*
+waterfall.html
+
+# splink temporary files
+.tmp
+/backup
+
+# Evaluation 
+/data/evaluation
