@@ -1,0 +1,38 @@
+# Name: CQ 09: Network hubs for linked DNB persons
+# SortKey: 109
+# CQ9
+# Which co-mentioned RGO persons act as network hubs around linked DNB anchor
+# persons, based on distinct regesta co-occurrence counts?
+
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX gnd:    <https://d-nb.info/gnd/>
+PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
+PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
+PREFIX org:    <http://www.w3.org/ns/org#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX part:   <http://purl.org/vocab/participation/schema#>
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rg:     <https://rg-online.dhi-roma.it/rg/>
+PREFIX rgo:    <https://rg-online.dhi-roma.it/ontology/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+SELECT
+  ?coRgoPerson
+  (COUNT(DISTINCT ?lemma) AS ?co_mentioned_in_regesta)
+  (COUNT(DISTINCT ?anchorDnbPerson) AS ?linked_dnb_anchors)
+WHERE {
+  ?anchorDnbPerson a gndo:DifferentiatedPerson ;
+                   owl:sameAs ?anchorRgoPerson .
+
+  FILTER(STRSTARTS(STR(?anchorDnbPerson), "https://d-nb.info/gnd/"))
+  FILTER(STRSTARTS(STR(?anchorRgoPerson), "https://rg-online.dhi-roma.it/rg/person/"))
+
+  ?lemma gndo:relatedPerson ?anchorRgoPerson , ?coRgoPerson .
+  FILTER(?coRgoPerson != ?anchorRgoPerson)
+  FILTER(STRSTARTS(STR(?coRgoPerson), "https://rg-online.dhi-roma.it/rg/person/"))
+}
+GROUP BY ?coRgoPerson
+HAVING (COUNT(DISTINCT ?lemma) >= 3)
+ORDER BY DESC(?co_mentioned_in_regesta) DESC(?linked_dnb_anchors) ?coRgoPerson
