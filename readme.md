@@ -137,8 +137,8 @@ The currently used core technologies are:
 Project mappings use the following preferred prefixes:
 
 - `gsn: <https://personendatenbank.germania-sacra.de/index/gsn/>`
-- `rgo: <https://example.org/ontology/>`
-- `rg: <https://example.org/rg/>`
+- `rgo: <https://rg-online.dhi-roma.it/ontology/>`
+- `rg: <https://rg-online.dhi-roma.it/rg/>`
 - `gndo: <https://d-nb.info/standards/elementset/gnd#>`
 - `gnd: <https://d-nb.info/gnd/>`
 

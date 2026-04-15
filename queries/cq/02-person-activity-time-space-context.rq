@@ -6,7 +6,7 @@
 
 PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
 PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-PREFIX rgo:  <https://example.org/ontology/>
+PREFIX rgo:  <https://rg-online.dhi-roma.it/ontology/>
 
 SELECT DISTINCT
   ?person

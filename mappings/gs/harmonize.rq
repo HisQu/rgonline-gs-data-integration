@@ -1,13 +1,3 @@
-# Harmonize GS person data to GNDO.
-#
-# Input expectations:
-# - raw GS pages (blank-node persons typed as "foaf:Person"^^xsd:string), or
-# - cleaned GS data (IRI persons typed as foaf:Person).
-#
-# Output:
-# - GNDO person-centric triples for SPARQL interoperability.
-# - Use GNDO terms wherever GS semantics can be represented in GNDO.
-
 PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
 PREFIX gsn:    <https://personendatenbank.germania-sacra.de/index/gsn/>
 PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
@@ -39,16 +29,15 @@ CONSTRUCT {
 }
 WHERE {
   {
-    ?person a foaf:Person .
-  }
-  UNION
-  {
-    ?person a "foaf:Person"^^xsd:string .
-  }
+    SELECT ?person (MIN(?gsURI) AS ?gsCanonicalURI) WHERE {
+      ?person a ?personType .
+      VALUES ?personType { foaf:Person "foaf:Person"^^xsd:string }
 
-  OPTIONAL {
-    ?person owl:sameAs ?gsCanonicalURI .
-    FILTER(STRSTARTS(STR(?gsCanonicalURI), STR(gsn:)))
+      OPTIONAL {
+        ?person owl:sameAs ?gsURI .
+        FILTER(STRSTARTS(STR(?gsURI), STR(gsn:)))
+      }
+    } GROUP BY ?person
   }
   BIND(COALESCE(?gsCanonicalURI, ?person) AS ?personOut)
 
@@ -62,6 +51,7 @@ WHERE {
 
   OPTIONAL { ?person schema:givenName ?givenName }
   OPTIONAL { ?person schema:familyName ?familyName }
+  FILTER(BOUND(?givenName) || BOUND(?familyName))
 
   BIND(
     REPLACE(
@@ -80,31 +70,42 @@ WHERE {
   OPTIONAL { ?person schema:birthDate ?birthDate }
   OPTIONAL { ?person schema:deathDate ?deathDate }
 
-  OPTIONAL { ?person part:holder_of ?office }
-  OPTIONAL { ?person org:memberOf ?organization }
-
-  OPTIONAL { ?office foaf:name ?officeName }
   OPTIONAL {
-    ?office part:startDate ?officeStart ;
-      part:endDate ?officeEnd .
-    BIND(CONCAT(STR(?officeStart), " - ", STR(?officeEnd)) AS ?periodOfActivity)
-  }
-  OPTIONAL {
-    ?office part:startDate ?officeStartOnly .
-    FILTER NOT EXISTS { ?office part:endDate ?_officeEndAny }
-    BIND(CONCAT("from ", STR(?officeStartOnly)) AS ?periodOfActivity)
-  }
-  OPTIONAL {
-    ?office part:endDate ?officeEndOnly .
-    FILTER NOT EXISTS { ?office part:startDate ?_officeStartAny }
-    BIND(CONCAT("until ", STR(?officeEndOnly)) AS ?periodOfActivity)
-  }
-
-  OPTIONAL { ?organization foaf:name ?organizationName }
-  OPTIONAL {
-    ?organization owl:sameAs ?organizationSameAs .
-    FILTER(STRSTARTS(STR(?organizationSameAs), "https://klosterdatenbank.germania-sacra.de/"))
+    SELECT ?person
+           (SAMPLE(?officeName0) AS ?officeName)
+           (SAMPLE(?period0) AS ?periodOfActivity)
+    WHERE {
+      ?person part:holder_of ?office .
+      OPTIONAL { ?office foaf:name ?officeName0 }
+      OPTIONAL { ?office part:startDate ?officeStart }
+      OPTIONAL { ?office part:endDate   ?officeEnd   }
+      BIND(
+        IF(BOUND(?officeStart) && BOUND(?officeEnd),
+          CONCAT(STR(?officeStart), " - ", STR(?officeEnd)),
+          IF(BOUND(?officeStart),
+            CONCAT("from ", STR(?officeStart)),
+            IF(BOUND(?officeEnd),
+              CONCAT("until ", STR(?officeEnd)),
+              "")))
+        AS ?period0
+      )
+    }
+    GROUP BY ?person
   }
 
-  FILTER(STRLEN(?preferredName) > 0)
+  OPTIONAL {
+    SELECT ?person
+           (SAMPLE(?organization0) AS ?organization)
+           (SAMPLE(?organizationName0) AS ?organizationName)
+           (SAMPLE(?organizationSameAs0) AS ?organizationSameAs)
+    WHERE {
+      ?person org:memberOf ?organization0 .
+      OPTIONAL { ?organization0 foaf:name ?organizationName0 }
+      OPTIONAL {
+        ?organization0 owl:sameAs ?organizationSameAs0 .
+        FILTER(STRSTARTS(STR(?organizationSameAs0), "https://klosterdatenbank.germania-sacra.de/"))
+      }
+    }
+    GROUP BY ?person
+  }
 }

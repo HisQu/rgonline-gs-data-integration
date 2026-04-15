@@ -17,22 +17,22 @@ from rdflib.namespace import OWL, RDF
 PERSONS = {
     "gerhard_hoya": {
         "gnd": "136175414",
-        "rgo": "https://example.org/rg/person/10504820",
+        "rgo": "https://rg-online.dhi-roma.it/rg/person/10504820",
         "gs": "https://personendatenbank.germania-sacra.de/index/gsn/005-02827-001",
     },
     "dietrich_ii_moers": {
         "gnd": "118525530",
-        "rgo": "https://example.org/rg/person/10517697",
+        "rgo": "https://rg-online.dhi-roma.it/rg/person/10517697",
         "gs": "https://personendatenbank.germania-sacra.de/index/gsn/012-00347-001",
     },
     "heinrich_bodo": {
         "gnd": "10427526X",
-        "rgo": "https://example.org/rg/person/10505909",
+        "rgo": "https://rg-online.dhi-roma.it/rg/person/10505909",
         "gs": "https://personendatenbank.germania-sacra.de/index/gsn/015-00498-001",
     },
     "friedrich_arnsberg": {
         "gnd": "137509782",
-        "rgo": "https://example.org/rg/person/10504302",
+        "rgo": "https://rg-online.dhi-roma.it/rg/person/10504302",
         "gs": "https://personendatenbank.germania-sacra.de/index/gsn/048-02156-001",
     },
 }
@@ -44,8 +44,8 @@ PREFERRED_PREFIXES = {
     "gnd": "https://d-nb.info/gnd/",
     "gndo": "https://d-nb.info/standards/elementset/gnd#",
     "gsn": "https://personendatenbank.germania-sacra.de/index/gsn/",
-    "rgo": "https://example.org/ontology/",
-    "rg": "https://example.org/rg/",
+    "rgo": "https://rg-online.dhi-roma.it/ontology/",
+    "rg": "https://rg-online.dhi-roma.it/rg/",
 }
 
 
@@ -104,12 +104,16 @@ def extract_subgraph_focused(
             return True
         node_str = str(node)
         return (
-            node_str.startswith("https://example.org/rg/person/")
-            or node_str.startswith("http://example.org/rg/person/")
+            node_str.startswith("https://rg-online.dhi-roma.it/rg/person/")
+            or node_str.startswith("http://rg-online.dhi-roma.it/rg/person/")
             or node_str.startswith("https://d-nb.info/gnd/")
             or node_str.startswith("http://d-nb.info/gnd/")
-            or node_str.startswith("https://personendatenbank.germania-sacra.de/index/gsn/")
-            or node_str.startswith("http://personendatenbank.germania-sacra.de/index/gsn/")
+            or node_str.startswith(
+                "https://personendatenbank.germania-sacra.de/index/gsn/"
+            )
+            or node_str.startswith(
+                "http://personendatenbank.germania-sacra.de/index/gsn/"
+            )
         )
 
     while queue:

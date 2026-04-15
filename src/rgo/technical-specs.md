@@ -163,8 +163,8 @@ The initial RDF conversion should therefore model at least:
 A minimal target pattern is:
 
 ```turtle
-@prefix rg: <https://example.org/rg/> .
-@prefix rgo: <https://example.org/ontology/> .
+@prefix rg: <https://rg-online.dhi-roma.it/rg/> .
+@prefix rgo: <https://rg-online.dhi-roma.it/ontology/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
 
 rg:lemma/10500001 a rgo:RegestEntry ;

@@ -1,8 +1,8 @@
 # this is automatically extracted from data/raw/rgo/rg5_aligned.ttl
 
 @prefix gndo:  <https://d-nb.info/standards/elementset/gnd#> .
-@prefix rgo:   <https://example.org/ontology/> .
-@prefix rg:    <https://example.org/ontology/> .
+@prefix rgo:   <https://rg-online.dhi-roma.it/ontology/> .
+@prefix rg:    <https://rg-online.dhi-roma.it/rg/> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .

@@ -1,10 +1,10 @@
 # Harmonize RGO data to GNDO where possible and preserve only residual
 # source-specific semantics in RG ontology terms.
 
-PREFIX rgo:    <https://example.org/ontology/>
+PREFIX rgo:    <https://rg-online.dhi-roma.it/ontology/>
 PREFIX gndo:   <https://d-nb.info/standards/elementset/gnd#>
 PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rg:     <https://example.org/ontology/>
+PREFIX rg:     <https://rg-online.dhi-roma.it/ontology/>
 
 CONSTRUCT {
   ?s ?p ?o .
