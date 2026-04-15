@@ -4,7 +4,7 @@ default:
 
 # Set up dependencies, build reduced example inputs, run harmonization,
 # export person-focused examples, and start query services.
-go: sync test fetch reduce use-example clean harmonize examples-export qlever ui
+go: sync test fetch reduce use-cohort clean harmonize examples-export qlever ui
 setup: go
 
 # Install project and dev dependencies
@@ -122,10 +122,8 @@ harmonize:
     just robot merge \
         --input data/harmonized/gs.ttl \
         --input data/harmonized/rgo.ttl \
-        --output data/harmonized/statements.ttl
-    just robot merge \
+        --input data/raw/dnb/statements.ttl \
         --input mappings/harmonize.ttl \
-        --input data/harmonized/statements.ttl \
         --output data/harmonized/with-ontology.ttl
     just robot reason \
         --input data/harmonized/with-ontology.ttl \
@@ -162,6 +160,7 @@ rgo-fetch *args:
     uv run python src/rgo/fetch.py {{ args }}
     uv run python src/rgo/materialize.py {{ args }}
     uv run python src/rgo/allign.py {{ args }}
+    cp data/raw/rgo/full.ttl data/raw/rgo/statements.ttl
 
 # Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
 # then normalize fuzzy date literals in the cleaned output.
@@ -215,9 +214,32 @@ cq:
             --query "$query" "$out"; \
     done
 
+# Run one/single competency-question query by number (e.g. `just scq 5`).
+# Output file is written to queries/cq/results/.
+scq number:
+    @mkdir -p queries/cq/results
+    @set -e; \
+    num_padded="$(printf "%02d" "{{number}}")"; \
+    set -- queries/cq/"${num_padded}"-*.rq; \
+    if [ "$1" = "queries/cq/${num_padded}-*.rq" ]; then \
+        echo "No CQ file found for number {{number}} (expected queries/cq/${num_padded}-*.rq)"; \
+        exit 1; \
+    fi; \
+    if [ "$#" -ne 1 ]; then \
+        echo "Expected exactly one CQ file for number {{number}}, found $#"; \
+        exit 1; \
+    fi; \
+    query="$1"; \
+    out="queries/cq/results/$(basename "${query%.rq}").csv"; \
+    just robot -vvv query \
+        --input data/harmonized/statements.ttl \
+        --query "$query" "$out"
+
 # Build the QLever index from all available source files
 qlever-index:
-    qlever index --overwrite-existing
+    @if [ ! -f data/raw/dnb/statements.ttl ] && [ -f data/raw/dnb/full.ttl ]; then cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl; fi
+    qlever index --overwrite-existing \
+        --multi-input-json '[{"cmd":"cat {}","format":"ttl","graph":"https://data.hisqu.de/graph/harmonized","for-each":"data/harmonized/statements.ttl"}]'
 
 # Start the QLever SPARQL endpoint (port 7001)
 qlever-start:
@@ -243,7 +265,11 @@ match-run:
 # Full matching workflow: first build context table, then run matching.
 match: match-context match-run
 
-ui: ui-stop ui-build ui-setup ui-start
+ui: ui-stop ui-fetch ui-build ui-setup ui-start
+
+# Clone or pull the QLever UI source from GitHub
+ui-fetch:
+    if [ -d qlever-ui/.git ]; then git -C qlever-ui pull --ff-only; else git clone https://github.com/ad-freiburg/qlever-ui qlever-ui; fi
 
 # Build the QLever UI Docker image
 ui-build:
