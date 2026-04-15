@@ -16,6 +16,10 @@ __pycache__/
 qlever/*
 !qlever/.gitkeep
 
+# Apache Jena Fuseki binaries and runtime files (downloaded locally)
+fuseki/*
+!fuseki/.gitkeep
+
 # QLever UI (cloned separately, not part of this repo)
 qlever-ui/
 

@@ -2,9 +2,13 @@
 default:
     @just --list
 
+# Version of Apache Jena Fuseki to download.
+# Check https://jena.apache.org/download/ for the latest release.
+FUSEKI_VERSION := "6.0.0"
+
 # Set up dependencies, build reduced example inputs, run harmonization,
 # export person-focused examples, and start query services.
-go: sync test fetch reduce use-cohort clean harmonize examples-export qlever ui
+go: sync test fetch reduce use-cohort clean harmonize examples-export qlever ui fuseki
 setup: go
 
 # Install project and dev dependencies
@@ -108,7 +112,8 @@ use-example:
     cp data/raw/rgo/example.ttl data/raw/rgo/statements.ttl
 
 # Harmonize GS and RGO source graphs to GNDO-oriented projections using ROBOT.
-# Writes merged statements and reasoned output to data/harmonized/.
+# Merges all sources and the TBox directly into data/harmonized/statements.ttl.
+# OWL reasoning is deferred to Apache Jena Fuseki at query time.
 harmonize:
     @mkdir -p data/harmonized
     just robot query \
@@ -124,12 +129,7 @@ harmonize:
         --input data/harmonized/rgo.ttl \
         --input data/raw/dnb/statements.ttl \
         --input mappings/harmonize.ttl \
-        --output data/harmonized/with-ontology.ttl
-    just robot reason \
-        --input data/harmonized/with-ontology.ttl \
-        --reasoner HermiT \
         --output data/harmonized/statements.ttl
-    rm -f data/harmonized/with-ontology.ttl
 
 # Export per-person harmonized examples from data/harmonized/statements.ttl.
 # Default mode is focused (one person per file). To reproduce the previous
@@ -201,6 +201,29 @@ dnb-fetch:
 qlever-restart: qlever-stop qlever-start
 
 qlever: qlever-stop qlever-index qlever-up
+
+# ── Apache Jena Fuseki ─────────────────────────────────────────────────────
+
+# Download and extract Apache Jena Fuseki into the fuseki/ directory.
+# Update FUSEKI_VERSION at the top of this file if a newer release is available.
+fuseki-fetch:
+    mkdir -p fuseki
+    curl -L -o fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}.tar.gz \
+        https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-{{FUSEKI_VERSION}}.tar.gz
+    tar -xzf fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}.tar.gz -C fuseki/
+    @echo "Fuseki {{FUSEKI_VERSION}} extracted to fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/"
+
+# Start Fuseki SPARQL endpoint on port 3030 with OWL inference (fuseki-config.ttl).
+# SPARQL endpoint: http://localhost:3030/integration/sparql
+fuseki-start:
+    bash -c 'nohup fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/fuseki-server --config=fuseki-config.ttl --port=3030 > fuseki/fuseki.log 2>&1 & PID=$!; echo $PID > fuseki/fuseki.pid; echo "Fuseki started (PID $PID) — http://localhost:3030/integration/sparql"'
+
+# Stop the Fuseki SPARQL endpoint.
+fuseki-stop:
+    -bash -c '[ -f fuseki/fuseki.pid ] && kill "$(cat fuseki/fuseki.pid)" 2>/dev/null && rm -f fuseki/fuseki.pid && echo "Fuseki stopped." || rm -f fuseki/fuseki.pid'
+
+# Stop any running Fuseki instance and start a fresh one.
+fuseki: fuseki-stop fuseki-start
 
 # Run all competency-question SPARQL queries with ROBOT and save CSV outputs.
 # Output files are written to queries/cq/results/.
