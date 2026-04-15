@@ -38,3 +38,6 @@ waterfall.html
 
 # splink temporary files
 .tmp
+
+# Evaluation 
+/evaluation

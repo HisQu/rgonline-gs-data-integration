@@ -282,6 +282,10 @@ def build_date_comparison_activity_overlap(
                 label_for_charts=f"moderate interval overlap >= {int(moderate_overlap_years)} years",
             ),
             cll.CustomLevel(
+                sql_condition=f"({overlap_years} >= 1)",
+                label_for_charts=f"small interval overlap >= 1 years",
+            ),
+            cll.CustomLevel(
                 sql_condition=(
                     f"({overlap_years} = 0) AND ({distance_years} <= {int(close_distance_years)})"
                 ),

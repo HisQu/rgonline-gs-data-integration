@@ -78,6 +78,7 @@ def build_prediction_blocking_rules() -> list:
     return [
         block_on("preferred_first_token", "preferred_last_token"),
         block_on("preferred_first_token", "death_year"),
+        block_on("preferred_last_token", "death_year"),
     ]
 
 
@@ -126,7 +127,7 @@ def build_linker(
             build_date_comparison_birth_dnb_gs(small_diff=3, medium_diff=10),
             build_date_comparison_birth_rgo_other(allowance=5, minimum_age_at_first_mention=12),
             build_date_comparison_activity_overlap(
-                strong_overlap_years=10,
+                strong_overlap_years=5,
                 moderate_overlap_years=3,
                 close_distance_years=5,
             ),
@@ -179,7 +180,7 @@ def train_linker(linker: Linker) -> tuple[Linker, list]:
 
     try:
         linker.training.estimate_u_using_random_sampling(
-            max_pairs=1e7,
+            max_pairs=100_000,
             seed=42,
         )
     except Exception as exc:
@@ -260,6 +261,9 @@ def run_matching(
 
 
 if __name__ == "__main__":
+    output_dir = ROOT_DIR / "data" / "matching_outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     combined_df = pd.read_pickle(ROOT_DIR / "data" / "tabular" / "common_profiles.pkl")
 
     prepared_df, pred_df, pred_splink_df, linker, training_sessions = run_matching(
@@ -267,7 +271,14 @@ if __name__ == "__main__":
         threshold_match_probability=0.5,
     )
 
-    # Add 'order by match_probability desc' after 'from ...' to get the top candidates
+
+    # Full thresholded dataframe
+    thresholded_matches_pkl = output_dir / f"predictions_pairs.pkl"
+    pred_df.to_pickle(thresholded_matches_pkl)
+
+    thresholded_matches_csv = output_dir / f"predictions_pairs.csv"
+    pred_df.to_csv(thresholded_matches_csv, index=False)
+
     sql = f"""
     select *
     from {pred_splink_df.physical_name}
@@ -275,20 +286,22 @@ if __name__ == "__main__":
     limit 100
     """
 
-    top50_splink_df = linker.misc.query_sql(sql, output_type="splink_df")
-    records = top50_splink_df.as_record_dict()
+    top100_splink_df = linker.misc.query_sql(sql, output_type="splink_df")
+    records = top100_splink_df.as_record_dict()
     chart = linker.visualisations.waterfall_chart(records)
-    chart.save("waterfall.html")
+    chart.save(str(output_dir / "waterfall.html"))
 
     pair_display_columns = build_pair_display_columns(pred_df)
 
-    csv_path = export_dataframe_to_csv(
+    debug_csv_path = export_dataframe_to_csv(
         pred_df,
-        ROOT_DIR / "data" / "matching_outputs" / "predictions_pairs.csv",
+        output_dir / f"predictions_pairs_top500.csv",
         top_k=500,
         columns=pair_display_columns,
     )
 
     print(prepared_df.loc[:, DEFAULT_PROFILE_DISPLAY_COLUMNS].head())
     print(pred_df.head(10))
-    print(f"Exported top predictions CSV to: {csv_path}")
+    print(f"Exported thresholded match dataframe to: {thresholded_matches_pkl}")
+    print(f"Exported thresholded match CSV to: {thresholded_matches_csv}")
+    print(f"Exported top predictions CSV to: {debug_csv_path}")
