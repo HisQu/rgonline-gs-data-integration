@@ -162,6 +162,7 @@ rgo-fetch *args:
     uv run python src/rgo/fetch.py {{ args }}
     uv run python src/rgo/materialize.py {{ args }}
     uv run python src/rgo/allign.py {{ args }}
+    cp data/raw/rgo/full.ttl data/raw/rgo/statements.ttl
 
 # Apply the three GS cleaning CONSTRUCT queries locally via ROBOT + Jena TDB,
 # then normalize fuzzy date literals in the cleaned output.
@@ -198,6 +199,7 @@ dnb-fetch:
 		> data/raw/dnb/places_full.ttl
 
 	cat data/raw/dnb/persons_full.ttl data/raw/dnb/places_full.ttl > data/raw/dnb/full.ttl
+	cp data/raw/dnb/full.ttl data/raw/dnb/statements.ttl
 
 qlever-restart: qlever-stop qlever-start
 
@@ -217,7 +219,8 @@ cq:
 
 # Build the QLever index from all available source files
 qlever-index:
-    qlever index --overwrite-existing
+    qlever index --overwrite-existing \
+        --multi-input-json '[{"cmd":"cat {}","format":"ttl","graph":"https://data.rgonline-integration.de/graph/harmonized","for-each":"data/harmonized/statements.ttl"},{"cmd":"cat {}","format":"ttl","graph":"https://data.rgonline-integration.de/graph/dnb","for-each":"data/raw/dnb/statements.ttl"}]'
 
 # Start the QLever SPARQL endpoint (port 7001)
 qlever-start:
