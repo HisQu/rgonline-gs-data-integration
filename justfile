@@ -2,13 +2,14 @@
 default:
     @just --list
 
-# Version of Apache Jena Fuseki to download.
+# Versions of Apache Jena to download.
 # Check https://jena.apache.org/download/ for the latest release.
+JENA_VERSION   := "6.0.0"
 FUSEKI_VERSION := "6.0.0"
 
 # Set up dependencies, build reduced example inputs, run harmonization,
 # export person-focused examples, and start query services.
-go: sync test fetch reduce use-cohort clean harmonize examples-export qlever ui fuseki
+go: sync test fetch reduce use-cohort clean harmonize examples-export fuseki
 setup: go
 
 # Install project and dev dependencies
@@ -202,6 +203,18 @@ qlever-restart: qlever-stop qlever-start
 
 qlever: qlever-stop qlever-index qlever-up
 
+# ── Apache Jena ────────────────────────────────────────────────────────────
+
+# Download and extract the Apache Jena command-line tools into ./jena/.
+# Creates ./rsparql symlink in the project root (used by cq, scq, sparql).
+jena-fetch:
+    mkdir -p jena
+    curl -L -o jena/apache-jena-{{JENA_VERSION}}.tar.gz \
+        https://downloads.apache.org/jena/binaries/apache-jena-{{JENA_VERSION}}.tar.gz
+    tar -xzf jena/apache-jena-{{JENA_VERSION}}.tar.gz -C jena/
+    ln -sf jena/apache-jena-{{JENA_VERSION}}/bin/rsparql rsparql
+    @echo "Apache Jena {{JENA_VERSION}} extracted; ./rsparql symlink created."
+
 # ── Apache Jena Fuseki ─────────────────────────────────────────────────────
 
 # Download and extract Apache Jena Fuseki into the fuseki/ directory.
@@ -213,10 +226,11 @@ fuseki-fetch:
     tar -xzf fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}.tar.gz -C fuseki/
     @echo "Fuseki {{FUSEKI_VERSION}} extracted to fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/"
 
-# Start Fuseki SPARQL endpoint on port 3030 with OWL inference (fuseki-config.ttl).
+# Start Fuseki SPARQL endpoint on port 3030 with OWL inference (e.g. fuseki-config.ttl).
 # SPARQL endpoint: http://localhost:3030/integration/sparql
+# JVM_ARGS sets the heap; increase if the reasoner runs out of memory.
 fuseki-start:
-    bash -c 'nohup fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/fuseki-server --config=fuseki-config.ttl --port=3030 > fuseki/fuseki.log 2>&1 & PID=$!; echo $PID > fuseki/fuseki.pid; echo "Fuseki started (PID $PID) — http://localhost:3030/integration/sparql"'
+    bash -c 'JVM_ARGS="-Xmx8g" nohup fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/fuseki-server --config=fuseki-config-lightweight.ttl --port=3030 > fuseki/fuseki.log 2>&1 & PID=$!; echo $PID > fuseki/fuseki.pid; echo "Fuseki started (PID $PID) — http://localhost:3030/integration/sparql"'
 
 # Stop the Fuseki SPARQL endpoint.
 fuseki-stop:
@@ -225,19 +239,22 @@ fuseki-stop:
 # Stop any running Fuseki instance and start a fresh one.
 fuseki: fuseki-stop fuseki-start
 
-# Run all competency-question SPARQL queries with ROBOT and save CSV outputs.
+# Run all competency-question SPARQL queries against the Fuseki integration
+# endpoint (http://localhost:3030/integration/sparql) and save CSV outputs.
+# Requires: just fuseki-start (or just fuseki) to be running first.
+# Requires: ./rsparql symlink created by just jena-fetch.
 # Output files are written to queries/cq/results/.
 cq:
     @mkdir -p queries/cq/results
     @set -e; \
     for query in queries/cq/*.rq; do \
         out="queries/cq/results/$(basename "${query%.rq}").csv"; \
-        just robot -vvv query \
-            --input data/harmonized/statements.ttl \
-            --query "$query" "$out"; \
+        ./rsparql --service=http://localhost:3030/integration/sparql \
+            --results=CSV --query="$query" > "$out"; \
     done
 
 # Run one/single competency-question query by number (e.g. `just scq 5`).
+# Requires: just fuseki-start and ./rsparql (see just jena-fetch).
 # Output file is written to queries/cq/results/.
 scq number:
     @mkdir -p queries/cq/results
@@ -254,9 +271,14 @@ scq number:
     fi; \
     query="$1"; \
     out="queries/cq/results/$(basename "${query%.rq}").csv"; \
-    just robot -vvv query \
-        --input data/harmonized/statements.ttl \
-        --query "$query" "$out"
+    ./rsparql --service=http://localhost:3030/integration/sparql \
+        --results=CSV --query="$query" > "$out"
+
+# Run an ad-hoc SPARQL query against the Fuseki integration endpoint.
+# Requires: just fuseki-start and ./rsparql (see just jena-fetch).
+# Example: just sparql --query queries/cq/01-cross-source-identity-disagreement.rq
+sparql *args:
+    ./rsparql --service=http://localhost:3030/integration/sparql --results=CSV {{ args }}
 
 # Build the QLever index from all available source files
 qlever-index:

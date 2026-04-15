@@ -52,20 +52,8 @@ This repository is intended to be used for:
 
 ## Prerequisites
 
-### Install the QLever Triplestore
-If you want to be able to query the data with a fast SPARQL interface, you can set up a local QLever instance. You can 
-also use ROBOT for this purpose, which is also used in this pipeline and available as a Docker image. 
-
-Consult the documentation for instructions on your platform: https://docs.qlever.dev/quickstart/#debian-and-ubuntu.
-
-You can install QLever on Debian/Ubuntu from a precompiled package:
-```bash
-sudo apt update && sudo apt install -y wget gpg ca-certificates
-wget -qO - https://packages.qlever.dev/pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/qlever.gpg > /dev/null
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/qlever.gpg] https://packages.qlever.dev/ $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") main" | sudo tee /etc/apt/sources.list.d/qlever.list
-sudo apt update
-sudo apt install qlever
-```
+- Docker
+- Python3 + uv
 
 ## Pipeline Steps
 
