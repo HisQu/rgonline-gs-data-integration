@@ -35,6 +35,12 @@ We integrated the three data sources with the aim to make the information from a
 For this, we materialized all three data sources using the GND-Ontology (GNDO), except for the aspects that cannot be accurately described with it, i.e.
 statements about the Repertorium Germanicum (RG). 
 
+The goal is to merge information about persons, e.g. preferred names, variants of their names, dates of activity etc. It was decided to keep the IRIs of each data source, e.g. `rg:101..5` and `gnd:45...X` and connect them with `owl:sameAs` if we find a match. Also, everything that we found could be mapped to the GNDO was materialized in the target graph using SPARQL construct queries, and the original vocabularies were stripped, e.g. the Germania Sacra (GS) used `foaf:`,`schema:`. However, these mapping decisions are stored in an ontology file (in the form of `sameAs` assertions) and available to the Fuseki server.
+
+The data from the Repertorium Germanicum (RG) was in XML format, and we had to create a vocabulary for it. This vocabulary uses the same terminology and structure as the original XML. A thorough documentation from the authors of this source is not available, but we asked them and documented our insights. The source itself is also not publicly available, but we can make it available if that is necessary.
+
+The project in its current state does not make use of the existing identification provided by the GS to the GND. **Only persons are matched.** Future work should also match mentioned institutions, which however was out-of-scope for this milestone.
+
 **Why are the RG fragments not mapped to the GNDO?** The RG is a collection of summaries (sg. Regest, pl. Regeste) of original charters, grouped by popes 
 (i.e. their time of reign). These summaries contain information about persons performing legal actions at a specific point of time, e.g. claiming a benefice 
 (ecclesiastical office), and they are also called "lemma" (there should be one lemma for each person), consisting of "sublemmas" (or also called subentries), 
@@ -93,7 +99,9 @@ The document [0007-matching-rules.md](docs/decisions/0007-matching-rules.md) des
 ### Evaluation
 We evaluated
 - the integrated data → with competency questions, see [cqs.md](docs/cqs.md)
-- the matching results? → evaluate with known TP (GS-to-GND-pointers) [readme.md](src/matching/readme.md)
+- the matching results → evaluate with known TP (GS-to-GND-pointers) [readme.md](src/matching/readme.md)
+- the matching rules → with the "waterfall"-explanation, see [waterfall.html](waterfall.html)
+
 
 ## Scope
 
