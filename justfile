@@ -14,7 +14,7 @@ setup: go
 
 # Install project and dev dependencies
 sync:
-    uv sync --dev
+    uv sync --extra dev
 
 # Run all tests
 test *args:
