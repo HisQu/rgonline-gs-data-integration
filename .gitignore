@@ -16,6 +16,10 @@ __pycache__/
 qlever/*
 !qlever/.gitkeep
 
+# ROBOT jar files and shell script
+robot
+robot.jar
+
 # Apache Jena Fuseki binaries and runtime files (downloaded locally)
 fuseki/*
 !fuseki/.gitkeep

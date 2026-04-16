@@ -14,7 +14,7 @@ setup: go
 
 # Install project and dev dependencies
 sync:
-    uv sync --dev
+    uv sync --extra dev
 
 # Run all tests
 test *args:
@@ -230,7 +230,7 @@ fuseki-fetch:
 # SPARQL endpoint: http://localhost:3030/integration/sparql
 # JVM_ARGS sets the heap; increase if the reasoner runs out of memory.
 fuseki-start:
-    bash -c 'JVM_ARGS="-Xmx8g" nohup fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/fuseki-server --config=fuseki-config-lightweight.ttl --port=3030 > fuseki/fuseki.log 2>&1 & PID=$!; echo $PID > fuseki/fuseki.pid; echo "Fuseki started (PID $PID) — http://localhost:3030/integration/sparql"'
+    bash -c 'JVM_ARGS="-Xmx128g" nohup fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/fuseki-server --config=fuseki-config-lightweight.ttl --port=3030 > fuseki/fuseki.log 2>&1 & PID=$!; echo $PID > fuseki/fuseki.pid; echo "Fuseki started (PID $PID) — http://localhost:3030/integration/sparql"'
 
 # Stop the Fuseki SPARQL endpoint.
 fuseki-stop:
@@ -347,10 +347,17 @@ ui-stop:
 
 # ── ROBOT ──────────────────────────────────────────────────────────────────
 
-# Run ROBOT via Docker; pass any ROBOT command and flags as arguments
+# Download ROBOT launcher and robot.jar into the project root.
+robot-fetch:
+    curl https://raw.githubusercontent.com/ontodev/robot/master/bin/robot > robot
+    curl -L https://github.com/ontodev/robot/releases/latest/download/robot.jar > robot.jar
+    chmod +x robot
+
+# Run local ROBOT; pass any ROBOT command and flags as arguments.
 # Example: just robot convert --input mappings/gs/ontology.owl --output out.ttl
 robot *args:
-    docker compose run --rm robot robot {{ args }}
+    @if [ ! -x robot ] || [ ! -f robot.jar ]; then just robot-fetch; fi
+    ./robot {{ args }}
 
 # ── RDF4J ──────────────────────────────────────────────────────────────────
 
