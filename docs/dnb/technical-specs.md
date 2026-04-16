@@ -60,7 +60,7 @@ Small example/reference files are stored under:
 
 ## 5. Integration into Query Stack
 
-QLever loads DNB from:
+Fuseki loads DNB from:
 
 - `data/raw/dnb/statements.ttl`
 

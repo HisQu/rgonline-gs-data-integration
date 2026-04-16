@@ -9,7 +9,7 @@ FUSEKI_VERSION := "6.0.0"
 
 # Set up dependencies, build reduced example inputs, run harmonization,
 # export person-focused examples, and start query services.
-go: sync test fetch reduce use-cohort clean harmonize examples-export fuseki
+go: sync fetch reduce use-cohort clean match match-write-sameas harmonize examples-export fuseki
 setup: go
 
 # Install project and dev dependencies
@@ -306,6 +306,16 @@ match-context:
 # Writes pairwise predictions to data/matching_outputs/predictions_pairs.csv.
 match-run:
     PYTHONPATH=src uv run python -m matching.main_match
+
+# Evaluate matching predictions against labelled ground truth.
+# Writes evaluation outputs to data/evaluation/.
+match-evaluate:
+    PYTHONPATH=src uv run python -m matching.evaluate_matches
+
+# Write owl:sameAs links derived from matching predictions into the cohort Turtle files.
+# Pass --dry-run to preview additions without modifying any files.
+match-write-sameas *args:
+    UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/write_sameas_from_predictions.py {{ args }}
 
 # Full matching workflow: first build context table, then run matching.
 match: match-context match-run

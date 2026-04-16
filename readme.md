@@ -26,7 +26,74 @@ The following data sources have been selected for the project:
 |---------------------------------|----------------------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Germania Sacra Personenregister | https://personendatenbank.germania-sacra.de/ | JSON, XML, RDF  | 83,134                                                                                                                                         | >10          | First name, name prefix, family name, source/reference data, GND number, WIAG ID, Wikidata ID, offices/positions (designation, type, institution, etc.) |
 | Deutsche Nationalbibliothek     | https://www.dnb.de/                          | Relational, RDF | 145,112 persons between 1200 and 1600; the dataset can be narrowed further because only ecclesiastical representatives are considered relevant | >6           | Person, alternative names, time, country, geographic reference, profession(s), additional information, type, etc.                                       |
-| Repertorium Germanicum Online   | https://rg-online.dhi-roma.it/               | XML             | Approx. 400,000 persons in the full RG; only Volume 8 is intended to be used                                                                   | 3            | The source is principally provided as running text, but first name, surname, and mentioned place are to be extracted                                    |
+| Repertorium Germanicum Online   | https://rg-online.dhi-roma.it/               | XML             | Approx. 400,000 persons in the full RG; only Volume 5 is used                                                                   | 3            | The source is principally provided as running text, but first name, surname, and mentioned place are to be extracted                                    |
+
+## Short Summary
+
+### Integration
+We integrated the three data sources with the aim to make the information from all of them available using one vocabulary (as of now). 
+For this, we materialized all three data sources using the GND-Ontology (GNDO), except for the aspects that cannot be accurately described with it, i.e.
+statements about the Repertorium Germanicum (RG). 
+
+**Why are the RG fragments not mapped to the GNDO?** The RG is a collection of summaries (sg. Regest, pl. Regeste) of original charters, grouped by popes 
+(i.e. their time of reign). These summaries contain information about persons performing legal actions at a specific point of time, e.g. claiming a benefice 
+(ecclesiastical office), and they are also called "lemma" (there should be one lemma for each person), consisting of "sublemmas" (or also called subentries), 
+referring to  a specific event in the lifetime of this person during the reign of this pope. This can be represented using the GNDO (see below, can be 
+analogously done for a Regest). However, after discussion with experts in this field (mediavistic historians), we decided to postpone this step, as 
+`gndo:Work` did not seem to be an appropriate term to be presented to the user (although it is a work, by someone who subsumed all charters to a person 
+in a Regest). In future work, we will examine whether to use `rgo:Regest` as a subclass of `gndo:Work` and then also the rest of the GNDO.
+
+Further information on specifications about the original sources can be found in `docs/{dnb,gs,rg}/technical-specs.md`.
+
+```ttl
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix ex:   <https://example.org/charter/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ── The main charter as a physical manuscript ──────────────────────────────
+ex:charter1 a gndo:Manuscript ;
+    gndo:preferredNameForTheWork "Stadtrechtsurkunde von Musterburg" ;
+    gndo:dateOfProduction "1347"^^xsd:gYear ;
+    gndo:narrowerTermPartitive ex:part1 , ex:part2 , ex:part3 .
+
+# ── Preamble ────────────────────────────────────────────────────────
+ex:part1 a gndo:Work ;
+    gndo:preferredNameForTheWork "Präambel" ;
+    gndo:broaderTermPartitive ex:charter1 ;
+    gndo:contributingPerson ex:person_heinrich .
+
+# ── Land grant clause ───────────────────────────────────────────────
+ex:part2 a gndo:Work ;
+    gndo:preferredNameForTheWork "Landverleihungsklausel" ;
+    gndo:broaderTermPartitive ex:charter1 ;
+    gndo:contributingPerson ex:person_heinrich , ex:person_margarethe .
+
+# ── Witness list ────────────────────────────────────────────────────
+ex:part3 a gndo:Work ;
+    gndo:preferredNameForTheWork "Zeugenliste" ;
+    gndo:broaderTermPartitive ex:charter1 ;
+    gndo:contributingPerson ex:person_konrad .
+
+# ── Persons referenced in the document ─────────────────────────────────────
+ex:person_heinrich a gndo:DifferentiatedPerson ;
+    gndo:preferredNameForThePerson "Heinrich von Musterburg" ;
+    gndo:dateOfBirth "1310"^^xsd:gYear ;
+    gndo:dateOfDeath "1372"^^xsd:gYear .
+
+ex:person_margarethe a gndo:DifferentiatedPerson ;
+    gndo:preferredNameForThePerson "Margarethe von Stein" .
+
+ex:person_konrad a gndo:DifferentiatedPerson ;
+    gndo:preferredNameForThePerson "Konrad der Ältere" .
+```
+
+### Matching/NEI
+The document [0007-matching-rules.md](docs/decisions/0007-matching-rules.md) describes how the identification works. `just match` runs the matching.
+
+### Evaluation
+We evaluated
+- the integrated data → with competency questions, see [cqs.md](docs/cqs.md)
+- the matching results? → evaluate with known TP (GS-to-GND-pointers) [readme.md](src/matching/readme.md)
 
 ## Scope
 
@@ -115,10 +182,9 @@ just go
 
 The currently used core technologies are:
 
-- **ROBOT (via Docker)** for SPARQL CONSTRUCT-based cleaning, reduction, and harmonization.
+- **ROBOT** for SPARQL CONSTRUCT-based cleaning, reduction, and harmonization.
 - **Python + uv** for source-specific fetch and transformation scripts.
-- **QLever** for indexing and SPARQL querying.
-- **LIMES** (`under development`) for future entity resolution.
+- **Fuseki** for SPARQL queries and reasoning.
 
 ## Namespace Prefixes
 
