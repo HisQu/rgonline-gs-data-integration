@@ -12,6 +12,51 @@ FUSEKI_VERSION := "6.0.0"
 go: sync fetch reduce use-cohort clean match match-write-sameas harmonize examples-export fuseki
 setup: go
 
+# Build the Singularity 3.11 development image with fakeroot if available.
+# If fakeroot is unavailable (no /etc/subuid mapping), use singularity-build-remote
+# or singularity-build-sudo.
+singularity-build image="rgonline-dev.sif":
+    @if grep -q "^$(id -un):" /etc/subuid 2>/dev/null && grep -q "^$(id -un):" /etc/subgid 2>/dev/null; then \
+        singularity build --fakeroot --force {{ image }} singularity/Singularity.dev.def; \
+    else \
+        echo "fakeroot unavailable: no /etc/subuid or /etc/subgid mapping for $(id -un)."; \
+        echo "Try one of:"; \
+        echo "  just singularity-build-remote {{ image }}"; \
+        echo "  just singularity-build-sudo {{ image }}"; \
+        exit 2; \
+    fi
+
+# Build remotely via Sylabs Cloud (no local root/fakeroot required).
+singularity-build-remote image="rgonline-dev.sif":
+    mkdir -p .singularity
+    SINGULARITY_CONFIGDIR="$(pwd)/.singularity" singularity build --remote --force {{ image }} singularity/Singularity.dev.def
+
+# Build locally as root (requires sudo privileges).
+singularity-build-sudo image="rgonline-dev.sif":
+    sudo singularity build --force {{ image }} singularity/Singularity.dev.def
+
+# Pull a prebuilt image from GHCR/OCI into a local SIF (works without fakeroot).
+# Example:
+#   just singularity-pull-oci image=ghcr.io/OWNER/REPO:dev-latest
+singularity-pull-oci image output="rgonline-dev.sif":
+    singularity pull --force {{ output }} docker://{{ image }}
+
+# Pull from a private GHCR image into local SIF.
+# Requires:
+#   export SINGULARITY_DOCKER_USERNAME=<github-username>
+#   export SINGULARITY_DOCKER_PASSWORD=<github-token-with-read:packages>
+singularity-pull-oci-private image output="rgonline-dev.sif":
+    singularity pull --docker-login --force {{ output }} docker://{{ image }}
+
+# Open an interactive shell in the Singularity image and bind this repo to /workspace.
+singularity-shell image="rgonline-dev.sif":
+    singularity shell --bind "$(pwd):/workspace" {{ image }}
+
+# Execute a command inside the Singularity image with this repo bound to /workspace.
+# Example: just singularity-exec 'just test'
+singularity-exec cmd image="rgonline-dev.sif":
+    singularity exec --bind "$(pwd):/workspace" {{ image }} bash -lc '{{ cmd }}'
+
 # Install project and dev dependencies
 sync:
     uv sync --extra dev
@@ -230,7 +275,7 @@ fuseki-fetch:
 # SPARQL endpoint: http://localhost:3030/integration/sparql
 # JVM_ARGS sets the heap; increase if the reasoner runs out of memory.
 fuseki-start:
-    bash -c 'JVM_ARGS="-Xmx128g" nohup fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/fuseki-server --config=fuseki-config-lightweight.ttl --port=3030 > fuseki/fuseki.log 2>&1 & PID=$!; echo $PID > fuseki/fuseki.pid; echo "Fuseki started (PID $PID) — http://localhost:3030/integration/sparql"'
+    bash -c 'JVM_ARGS="-Xmx64g" nohup fuseki/apache-jena-fuseki-{{FUSEKI_VERSION}}/fuseki-server --config=fuseki-config-lightweight.ttl --port=3030 > fuseki/fuseki.log 2>&1 & PID=$!; echo $PID > fuseki/fuseki.pid; echo "Fuseki started (PID $PID) — http://localhost:3030/integration/sparql"'
 
 # Stop the Fuseki SPARQL endpoint.
 fuseki-stop:

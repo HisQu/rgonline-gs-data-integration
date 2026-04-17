@@ -1,0 +1,99 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+%labels
+    Author HerrMotz_HisQu_FSU_Jena
+    Description Development container for rgonline-gs-data-integration (Singularity 3.11)
+
+%help
+    This container provides the same core tooling as Dockerfile.dev:
+      - Python 3.12 + uv
+      - OpenJDK 21
+      - just
+      - qlever + qlever-bin + qlever-control
+      - docker CLI + compose plugin
+
+    Typical workflow:
+      singularity build --fakeroot rgonline-dev.sif singularity/Singularity.dev.def
+      singularity shell --bind $(pwd):/workspace rgonline-dev.sif
+
+%environment
+    export DEBIAN_FRONTEND=noninteractive
+    export PYTHONDONTWRITEBYTECODE=1
+    export PYTHONUNBUFFERED=1
+    export PATH=/workspace/.venv/bin:/opt/rgonline/.venv/bin:/usr/local/bin:$PATH
+    export SHELL=/bin/zsh
+
+%files
+    pyproject.toml /opt/rgonline/pyproject.toml
+    uv.lock /opt/rgonline/uv.lock
+
+%post
+    set -eux
+
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        openjdk-21-jre-headless \
+        python3.12 \
+        python3.12-venv \
+        python3-pip \
+        curl \
+        git \
+        gzip \
+        zsh \
+        ca-certificates \
+        gnupg \
+        lsb-release
+
+    # Docker CLI + Compose plugin
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+        | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+        > /etc/apt/sources.list.d/docker.list
+
+    # QLever packages
+    curl -fsSL https://packages.qlever.dev/qlever.gpg \
+        | gpg --dearmor -o /usr/share/keyrings/qlever.gpg
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/qlever.gpg] https://packages.qlever.dev/ noble main" \
+        > /etc/apt/sources.list.d/qlever.list
+
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        docker-ce-cli \
+        docker-compose-plugin \
+        qlever \
+        qlever-bin \
+        qlever-control
+
+    # uv installer
+    curl -fsSL https://astral.sh/uv/install.sh | sh
+    mv /root/.local/bin/uv /root/.local/bin/uvx /usr/local/bin/
+
+    # just installer
+    curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+
+    # Prepare project dependencies into a template location.
+    mkdir -p /opt/rgonline
+    cd /opt/rgonline
+    uv sync --dev --frozen
+
+    # Clean apt cache.
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+%runscript
+    if [ "$#" -gt 0 ]; then
+        exec "$@"
+    fi
+
+    if [ -d /workspace ]; then
+        cd /workspace
+    fi
+
+    exec /bin/zsh
+
+%startscript
+    if [ -d /workspace ]; then
+        cd /workspace
+    fi
+    exec /bin/zsh

@@ -130,6 +130,42 @@ This repository is intended to be used for:
 - Docker
 - Python3 + uv
 
+## Singularity (3.11)
+
+This repository includes a Singularity definition file for a development container:
+
+- `singularity/Singularity.dev.def`
+
+### Recommended on HPC (no `sudo`, no `fakeroot`)
+
+Publish `Dockerfile.dev` to GHCR via GitHub Actions:
+
+- `.github/workflows/ghcr-dev-image.yml`
+
+Then pull and run on the cluster:
+
+```bash
+just singularity-pull-oci image=ghcr.io/<owner>/<repo>:dev-latest
+just singularity-shell
+```
+
+If the GHCR package is private:
+
+```bash
+export SINGULARITY_DOCKER_USERNAME=<github-username>
+export SINGULARITY_DOCKER_PASSWORD=<github-token-with-read:packages>
+just singularity-pull-oci-private image=ghcr.io/<owner>/<repo>:dev-latest
+```
+
+### Local build (only when supported)
+
+```bash
+just singularity-build
+just singularity-shell
+```
+
+Detailed notes are in `docs/singularity.md`.
+
 ## Pipeline Steps
 
 The current pipeline is implemented via `just` recipes:
