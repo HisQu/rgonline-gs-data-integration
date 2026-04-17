@@ -27,6 +27,7 @@ robot.jar
 # Apache Jena Fuseki binaries and runtime files (downloaded locally)
 fuseki/*
 !fuseki/.gitkeep
+run
 
 # QLever UI (cloned separately, not part of this repo)
 qlever-ui/
