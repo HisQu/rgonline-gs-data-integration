@@ -6,6 +6,7 @@ default:
 # Check https://jena.apache.org/download/ for the latest release.
 JENA_VERSION   := "6.0.0"
 FUSEKI_VERSION := "6.0.0"
+GHCR_DEV_IMAGE := "ghcr.io/hisqu/rgonline-gs-data-integration:dev-latest"
 
 # Set up dependencies, build reduced example inputs, run harmonization,
 # export person-focused examples, and start query services.
@@ -35,24 +36,21 @@ singularity-build-remote image="rgonline-dev.sif":
 singularity-build-sudo image="rgonline-dev.sif":
     sudo singularity build --force {{ image }} singularity/Singularity.dev.def
 
-# Pull a prebuilt image from GHCR/OCI into a local SIF (works without fakeroot).
+# Pull a prebuilt image from GHCR/OCI into a local SIF.
 # Example:
-#   just singularity-pull-oci ghcr.io/owner/repo:dev-latest
-singularity-pull-oci image output="rgonline-dev.sif":
-    @img='{{ image }}'; \
-    img="${img#image=}"; \
-    img="$(printf '%s' "$img" | tr '[:upper:]' '[:lower:]')"; \
+#   just singularity-pull-oci
+singularity-pull-oci output="rgonline-dev.sif":
+    @img='{{GHCR_DEV_IMAGE}}'; \
     singularity pull --force {{ output }} "docker://$img"
 
-# Pull from a private GHCR image into local SIF.
-# Requires:
-#   export SINGULARITY_DOCKER_USERNAME=<github-username>
-#   export SINGULARITY_DOCKER_PASSWORD=<github-token-with-read:packages>
-singularity-pull-oci-private image output="rgonline-dev.sif":
-    @img='{{ image }}'; \
-    img="${img#image=}"; \
-    img="$(printf '%s' "$img" | tr '[:upper:]' '[:lower:]')"; \
-    singularity pull --docker-login --force {{ output }} "docker://$img"
+# Set up GHCR credentials for private image pulls.
+# Default env file: ~/.config/rgonline-ghcr.env
+ghcr-token-setup env_file="":
+    @if [ -n "{{ env_file }}" ]; then \
+        ./scripts/setup_ghcr_token.sh "{{ env_file }}"; \
+    else \
+        ./scripts/setup_ghcr_token.sh; \
+    fi
 
 # Open an interactive shell in the Singularity image and bind this repo to /workspace.
 singularity-shell image="rgonline-dev.sif":

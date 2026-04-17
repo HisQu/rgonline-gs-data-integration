@@ -79,24 +79,27 @@ Workflow file:
 
 Published tags:
 
-- `ghcr.io/<owner>/<repo>:dev-latest`
-- `ghcr.io/<owner>/<repo>:dev-<git-sha>`
+- `ghcr.io/hisqu/rgonline-gs-data-integration:dev-latest`
+- `ghcr.io/hisqu/rgonline-gs-data-integration:dev-<git-sha>`
 
 Note: OCI image references must be lowercase.
 
 Pull public image:
 
 ```bash
-just singularity-pull-oci ghcr.io/<owner>/<repo>:dev-latest
+just singularity-pull-oci
 ```
 
 Pull private image (requires token with `read:packages`):
 
 ```bash
-export SINGULARITY_DOCKER_USERNAME=<github-username>
-export SINGULARITY_DOCKER_PASSWORD=<github-token>
-just singularity-pull-oci-private ghcr.io/<owner>/<repo>:dev-latest
+just ghcr-token-setup
+source ~/.config/rgonline-ghcr.env
+just singularity-pull-oci-private
 ```
+
+`just ghcr-token-setup` tries GitHub CLI OAuth first (browser login) and falls
+back to opening the token page for manual PAT creation if needed.
 
 Run:
 
