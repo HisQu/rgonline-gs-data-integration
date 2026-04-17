@@ -141,6 +141,7 @@ This repository includes a Singularity definition file for a development contain
 Publish `Dockerfile.dev` to GHCR via GitHub Actions:
 
 - `.github/workflows/ghcr-dev-image.yml`
+- Manual trigger (CLI): `gh workflow run ghcr-dev-image.yml --ref main`
 
 Then pull and run on the cluster:
 
