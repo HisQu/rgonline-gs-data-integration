@@ -5,7 +5,7 @@
 #   - OpenJDK 21        (Apache Jena / Fuseki)
 #   - Docker CLI        (ROBOT via `just robot` / docker compose)
 #   - just              (task runner)
-#   - qlever + qlever-bin + qlever-control  (SPARQL index/server, native binaries)
+#   - qlever  (SPARQL index/server tooling)
 #
 # Build:
 #   docker build -f Dockerfile.dev -t rgonline-dev .
@@ -52,17 +52,15 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
     && rm -rf /var/lib/apt/lists/*
 
 # ── QLever (CLI wrapper + native index/server binaries) ───────────────────────
-RUN curl -fsSL https://packages.qlever.dev/qlever.gpg \
+RUN curl -fsSL https://packages.qlever.dev/pub.asc \
         | gpg --dearmor -o /usr/share/keyrings/qlever.gpg \
     && echo \
-        "deb [arch=amd64 signed-by=/usr/share/keyrings/qlever.gpg] \
-         https://packages.qlever.dev/ noble main" \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/qlever.gpg] \
+         https://packages.qlever.dev/ $(. /etc/os-release && echo \"${UBUNTU_CODENAME:-$VERSION_CODENAME}\") main" \
         > /etc/apt/sources.list.d/qlever.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         qlever \
-        qlever-bin \
-        qlever-control \
     && rm -rf /var/lib/apt/lists/*
 
 # ── uv (Python package/project manager) ──────────────────────────────────────

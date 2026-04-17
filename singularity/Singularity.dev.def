@@ -10,7 +10,7 @@ From: ubuntu:24.04
       - Python 3.12 + uv
       - OpenJDK 21
       - just
-      - qlever + qlever-bin + qlever-control
+      - qlever
       - docker CLI + compose plugin
 
     Typical workflow:
@@ -52,18 +52,16 @@ From: ubuntu:24.04
         > /etc/apt/sources.list.d/docker.list
 
     # QLever packages
-    curl -fsSL https://packages.qlever.dev/qlever.gpg \
+    curl -fsSL https://packages.qlever.dev/pub.asc \
         | gpg --dearmor -o /usr/share/keyrings/qlever.gpg
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/qlever.gpg] https://packages.qlever.dev/ noble main" \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/qlever.gpg] https://packages.qlever.dev/ $(. /etc/os-release && echo \"${UBUNTU_CODENAME:-$VERSION_CODENAME}\") main" \
         > /etc/apt/sources.list.d/qlever.list
 
     apt-get update
     apt-get install -y --no-install-recommends \
         docker-ce-cli \
         docker-compose-plugin \
-        qlever \
-        qlever-bin \
-        qlever-control
+        qlever
 
     # uv installer
     curl -fsSL https://astral.sh/uv/install.sh | sh

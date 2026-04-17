@@ -9,7 +9,7 @@ The definition mirrors `Dockerfile.dev` and installs:
 - Python 3.12 + `uv`
 - OpenJDK 21
 - `just`
-- `qlever`, `qlever-bin`, `qlever-control`
+- `qlever`
 - Docker CLI + Compose plugin
 
 ## Prerequisites
