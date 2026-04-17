@@ -37,16 +37,22 @@ singularity-build-sudo image="rgonline-dev.sif":
 
 # Pull a prebuilt image from GHCR/OCI into a local SIF (works without fakeroot).
 # Example:
-#   just singularity-pull-oci image=ghcr.io/OWNER/REPO:dev-latest
+#   just singularity-pull-oci ghcr.io/owner/repo:dev-latest
 singularity-pull-oci image output="rgonline-dev.sif":
-    singularity pull --force {{ output }} docker://{{ image }}
+    @img='{{ image }}'; \
+    img="${img#image=}"; \
+    img="$(printf '%s' "$img" | tr '[:upper:]' '[:lower:]')"; \
+    singularity pull --force {{ output }} "docker://$img"
 
 # Pull from a private GHCR image into local SIF.
 # Requires:
 #   export SINGULARITY_DOCKER_USERNAME=<github-username>
 #   export SINGULARITY_DOCKER_PASSWORD=<github-token-with-read:packages>
 singularity-pull-oci-private image output="rgonline-dev.sif":
-    singularity pull --docker-login --force {{ output }} docker://{{ image }}
+    @img='{{ image }}'; \
+    img="${img#image=}"; \
+    img="$(printf '%s' "$img" | tr '[:upper:]' '[:lower:]')"; \
+    singularity pull --docker-login --force {{ output }} "docker://$img"
 
 # Open an interactive shell in the Singularity image and bind this repo to /workspace.
 singularity-shell image="rgonline-dev.sif":

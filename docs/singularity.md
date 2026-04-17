@@ -82,10 +82,12 @@ Published tags:
 - `ghcr.io/<owner>/<repo>:dev-latest`
 - `ghcr.io/<owner>/<repo>:dev-<git-sha>`
 
+Note: OCI image references must be lowercase.
+
 Pull public image:
 
 ```bash
-just singularity-pull-oci image=ghcr.io/<owner>/<repo>:dev-latest
+just singularity-pull-oci ghcr.io/<owner>/<repo>:dev-latest
 ```
 
 Pull private image (requires token with `read:packages`):
@@ -93,7 +95,7 @@ Pull private image (requires token with `read:packages`):
 ```bash
 export SINGULARITY_DOCKER_USERNAME=<github-username>
 export SINGULARITY_DOCKER_PASSWORD=<github-token>
-just singularity-pull-oci-private image=ghcr.io/<owner>/<repo>:dev-latest
+just singularity-pull-oci-private ghcr.io/<owner>/<repo>:dev-latest
 ```
 
 Run:

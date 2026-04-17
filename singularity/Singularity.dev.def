@@ -37,6 +37,7 @@ From: ubuntu:24.04
         python3.12 \
         python3.12-venv \
         python3-pip \
+        just \
         curl \
         git \
         gzip \
@@ -66,9 +67,6 @@ From: ubuntu:24.04
     # uv installer
     curl -fsSL https://astral.sh/uv/install.sh | sh
     mv /root/.local/bin/uv /root/.local/bin/uvx /usr/local/bin/
-
-    # just installer
-    curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
 
     # Prepare project dependencies into a template location.
     mkdir -p /opt/rgonline

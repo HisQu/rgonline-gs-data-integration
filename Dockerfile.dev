@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3.12 \
         python3.12-venv \
         python3-pip \
+        just \
         curl \
         git \
         gzip \
@@ -66,9 +67,6 @@ RUN curl -fsSL https://packages.qlever.dev/pub.asc \
 # ── uv (Python package/project manager) ──────────────────────────────────────
 RUN curl -fsSL https://astral.sh/uv/install.sh | sh \
     && mv /root/.local/bin/uv /root/.local/bin/uvx /usr/local/bin/
-
-# ── just (task runner) ────────────────────────────────────────────────────────
-RUN curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
 
 # ── Python project dependencies ───────────────────────────────────────────────
 WORKDIR /workspace

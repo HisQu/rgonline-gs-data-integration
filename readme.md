@@ -145,7 +145,7 @@ Publish `Dockerfile.dev` to GHCR via GitHub Actions:
 Then pull and run on the cluster:
 
 ```bash
-just singularity-pull-oci image=ghcr.io/<owner>/<repo>:dev-latest
+just singularity-pull-oci ghcr.io/<owner>/<repo>:dev-latest
 just singularity-shell
 ```
 
@@ -154,7 +154,7 @@ If the GHCR package is private:
 ```bash
 export SINGULARITY_DOCKER_USERNAME=<github-username>
 export SINGULARITY_DOCKER_PASSWORD=<github-token-with-read:packages>
-just singularity-pull-oci-private image=ghcr.io/<owner>/<repo>:dev-latest
+just singularity-pull-oci-private ghcr.io/<owner>/<repo>:dev-latest
 ```
 
 ### Local build (only when supported)
