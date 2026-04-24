@@ -205,6 +205,60 @@ def annotate_prediction_blocking(reference_df: pd.DataFrame) -> pd.DataFrame:
 
     return out
 
+def compute_classification_metrics(
+    reference_df: pd.DataFrame,
+    predicted_pairs_df: pd.DataFrame,
+) -> dict[str, float | int | None]:
+    """
+    Computes TP, FP, FN, TN (approx) and derived metrics.
+
+    IMPORTANT:
+    - TP: reference pairs found by Splink
+    - FN: reference pairs missed
+    - FP: predicted pairs NOT in reference
+    - TN: approximated as all possible pairs minus TP, FP, FN
+          (can be huge / not always meaningful in record linkage!)
+    """
+
+    # --- Keys ---
+    ref_keys = set(reference_df["reference_pair_key"])
+    pred_keys = set(predicted_pairs_df["reference_pair_key"])
+
+    # --- Confusion matrix ---
+    tp = len(ref_keys & pred_keys)
+    fn = len(ref_keys - pred_keys)
+    fp = len(pred_keys - ref_keys)
+
+    # --- Total possible pairs (GS x DNB) ---
+    # approximate from reference_df
+    n_dnb = reference_df["entity_id_dnb"].nunique()
+    n_gs = reference_df["entity_id_gs"].nunique()
+    total_pairs = n_dnb * n_gs
+
+    tn = total_pairs - tp - fn - fp
+
+    # --- Metrics ---
+    precision = tp / (tp + fp) if (tp + fp) else None
+    recall = tp / (tp + fn) if (tp + fn) else None
+    f1 = (
+        2 * precision * recall / (precision + recall)
+        if (precision is not None and recall is not None and (precision + recall))
+        else None
+    )
+
+    accuracy = (tp + tn) / total_pairs if total_pairs else None
+
+    return {
+        "tp": tp,
+        "fp": fp,
+        "fn": fn,
+        "tn": tn,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "accuracy": accuracy,
+        "total_pairs": total_pairs,
+    }
 
 def compare_reference_to_predictions(
     reference_df: pd.DataFrame,
@@ -346,6 +400,10 @@ def run_gs_dnb_gnd_evaluation(
     reference_df = annotate_prediction_blocking(reference_df)
 
     predicted_pairs_df = extract_predicted_gs_dnb_pairs(pred_df)
+    metrics = compute_classification_metrics(
+        reference_df=reference_df,
+        predicted_pairs_df=predicted_pairs_df,
+    )
 
     reference_with_eval_df, found_df, missed_df = compare_reference_to_predictions(
         reference_df=reference_df,
@@ -359,6 +417,7 @@ def run_gs_dnb_gnd_evaluation(
         missed_df=missed_df,
         predictions_file=predictions_path,
     )
+    summary.update(metrics)
 
     return reference_with_eval_df, found_df, missed_df, summary
 

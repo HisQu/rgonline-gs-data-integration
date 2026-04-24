@@ -179,7 +179,7 @@ def train_linker(linker: Linker) -> tuple[Linker, list]:
 
     try:
         linker.training.estimate_u_using_random_sampling(
-            max_pairs=1e7,
+            max_pairs=1e6,
             seed=42,
         )
     except Exception as exc:
