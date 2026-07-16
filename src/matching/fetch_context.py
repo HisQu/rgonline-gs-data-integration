@@ -1,6 +1,7 @@
+import argparse
 import re
 from pathlib import Path
-from typing import Any, Iterable, Optional, Sequence, Set
+from typing import Any, Callable, Iterable, Optional, Sequence, Set
 
 import pandas as pd
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
@@ -48,6 +49,7 @@ YEAR_COLUMNS = [
 LIST_COLUMNS = ["variant_names", "places"]
 
 DEFAULT_CONFIG_PATH = ROOT / "data" / "name_normalization_config.json"
+DEFAULT_SOURCES = ("dnb", "gs", "rgo")
 
 # Helpers
 YEAR_RE = re.compile(r"(?<!\d)(-?\d{3,4})(?!\d)")
@@ -711,30 +713,88 @@ def add_all_names_column(df: pd.DataFrame) -> pd.DataFrame:
     df["all_names"] = df.apply(_build_all_names, axis=1)
     return df
 
-# Usage
-if __name__ == "__main__":
-    # Build one DataFrame per source
-    dnb_df = build_dnb_dataframe(DNB_FILE)
-    gs_df = build_gs_dataframe(GS_FILE, config_path=DEFAULT_CONFIG_PATH)
-    rgo_df = build_rgo_dataframe(RGO_FILE)
 
-    # Unify into one common long-format profile table
-    common_profiles_df = concatenate_source_frames([dnb_df, gs_df, rgo_df])
+def build_source_registry() -> dict[str, Callable[[], pd.DataFrame]]:
+    return {
+        "dnb": lambda: build_dnb_dataframe(DNB_FILE),
+        "gs": lambda: build_gs_dataframe(GS_FILE, config_path=DEFAULT_CONFIG_PATH),
+        "rgo": lambda: build_rgo_dataframe(RGO_FILE),
+    }
 
-    #  materialize derived all_names
-    common_profiles_with_all_names_df = add_all_names_column(common_profiles_df)
 
-    print("DNB rows:", len(dnb_df))
-    print("GS rows:", len(gs_df))
-    print("RGO rows:", len(rgo_df))
-    print("Combined rows:", len(common_profiles_df))
+def validate_sources(
+    sources: Sequence[str],
+    available_sources: Sequence[str],
+    *,
+    require_at_least_two: bool = False,
+) -> list[str]:
+    selected = list(dict.fromkeys(source.lower() for source in sources))
+    unknown = sorted(set(selected) - set(available_sources))
+    if unknown:
+        known = ", ".join(available_sources)
+        raise ValueError(f"Unknown source(s): {', '.join(unknown)}. Known sources: {known}")
+    if require_at_least_two and len(set(selected)) < 2:
+        raise ValueError("At least two distinct sources are required for matching")
+    return selected
+
+
+def build_common_profiles(sources: Sequence[str] = DEFAULT_SOURCES) -> pd.DataFrame:
+    registry = build_source_registry()
+    selected_sources = validate_sources(sources, tuple(registry))
+
+    frames = []
+    for source in selected_sources:
+        df = registry[source]()
+        print(f"{source.upper()} rows: {len(df)}")
+        frames.append(df)
+
+    common_profiles_df = concatenate_source_frames(frames)
+    print(f"Combined rows: {len(common_profiles_df)}")
+    return common_profiles_df
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Build the common matching profile table for selected sources."
+    )
+    parser.add_argument(
+        "--sources",
+        nargs="+",
+        default=list(DEFAULT_SOURCES),
+        help=f"Sources to include. Defaults to: {' '.join(DEFAULT_SOURCES)}",
+    )
+    parser.add_argument(
+        "--output-csv",
+        default=str(ROOT / "data" / "tabular" / "common_profiles.csv"),
+        help="Path for the CSV profile output.",
+    )
+    parser.add_argument(
+        "--output-pkl",
+        default=str(ROOT / "data" / "tabular" / "common_profiles.pkl"),
+        help="Path for the pickle profile output.",
+    )
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    common_profiles_df = build_common_profiles(args.sources)
+
     print()
-
     print("Combined schema:")
     print(common_profiles_df.dtypes)
     print()
-
     print(common_profiles_df.head())
 
-    common_profiles_df.to_csv("data/tabular/common_profiles.csv", index=False)
-    common_profiles_df.to_pickle("data/tabular/common_profiles.pkl")
+    output_csv = Path(args.output_csv)
+    output_pkl = Path(args.output_pkl)
+    output_csv.parent.mkdir(parents=True, exist_ok=True)
+    output_pkl.parent.mkdir(parents=True, exist_ok=True)
+    common_profiles_df.to_csv(output_csv, index=False)
+    common_profiles_df.to_pickle(output_pkl)
+    print(f"Exported common profile CSV to: {output_csv}")
+    print(f"Exported common profile pickle to: {output_pkl}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,5 +1,6 @@
+import argparse
 from pathlib import Path
-from typing import Tuple
+from typing import Sequence
 
 import pandas as pd
 from splink import DuckDBAPI, Linker, SettingsCreator, block_on
@@ -27,47 +28,79 @@ from .utils import (
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = ROOT_DIR / "data" / "name_normalization_config.json"
+DEFAULT_INPUT_PATH = ROOT_DIR / "data" / "tabular" / "common_profiles.pkl"
+DEFAULT_OUTPUT_DIR = ROOT_DIR / "data" / "matching_outputs"
+
+MATCHING_COLUMNS = [
+    "entity_id",
+    "source",
+    "preferred_name",
+    "variant_names",
+    "birth_year",
+    "death_year",
+    "activity_start",
+    "activity_end",
+    "mention_start",
+    "mention_end",
+    "places",
+    "gnd_id",
+    "wikidata_id",
+    # helper columns from name_utils
+    "preferred_name_norm",
+    "preferred_name_tokens",
+    "preferred_first_token",
+    "preferred_last_token",
+    "variant_names_norm",
+    "variant_name_tokens",
+    "all_name_tokens",
+    # helper columns from place_utils
+    "places_norm",
+    "place_tokens",
+]
 
 
-def split_for_link_only(prepared_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def validate_selected_sources(
+    prepared_df: pd.DataFrame,
+    sources: Sequence[str] | None = None,
+) -> list[str]:
+    available_sources = list(dict.fromkeys(prepared_df["source"].dropna().astype(str)))
+    if sources is None:
+        selected_sources = available_sources
+    else:
+        selected_sources = list(dict.fromkeys(source.lower() for source in sources))
+
+    unknown = sorted(set(selected_sources) - set(available_sources))
+    if unknown:
+        known = ", ".join(available_sources)
+        raise ValueError(f"Unknown source(s): {', '.join(unknown)}. Available sources: {known}")
+
+    if len(set(selected_sources)) < 2:
+        raise ValueError("At least two distinct sources are required for matching")
+
+    for source in selected_sources:
+        row_count = int((prepared_df["source"] == source).sum())
+        if row_count == 0:
+            raise ValueError(f"Selected source has no rows: {source}")
+
+    return selected_sources
+
+
+def split_for_link_only(
+    prepared_df: pd.DataFrame,
+    sources: Sequence[str] | None = None,
+) -> tuple[list[pd.DataFrame], list[str]]:
     """
     Split the combined dataframe into one dataframe per source.
 
     Splink link_only expects a list of input tables and only generates
     between-dataset comparisons.
     """
-    keep_cols = [
-        "entity_id",
-        "source",
-        "preferred_name",
-        "variant_names",
-        "birth_year",
-        "death_year",
-        "activity_start",
-        "activity_end",
-        "mention_start",
-        "mention_end",
-        "places",
-        "gnd_id",
-        "wikidata_id",
-        # helper columns from name_utils
-        "preferred_name_norm",
-        "preferred_name_tokens",
-        "preferred_first_token",
-        "preferred_last_token",
-        "variant_names_norm",
-        "variant_name_tokens",
-        "all_name_tokens",
-        # helper columns from place_utils
-        "places_norm",
-        "place_tokens",
+    selected_sources = validate_selected_sources(prepared_df, sources)
+    source_frames = [
+        prepared_df.loc[prepared_df["source"] == source, MATCHING_COLUMNS].copy()
+        for source in selected_sources
     ]
-
-    dnb_df = prepared_df.loc[prepared_df["source"] == "dnb", keep_cols].copy()
-    gs_df = prepared_df.loc[prepared_df["source"] == "gs", keep_cols].copy()
-    rgo_df = prepared_df.loc[prepared_df["source"] == "rgo", keep_cols].copy()
-
-    return dnb_df, gs_df, rgo_df
+    return source_frames, selected_sources
 
 
 def build_prediction_blocking_rules() -> list:
@@ -99,15 +132,14 @@ def build_em_training_blocking_rules() -> list:
 
 
 def build_linker(
-    dnb_df: pd.DataFrame,
-    gs_df: pd.DataFrame,
-    rgo_df: pd.DataFrame,
+    source_frames: Sequence[pd.DataFrame],
+    source_aliases: Sequence[str],
 ) -> Linker:
     """
     Build the first Splink linker for name matching.
 
     Current model:
-    - link_only across DNB, GS, RGO
+    - link_only across the selected source tables
     - blocking on first/last normalized preferred-name token
     - one comparison: preferred_name_norm vs preferred_name_norm
     """
@@ -150,10 +182,10 @@ def build_linker(
     )
 
     linker = Linker(
-        [dnb_df, gs_df, rgo_df],
+        list(source_frames),
         settings,
         db_api=DuckDBAPI(),
-        input_table_aliases=["dnb", "gs", "rgo"],
+        input_table_aliases=list(source_aliases),
     )
     return linker
 
@@ -216,11 +248,12 @@ def run_matching(
     combined_df: pd.DataFrame,
     config_path: str | Path = DEFAULT_CONFIG_PATH,
     threshold_match_probability: float = 0.85,
+    sources: Sequence[str] | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, object, Linker, list]:
     """
     Workflow:
     1. Prepare helper columns
-    2. Split into DNB / GS / RGO inputs
+    2. Split into selected source inputs
     3. Build linker
     4. Train model
     5. Predict pairwise scores once
@@ -235,12 +268,11 @@ def run_matching(
         config_path=config_path,
     )
 
-    dnb_df, gs_df, rgo_df = split_for_link_only(prepared_df)
+    source_frames, source_aliases = split_for_link_only(prepared_df, sources=sources)
 
     linker = build_linker(
-        dnb_df=dnb_df,
-        gs_df=gs_df,
-        rgo_df=rgo_df,
+        source_frames=source_frames,
+        source_aliases=source_aliases,
     )
 
     linker, training_sessions = train_linker(linker)
@@ -259,15 +291,46 @@ def run_matching(
     return prepared_df, pred_df, pred_splink_df, linker, training_sessions
 
 
-if __name__ == "__main__":
-    output_dir = ROOT_DIR / "data" / "matching_outputs"
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run Splink matching for selected sources from a common profile table."
+    )
+    parser.add_argument(
+        "--sources",
+        nargs="+",
+        default=None,
+        help="Sources to match. Defaults to all sources present in the profile table.",
+    )
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT_PATH),
+        help="Path to the common profile pickle.",
+    )
+    parser.add_argument(
+        "--output-dir",
+        default=str(DEFAULT_OUTPUT_DIR),
+        help="Directory for matching outputs.",
+    )
+    parser.add_argument(
+        "--threshold",
+        type=float,
+        default=0.5,
+        help="Minimum match probability for exported predictions.",
+    )
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    combined_df = pd.read_pickle(ROOT_DIR / "data" / "tabular" / "common_profiles.pkl")
+    combined_df = pd.read_pickle(args.input)
 
     prepared_df, pred_df, pred_splink_df, linker, training_sessions = run_matching(
         combined_df,
-        threshold_match_probability=0.5,
+        threshold_match_probability=args.threshold,
+        sources=args.sources,
     )
 
 
@@ -304,3 +367,7 @@ if __name__ == "__main__":
     print(f"Exported thresholded match dataframe to: {thresholded_matches_pkl}")
     print(f"Exported thresholded match CSV to: {thresholded_matches_csv}")
     print(f"Exported top predictions CSV to: {debug_csv_path}")
+
+
+if __name__ == "__main__":
+    main()

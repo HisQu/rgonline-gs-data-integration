@@ -348,13 +348,13 @@ qlever-up: qlever-index qlever-start
 
 # Build the common matching input table from source RDF snapshots.
 # Writes data/tabular/common_profiles.csv and data/tabular/common_profiles.pkl.
-match-context:
-    PYTHONPATH=src uv run python -m matching.fetch_context
+match-context *args:
+    PYTHONPATH=src uv run python -m matching.fetch_context {{ args }}
 
 # Run Splink-based matching using the prepared common profile table.
 # Writes pairwise predictions to data/matching_outputs/predictions_pairs.csv.
-match-run:
-    PYTHONPATH=src uv run python -m matching.main_match
+match-run *args:
+    PYTHONPATH=src uv run python -m matching.main_match {{ args }}
 
 # Evaluate matching predictions against labelled ground truth.
 # Writes evaluation outputs to data/evaluation/.
@@ -367,7 +367,9 @@ match-write-sameas *args:
     UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/write_sameas_from_predictions.py {{ args }}
 
 # Full matching workflow: first build context table, then run matching.
-match: match-context match-run
+match *args:
+    PYTHONPATH=src uv run python -m matching.fetch_context {{ args }}
+    PYTHONPATH=src uv run python -m matching.main_match {{ args }}
 
 ui: ui-stop ui-fetch ui-build ui-setup ui-start
 
