@@ -17,6 +17,14 @@ from .place_comparisons import (
     build_place_comparison_token_overlap,
     build_place_comparison_match_quality,
 )
+from .erfurt_rgo_comparisons import (
+    build_erfurt_rgo_comparisons,
+    build_erfurt_rgo_given_name_comparison,
+    build_erfurt_rgo_origin_place_comparison,
+    build_erfurt_rgo_preferred_variant_comparison,
+    build_erfurt_rgo_semester_year_comparison,
+    build_erfurt_rgo_surname_byname_comparison,
+)
 
 __all__ = ["build_name_comparisons_pref_pref", 
            "build_name_comparison_pref_var_best", 
@@ -30,4 +38,11 @@ __all__ = ["build_name_comparisons_pref_pref",
            "build_date_comparison_birth_rgo_other",
            "build_date_comparison_death_dnb_gs",
            "build_date_comparison_death_rgo_other",
-           "build_place_comparison_match_quality",]
+           "build_place_comparison_match_quality",
+           "build_erfurt_rgo_comparisons",
+           "build_erfurt_rgo_origin_place_comparison",
+           "build_erfurt_rgo_preferred_variant_comparison",
+           "build_erfurt_rgo_semester_year_comparison",
+           "build_erfurt_rgo_given_name_comparison",
+           "build_erfurt_rgo_surname_byname_comparison"
+           ]

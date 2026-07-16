@@ -17,6 +17,7 @@ from .comparisons import (
     build_date_comparison_activity_overlap,
     build_place_comparison_token_overlap,
     build_place_comparison_match_quality,
+    build_erfurt_rgo_comparisons,
 )
 from .utils import (
     DEFAULT_PROFILE_DISPLAY_COLUMNS,
@@ -35,6 +36,9 @@ MATCHING_COLUMNS = [
     "entity_id",
     "source",
     "preferred_name",
+    "given_name",
+    "surname",
+    "origin_name",
     "variant_names",
     "birth_year",
     "death_year",
@@ -52,11 +56,36 @@ MATCHING_COLUMNS = [
     "preferred_last_token",
     "variant_names_norm",
     "variant_name_tokens",
+    "given_name_norm",
+    "surname_norm",
+    "given_name_tokens",
+    "surname_tokens",
     "all_name_tokens",
     # helper columns from place_utils
     "places_norm",
     "place_tokens",
 ]
+
+LIST_MATCHING_COLUMNS = {
+    "variant_names",
+    "places",
+    "preferred_name_tokens",
+    "variant_names_norm",
+    "variant_name_tokens",
+    "given_name_tokens",
+    "surname_tokens",
+    "all_name_tokens",
+    "places_norm",
+    "place_tokens",
+}
+
+
+def ensure_matching_columns(prepared_df: pd.DataFrame) -> pd.DataFrame:
+    out = prepared_df.copy()
+    for col in MATCHING_COLUMNS:
+        if col not in out.columns:
+            out[col] = [[] for _ in range(len(out))] if col in LIST_MATCHING_COLUMNS else pd.NA
+    return out
 
 
 def validate_selected_sources(
@@ -95,6 +124,7 @@ def split_for_link_only(
     Splink link_only expects a list of input tables and only generates
     between-dataset comparisons.
     """
+    prepared_df = ensure_matching_columns(prepared_df)
     selected_sources = validate_selected_sources(prepared_df, sources)
     source_frames = [
         prepared_df.loc[prepared_df["source"] == source, MATCHING_COLUMNS].copy()
@@ -103,18 +133,59 @@ def split_for_link_only(
     return source_frames, selected_sources
 
 
-def build_prediction_blocking_rules() -> list:
+def uses_erfurt_rgo_only(source_aliases: Sequence[str]) -> bool:
+    return set(source_aliases) == {"erfurt", "rgo"}
+
+
+def uses_erfurt_rgo(source_aliases: Sequence[str]) -> bool:
+    return {"erfurt", "rgo"}.issubset(set(source_aliases))
+
+
+def build_prediction_blocking_rules(source_aliases: Sequence[str] | None = None) -> list:
     """
     Tight blocking rules for prediction on the full dataset.
     Keep this conservative to avoid exploding candidate counts.
     """
+    if source_aliases is not None and uses_erfurt_rgo_only(source_aliases):
+        return [
+            block_on("preferred_first_token"),
+        ]
+
     return [
         block_on("preferred_first_token", "preferred_last_token"),
         block_on("preferred_first_token", "death_year"),
     ]
 
 
-def build_em_training_blocking_rules() -> list:
+def build_comparisons(source_aliases: Sequence[str]) -> list:
+    base_comparisons = [
+        *build_name_comparisons_pref_pref(),
+        build_name_comparison_pref_var_best(),
+        build_name_comparison_var_var_best(),
+        #build_name_comparison_all_name_token_overlap(), # not used since highly correlated to pref_var and var_var
+        build_date_comparison_death_dnb_gs(small_diff=1, medium_diff=5),
+        build_date_comparison_death_rgo_other(allowance=5),
+        build_date_comparison_birth_dnb_gs(small_diff=3, medium_diff=10),
+        build_date_comparison_birth_rgo_other(allowance=5, minimum_age_at_first_mention=12),
+        build_date_comparison_activity_overlap(
+            strong_overlap_years=5,
+            moderate_overlap_years=3,
+            close_distance_years=5,
+        ),
+        build_place_comparison_match_quality(),
+        build_place_comparison_token_overlap(),
+    ]
+
+    if uses_erfurt_rgo_only(source_aliases):
+        return build_erfurt_rgo_comparisons()
+
+    if uses_erfurt_rgo(source_aliases):
+        return [*base_comparisons, *build_erfurt_rgo_comparisons()]
+
+    return base_comparisons
+
+
+def build_em_training_blocking_rules(source_aliases: Sequence[str] | None = None) -> list:
     """
     Multiple EM blocking rules ('round robin').
 
@@ -123,6 +194,13 @@ def build_em_training_blocking_rules() -> list:
       blocking rule for that session.
     - So we use several sessions with different blocks.
     """
+    if source_aliases is not None and uses_erfurt_rgo_only(source_aliases):
+        return [
+            block_on("preferred_first_token"),
+            block_on("mention_start"),
+            block_on("preferred_last_token"),
+        ]
+
     return [
         block_on("preferred_first_token"),
         block_on("preferred_last_token"),
@@ -147,31 +225,20 @@ def build_linker(
         link_type="link_only",
         unique_id_column_name="entity_id",
         probability_two_random_records_match=0.05,
-        blocking_rules_to_generate_predictions=build_prediction_blocking_rules(),
-        comparisons=[
-            *build_name_comparisons_pref_pref(),
-            build_name_comparison_pref_var_best(),
-            build_name_comparison_var_var_best(),
-            #build_name_comparison_all_name_token_overlap(), # not used since highly correlated to pref_var and var_var
-            build_date_comparison_death_dnb_gs(small_diff=1, medium_diff=5),
-            build_date_comparison_death_rgo_other(allowance=5),
-            build_date_comparison_birth_dnb_gs(small_diff=3, medium_diff=10),
-            build_date_comparison_birth_rgo_other(allowance=5, minimum_age_at_first_mention=12),
-            build_date_comparison_activity_overlap(
-                strong_overlap_years=5,
-                moderate_overlap_years=3,
-                close_distance_years=5,
-            ),
-            build_place_comparison_match_quality(),
-            build_place_comparison_token_overlap(),
-        ],
+        blocking_rules_to_generate_predictions=build_prediction_blocking_rules(source_aliases),
+        comparisons=build_comparisons(source_aliases),
         retain_matching_columns=True,
         retain_intermediate_calculation_columns=True,
         additional_columns_to_retain=[
             "source",
             "preferred_name",
+            "given_name",
+            "surname",
+            "origin_name",
             "preferred_name_norm",
             "preferred_name_tokens",
+            "given_name_norm",
+            "surname_norm",
             "variant_names",
             "variant_names_norm",
             "variant_name_tokens",
@@ -190,24 +257,30 @@ def build_linker(
     return linker
 
 
-def train_linker(linker: Linker) -> tuple[Linker, list]:
+def train_linker(
+    linker: Linker,
+    source_aliases: Sequence[str],
+) -> tuple[Linker, list]:
     """
     Train the model using:
     - prior estimation
     - u estimation from random sampling
     - multiple EM passes with different blocking rules
     """
-    deterministic_rules = [
-        'l."preferred_name_norm" = r."preferred_name_norm"'
-    ]
+    if uses_erfurt_rgo_only(source_aliases):
+        print("[INFO] Prior estimation skipped for Erfurt-RGO source pair")
+    else:
+        deterministic_rules = [
+            'l."preferred_name_norm" = r."preferred_name_norm"'
+        ]
 
-    try:
-        linker.training.estimate_probability_two_random_records_match(
-            deterministic_rules,
-            recall=0.5,
-        )
-    except Exception as exc:
-        print(f"[INFO] Prior estimation skipped: {exc}")
+        try:
+            linker.training.estimate_probability_two_random_records_match(
+                deterministic_rules,
+                recall=0.5,
+            )
+        except Exception as exc:
+            print(f"[INFO] Prior estimation skipped: {exc}")
 
     try:
         linker.training.estimate_u_using_random_sampling(
@@ -219,7 +292,7 @@ def train_linker(linker: Linker) -> tuple[Linker, list]:
 
     training_sessions = []
 
-    for em_rule in build_em_training_blocking_rules():
+    for em_rule in build_em_training_blocking_rules(source_aliases):
         try:
             session = linker.training.estimate_parameters_using_expectation_maximisation(
                 em_rule
@@ -275,7 +348,7 @@ def run_matching(
         source_aliases=source_aliases,
     )
 
-    linker, training_sessions = train_linker(linker)
+    linker, training_sessions = train_linker(linker, source_aliases=source_aliases)
 
     pred_splink_df = predict_matches(
         linker=linker,
@@ -314,7 +387,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--threshold",
         type=float,
-        default=0.5,
+        default=0.7,
         help="Minimum match probability for exported predictions.",
     )
     return parser.parse_args()
@@ -358,7 +431,7 @@ def main() -> None:
     debug_csv_path = export_dataframe_to_csv(
         pred_df,
         output_dir / f"predictions_pairs_top500.csv",
-        top_k=500,
+        top_k=50,
         columns=pair_display_columns,
     )
 

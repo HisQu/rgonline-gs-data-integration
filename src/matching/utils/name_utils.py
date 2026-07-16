@@ -166,6 +166,10 @@ def prepare_name_columns_for_matching(
 
     out = df.copy()
 
+    for col in ["given_name", "surname", "origin_name"]:
+        if col not in out.columns:
+            out[col] = pd.NA
+
     out["variant_names"] = out["variant_names"].apply(ensure_list)
 
     out["preferred_name_norm"] = out["preferred_name"].apply(
@@ -214,6 +218,23 @@ def prepare_name_columns_for_matching(
         ),
         axis=1,
     )
+
+    for base_col in ["given_name", "surname"]:
+        out[f"{base_col}_norm"] = out[base_col].apply(
+            lambda x: normalize_name_string(
+                text=x,
+                remove_particles=remove_particles,
+                first_name_equivalents=first_name_equivalents,
+            )
+        )
+
+        out[f"{base_col}_tokens"] = out[base_col].apply(
+            lambda x: normalize_name_tokens(
+                text=x,
+                remove_particles=remove_particles,
+                first_name_equivalents=first_name_equivalents,
+            )
+        )
 
     return out
 

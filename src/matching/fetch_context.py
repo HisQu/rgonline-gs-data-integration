@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DNB_FILE = ROOT / "data" / "raw" / "dnb" / "statements.ttl"
 GS_FILE = ROOT / "data" / "raw" / "gs" / "statements.ttl"
 RGO_FILE = ROOT / "data" / "raw" / "rgo" / "statements.ttl"
+ERFURT_FILE = ROOT / "data" / "raw" / "erfurt" / "raw.csv"
 
 GNDO = Namespace("https://d-nb.info/standards/elementset/gnd#")
 SCHEMA = Namespace("http://schema.org/")
@@ -25,6 +26,9 @@ COMMON_COLUMNS = [
     "entity_id",
     "source",
     "preferred_name",
+    "given_name",
+    "surname",
+    "origin_name",
     "variant_names",
     "birth_year",
     "death_year",
@@ -77,6 +81,11 @@ def clean_text(value: Any) -> str:
     """Normalize whitespace and convert RDF values to plain strings."""
     if value is None:
         return ""
+    try:
+        if pd.isna(value):
+            return ""
+    except Exception:
+        pass
     text = str(value).strip()
     text = re.sub(r"\s+", " ", text)
     return text
@@ -185,6 +194,9 @@ def empty_common_record() -> dict[str, Any]:
         "entity_id": None,
         "source": None,
         "preferred_name": None,
+        "given_name": None,
+        "surname": None,
+        "origin_name": None,
         "variant_names": [],
         "birth_year": None,
         "death_year": None,
@@ -696,6 +708,49 @@ def build_rgo_dataframe(file_path: str, rdf_format: Optional[str] = None) -> pd.
     return finalize_dataframe(records)
 
 
+# Erfurt
+# ---------------------------------------------------------------------------
+def extract_erfurt_columns(row: pd.Series, row_index: int) -> dict[str, Any]:
+    record = empty_common_record()
+    record["entity_id"] = f"https://data.hisqu.de/erfurt/person/{row_index + 1}"
+    record["source"] = "erfurt"
+
+    given_name = clean_text(row.get("Vorname"))
+    surname = clean_text(row.get("Nachname"))
+    origin_name = clean_text(row.get("Herkunftsname"))
+    semester_year = extract_year(row.get("Semester"))
+    preferred_name = " ".join(part for part in [given_name, surname] if part) or None
+
+    record.update(
+        {
+            "preferred_name": preferred_name,
+            "given_name": given_name or None,
+            "surname": surname or None,
+            "origin_name": origin_name or None,
+            "variant_names": [],
+            "birth_year": None,
+            "death_year": None,
+            "activity_start": None,
+            "activity_end": None,
+            "mention_start": semester_year,
+            "mention_end": semester_year,
+            "places": [origin_name] if origin_name else [],
+            "gnd_id": None,
+            "wikidata_id": None,
+        }
+    )
+    return record
+
+
+def build_erfurt_dataframe(file_path: str | Path = ERFURT_FILE) -> pd.DataFrame:
+    df = pd.read_csv(file_path)
+    records = [
+        extract_erfurt_columns(row=row, row_index=row_index)
+        for row_index, row in df.iterrows()
+    ]
+    return finalize_dataframe(records)
+
+
 def add_all_names_column(df: pd.DataFrame) -> pd.DataFrame:
     """
     Optional convenience function.
@@ -719,6 +774,7 @@ def build_source_registry() -> dict[str, Callable[[], pd.DataFrame]]:
         "dnb": lambda: build_dnb_dataframe(DNB_FILE),
         "gs": lambda: build_gs_dataframe(GS_FILE, config_path=DEFAULT_CONFIG_PATH),
         "rgo": lambda: build_rgo_dataframe(RGO_FILE),
+        "erfurt": lambda: build_erfurt_dataframe(ERFURT_FILE),
     }
 
 
