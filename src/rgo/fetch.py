@@ -9,10 +9,10 @@ import httpx
 
 
 DATASET = "rgo"
-SOURCE_FILE = "rg5.xml"
+SOURCE_FILE = "rg6.xml"
 REPO_OWNER = "HisQu"
 REPO_NAME = "RG_data"
-REPO_PATH = "rg_xml/rg5.xml"
+REPO_PATH = "rg_xml/rg6.xml"
 GIT_REF = "792fcd6"
 
 # Required for private repository access. Can be exported in a shell or set it an environment before running the script.

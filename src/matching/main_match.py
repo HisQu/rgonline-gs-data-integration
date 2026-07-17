@@ -4,6 +4,7 @@ from typing import Sequence
 
 import pandas as pd
 from splink import DuckDBAPI, Linker, SettingsCreator, block_on
+from splink.blocking_rule_library import CustomRule
 
 from .comparisons import (
     build_name_comparisons_pref_pref,
@@ -197,8 +198,12 @@ def build_em_training_blocking_rules(source_aliases: Sequence[str] | None = None
     if source_aliases is not None and uses_erfurt_rgo_only(source_aliases):
         return [
             block_on("preferred_first_token"),
-            block_on("mention_start"),
-            block_on("preferred_last_token"),
+            CustomRule(
+                """
+                l."mention_start" BETWEEN r."mention_start" - 5 AND r."mention_end" + 5
+                OR r."mention_start" BETWEEN l."mention_start" - 5 AND l."mention_end" + 5
+                """
+            ),
         ]
 
     return [
@@ -235,6 +240,8 @@ def build_linker(
             "given_name",
             "surname",
             "origin_name",
+            "mention_start",
+            "mention_end",
             "preferred_name_norm",
             "preferred_name_tokens",
             "given_name_norm",
@@ -431,7 +438,7 @@ def main() -> None:
     debug_csv_path = export_dataframe_to_csv(
         pred_df,
         output_dir / f"predictions_pairs_top500.csv",
-        top_k=50,
+        top_k=500,
         columns=pair_display_columns,
     )
 

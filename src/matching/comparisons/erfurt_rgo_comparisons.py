@@ -257,11 +257,11 @@ def build_erfurt_rgo_origin_place_comparison() -> cl.CustomComparison:
             ),
             cll.CustomLevel(
                 sql_condition=f"({pair}) AND ({best_jw_sql} >= 0.95)",
-                label_for_charts="origin/place JW >= 0.95",
+                label_for_charts="origin/place JW >= 0.97",
             ),
             cll.CustomLevel(
                 sql_condition=f"({pair}) AND ({best_jw_sql} >= 0.88)",
-                label_for_charts="origin/place JW >= 0.88",
+                label_for_charts="origin/place JW >= 0.92",
             ),
             cll.ElseLevel(),
         ],
